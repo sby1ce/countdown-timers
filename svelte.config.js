@@ -19,6 +19,10 @@ const config = {
     paths: {
       base: dev ? "" : process.env.BASE_PATH,
     },
+    alias: {
+      $licences: "./LICENCES",
+      $wasm: "./countdown-rs/pkg",
+    },
   },
 };
 

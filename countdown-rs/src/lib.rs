@@ -1,14 +1,14 @@
-use std::time::{SystemTime, UNIX_EPOCH};
+use chrono::Utc;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 #[derive(Clone, Copy)]
 pub struct TimeUnit {
     suffix: &'static str,
-    divisor: u64,
+    divisor: i64,
 }
 
 impl TimeUnit {
-    const fn new(suffix: &'static str, divisor: u64) -> Self {
+    const fn new(suffix: &'static str, divisor: i64) -> Self {
         Self { suffix, divisor }
     }
 }
@@ -55,49 +55,97 @@ impl FormatOption {
     }
 }
 
-fn reduce_interval(interval: u64, result: String, format_options: &[FormatOption]) -> String {
-    let format_len = format_options.len();
+/// Works with positive intervals
+fn reduce_interval(interval: i64, accumulator: String, format_options: &[FormatOption]) -> String {
+    let format_len: usize = format_options.len();
     if format_len == 0 {
-        return result;
+        return accumulator;
     }
-    let format_option = &format_options[0];
-    let time_unit = format_option.to_time_unit();
-    let new_interval = interval
+    let format_option: &FormatOption = &format_options[0];
+    let time_unit: TimeUnit = format_option.to_time_unit();
+    let new_interval: i64 = interval
         .checked_rem_euclid(time_unit.divisor)
         .unwrap_or_default();
-    let unit_count = interval
+    let unit_count: i64 = interval
         .checked_div_euclid(time_unit.divisor)
         .unwrap_or_default();
-    let new_result = result + &unit_count.to_string() + time_unit.suffix + " ";
-    reduce_interval(new_interval, new_result, &format_options[1..format_len])
+    let new_accumulator = accumulator + &unit_count.to_string() + time_unit.suffix + " ";
+
+    reduce_interval(
+        new_interval,
+        new_accumulator,
+        &format_options[1..format_len],
+    )
 }
 
-fn update(origin: u64, now: u64) -> [String; 1] {
-    let interval: u64 = now.checked_sub(origin).unwrap_or_default();
+fn convert(interval: i64, format_options: &[FormatOption]) -> String {
+    let abs_interval: i64 = interval.abs();
+
+    let accumulator: String = if interval >= 0 {
+        String::with_capacity(12)
+    } else {
+        let acc: String = String::with_capacity(14);
+        acc + "- "
+    };
+
+    reduce_interval(abs_interval, accumulator, format_options)
+}
+
+fn update(origin: i64, now: i64) -> [String; 1] {
+    let interval: i64 = origin - now;
     let format_options: [FormatOption; 4] = [
         FormatOption::Day,
         FormatOption::Hour,
         FormatOption::Minute,
         FormatOption::Second,
     ];
-    [reduce_interval(
-        interval,
-        String::with_capacity(12),
-        &format_options,
-    )]
+
+    [convert(interval, &format_options)]
+}
+
+/// Expect positive
+fn get_now_millis() -> i64 {
+    Utc::now().timestamp_millis()
+}
+
+fn update_timers_(get_now: impl Fn() -> i64, origins: Vec<i64>) -> Vec<[String; 1]> {
+    let now: i64 = get_now();
+
+    origins
+        .into_iter()
+        .map(|origin: i64| -> [String; 1] { update(origin, now) })
+        .collect::<Vec<[String; 1]>>()
 }
 
 /// Returning JSON of Vec<Vec<String>>
 #[wasm_bindgen]
-pub fn update_timers(origins: Vec<u64>) -> String {
-    let now: u64 = u64::try_from(SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("time went backwards")
-        .as_millis())
-        .expect("millions of years in the future");
+pub fn update_timers(origins: Vec<i64>) -> String {
+    serde_json::to_string(&update_timers_(get_now_millis, origins))
+        .unwrap_or_else(|error| format!("{error:?}"))
+}
 
-    serde_json::to_string(&origins
-        .into_iter()
-        .map(|origin: u64| -> [String; 1] { update(origin, now) })
-        .collect::<Vec<[String; 1]>>()).unwrap_or_else(|error| format!("{error:?}"))
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    fn fake_get_now() -> i64 {
+        100_000
+    }
+
+    #[test]
+    fn test() {
+        let origins: Vec<i64> = vec![0];
+        let a: Vec<[String; 1]> = update_timers_(fake_get_now, origins);
+
+        assert_eq!(a, vec![["- 0d 0h 1m 40s "]]);
+    }
+
+    #[test]
+    fn test_wasm() {
+        let origins: Vec<i64> = vec![0];
+        let a: String = update_timers(origins);
+
+        assert!(a.starts_with("[[\"- "));
+        assert!(a.ends_with("\"]]"));
+    }
 }

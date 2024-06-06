@@ -1,73 +1,36 @@
 <script lang="ts">
-  import { storageAvailable } from "./storage.ts";
-  import { timers } from "./timers.ts";
-  //@ts-expect-error
-  import { get_current_component } from "svelte/internal";
+  import Kebab from "$lib/Kebab.svelte";
 
-  export let position: number;
-
-  const thisComponent = get_current_component();
-
-  // Menu variables
-  let top: string;
-  let left: string = "90%";
-  type Symbol = "-" | "v";
-  let symbol: Symbol = "-";
+  export let pop: () => void;
+  export let name: string;
+  export let countdowns: string[];
   let hidden: boolean = true;
 
-  function deleteTimer(e: Event) {
-    e.preventDefault();
-
-    timers.update((t) => {
-      return t.slice(0, position).concat(t.slice(position));
-    });
-
-    if (storageAvailable("localStorage")) {
-      localStorage.setItem("timers", JSON.stringify($timers));
-    }
-
-    thisComponent.$destroy();
-  }
-
-  function settings(e: Event) {
-    e.preventDefault();
-
-    if (symbol === "-") {
-      const button = (e.currentTarget as HTMLButtonElement)!;
-      const buttonRect = button.getBoundingClientRect();
-
-      top = `${buttonRect.top + window.scrollY}px`;
-      left = `${buttonRect.left + window.scrollX + button.offsetWidth}px`;
-
-      symbol = "v";
-      hidden = false;
-    } else {
-      symbol = "-";
-      hidden = true;
-    }
+  function toggle(): void {
+    hidden = !hidden;
   }
 </script>
 
 <article>
-  <h1>{$timers[position].name}</h1>
+  <h1>{name}</h1>
+
   <section>
-    {#each $timers[position].timerStrings as countdown}
+    {#each countdowns as countdown}
       <p>{countdown}</p>
     {/each}
-
-    <button class="settings" type="button" on:click={settings}>
-      {symbol}
-    </button>
-
-    <div class:hidden style:left style:top>
-      <button type="button">gaming</button>
-      <button type="button">gaming 2</button>
-      <button type="button" on:click={deleteTimer}>Delete timer</button>
-    </div>
   </section>
+
+  <!-- hidden is not a reliable attribute -->
+  <div class:hidden>
+    <button type="button" on:click={pop}>Delete timer</button>
+  </div>
+
+  <button class="settings" type="button" on:click={toggle}>
+    <Kebab />
+  </button>
 </article>
 
-<style>
+<style lang="scss">
   article {
     display: flex;
     flex-direction: column;
@@ -83,20 +46,17 @@
   }
 
   p {
-    /*box-sizing: border-box;*/
-    margin: 0px 5px 0px 5px;
+    margin: 0 1em 0 1em;
   }
 
   .settings {
-    font-family: inherit;
-    box-sizing: border-box;
-    inline-size: 2em;
-    min-block-size: 100%;
-    margin: 0 0 0 2em;
-    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid red;
   }
 
   div {
@@ -109,13 +69,13 @@
     flex-direction: column;
   }
 
-  .hidden {
-    display: none;
-  }
-
   button {
     font-family: inherit;
     background-color: #222222;
     color: #dddddd;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>

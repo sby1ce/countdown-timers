@@ -1,24 +1,19 @@
+<!--
+Copyright 2024 sby1ce
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 # Countdown
 
 Watch countdowns [here](https://sby1ce.github.io/countdown-timers/)
 
-## Dependecies
+# Build
 
-Uses bun
-Written with svelte
-
-# TODO
-
-- Rewrite timer count-up in WebAssembly with Rust
-
-# How to clone
-
-## Requirements
-
-- bun
-
-## Steps
-
-1. Clone repo with git
-2. cd to folder and run `bun install`
-3. `bun --bun run build_` to initialize
+```bash
+bun install
+bun run check
+bun run wasm --release
+bun run build_
+bun run preview
+```

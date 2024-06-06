@@ -38,27 +38,31 @@ export function loadFromLocalStorage(): ITimer[] {
     return temp;
   }
   // getItem theoretically never returns null but TS doesn't know
-  //@ts-expect-error
+  //@ts-expect-error see above
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return JSON.parse(localStorage.getItem("timers"));
 }
 
-export function storageAvailable(type: string) {
+export function storageAvailable(type: string): boolean {
   let storage;
   try {
     // I don't even know what it wants from me here
-    //@ts-expect-error
+    //@ts-expect-error see above
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     storage = window[type];
     const x = "__storage_test__";
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     storage.setItem(x, x);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     storage.removeItem(x);
     return true;
   } catch (e) {
-    return (
-      e instanceof DOMException &&
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return (e instanceof DOMException &&
       (e.name === "QuotaExceededError" || e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
       // acknowledge QuotaExceededError only if there's something already stored
       storage &&
-      storage.length !== 0
-    );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      storage.length !== 0) satisfies boolean;
   }
 }

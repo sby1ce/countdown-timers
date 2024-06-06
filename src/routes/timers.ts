@@ -1,104 +1,128 @@
 import { writable } from "svelte/store";
 import { loadFromLocalStorage } from "./storage";
 
-export const timers = writable(loadFromLocalStorage());
+export const timers = writable<ITimer[]>(loadFromLocalStorage());
 
-interface ITimer {
+export interface ITimer {
   key: string;
   name: string;
   origin: number;
-  timerStrings: string[];
 }
 
 enum FormatOption {
-  week = "week",
-  day = "day",
-  hour = "hour",
-  minute = "minute",
-  second = "second",
-  millisecond = "millisecond",
+  Week,
+  Day,
+  Hour,
+  Minute,
+  Second,
+  Millisecond,
 }
 
 interface TimeUnit {
-  key: string;
-  divisor: number;
   suffix: string;
+  divisor: number;
 }
 
-const timeUnits: TimeUnit[] = [
-  { key: "week", divisor: 1000 * 60 * 60 * 24 * 7, suffix: "w" },
-  { key: "day", divisor: 1000 * 60 * 60 * 24, suffix: "d" },
-  { key: "hour", divisor: 1000 * 60 * 60, suffix: "h" },
-  { key: "minute", divisor: 1000 * 60, suffix: "m" },
-  { key: "second", divisor: 1000, suffix: "s" },
-  { key: "millisecond", divisor: 1, suffix: "ms" },
+const TIME_UNITS: TimeUnit[] = [
+  { suffix: "w", divisor: 1000 * 60 * 60 * 24 * 7 },
+  { suffix: "d", divisor: 1000 * 60 * 60 * 24 },
+  { suffix: "h", divisor: 1000 * 60 * 60 },
+  { suffix: "m", divisor: 1000 * 60 },
+  { suffix: "s", divisor: 1000 },
+  { suffix: "ms", divisor: 1 },
 ];
 
-export function newTimers(timers: ITimer[], formatObjects: Object[]) {
+function toTimeUnit(formatOption: FormatOption): TimeUnit {
+  switch (formatOption) {
+    case FormatOption.Week:
+      return TIME_UNITS[0];
+    case FormatOption.Day:
+      return TIME_UNITS[1];
+    case FormatOption.Hour:
+      return TIME_UNITS[2];
+    case FormatOption.Minute:
+      return TIME_UNITS[3];
+    case FormatOption.Second:
+      return TIME_UNITS[4];
+    case FormatOption.Millisecond:
+      return TIME_UNITS[5];
+  }
+}
+
+function reduceInterval(interval: number, accumulator: string, formatOptions: FormatOption[]) {
+  const formatLen: number = formatOptions.length;
+  if (formatLen === 0) {
+    return accumulator;
+  }
+  const formatOption: FormatOption = formatOptions[0];
+  const timeUnit = toTimeUnit(formatOption);
+  const newInterval: number = interval % timeUnit.divisor;
+  const unitCount: number = Math.floor(interval / timeUnit.divisor);
+  const newAccumulator: string = accumulator + unitCount.toString() + timeUnit.suffix + " ";
+
+  return reduceInterval(newInterval, newAccumulator, formatOptions.slice(1));
+}
+
+function convert(interval: number, formatOptions: FormatOption[]): string {
+  const absInterval: number = Math.abs(interval);
+  const accumulator: string = interval >= 0 ? "" : "- ";
+
+  return reduceInterval(absInterval, accumulator, formatOptions);
+}
+
+function updateTimer(origin: number, now: number): string[] {
+  const interval: number = origin - now;
+  const formatOptions: FormatOption[] = [
+    FormatOption.Day,
+    FormatOption.Hour,
+    FormatOption.Minute,
+    FormatOption.Second,
+  ];
+
+  return [convert(interval, formatOptions)];
+}
+
+export function newTimers(origins: Origins | undefined): string[][] {
+  if (origins === undefined) {
+    return [];
+  }
+
   const now: number = Date.now();
 
-  const formats: FormatOption[][] = toFormats(formatObjects);
+  const result: string[][] = origins.ts.map((origin: number): string[] => updateTimer(origin, now));
 
-  return timers.map((timer) => {
-    timer.timerStrings = updateTimer(timer, now, formats);
-    return timer;
-  });
+  return result;
 }
 
-function toFormats(formatObjects: Object[]): FormatOption[][] {
-  return formatObjects.map(objectToFormat);
-}
-
-function objectToFormat(formatObject: Object): FormatOption[] {
-  const format: FormatOption[] = [];
-
-  for (const [key, value] of Object.entries(formatObject)) {
-    if (value) {
-      const enumKey = key.toLowerCase() as keyof typeof FormatOption;
-      format.push(FormatOption[enumKey]);
+export function wasmWrapper(
+  updater: (o: BigInt64Array) => string,
+): (o: Origins | undefined) => string[][] {
+  const thingamabob: (o: Origins | undefined) => string[][] = (
+    origins: Origins | undefined,
+  ): string[][] => {
+    if (origins === undefined) {
+      return [];
     }
-  }
 
-  return format;
+    const result: string = updater(origins.wasm);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return JSON.parse(result);
+  };
+
+  return thingamabob;
 }
 
-function matchStringToEnum(str: string): FormatOption | undefined {
-  return Object.values(FormatOption).find((option) => option === str) || undefined;
+export interface Origins {
+  ts: number[];
+  wasm: BigInt64Array;
 }
 
-function updateTimer(timer: ITimer, now: number, formats: FormatOption[][]): string[] {
-  const distance: number = timer.origin - now;
+export function originsPipe(itimers: ITimer[]): Origins {
+  const ts: number[] = itimers.map((itimer: ITimer): number => itimer.origin);
+  const wasm: BigInt64Array = new BigInt64Array(ts.map(BigInt));
 
-  return formats.map((format) => convertDateToString(distance, format));
-}
-
-function convertDateToString(interval: number, format: FormatOption[]): string {
-  const absInterval: number = Math.abs(interval);
-
-  const result: string = reduceTimeUnits(timeUnits, format, absInterval);
-
-  return interval < 0 ? `-${result}` : result;
-}
-
-function reduceTimeUnits(
-  timeUnits: TimeUnit[],
-  format: FormatOption[],
-  interval: number,
-  result: string = "",
-) {
-  if (!timeUnits.length) {
-    return result.trim();
-  }
-
-  const enumOption: FormatOption | undefined = matchStringToEnum(timeUnits[0].key);
-  if (!enumOption || !format.includes(enumOption)) {
-    return reduceTimeUnits(timeUnits.slice(1), format, interval, result);
-  }
-
-  const divisor = timeUnits[0].divisor;
-  const value = String(Math.floor(interval / divisor));
-
-  const accInterval = interval % divisor;
-  const accResult = result + value + timeUnits[0].suffix + " ";
-  return reduceTimeUnits(timeUnits.slice(1), format, accInterval, accResult);
+  return {
+    ts,
+    wasm,
+  } satisfies Origins;
 }

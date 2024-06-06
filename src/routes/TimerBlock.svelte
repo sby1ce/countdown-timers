@@ -1,22 +1,19 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { timers, newTimers } from "./timers.ts";
+  import { onDestroy, onMount } from "svelte";
+  import {
+    timers,
+    newTimers,
+    wasmWrapper,
+    type ITimer,
+    type Origins,
+    originsPipe,
+  } from "./timers.ts";
   import { storageAvailable } from "./storage.ts";
   import Timer from "./Timer.svelte";
   import AddTimer from "./AddTimer.svelte";
-  import init from "../../countdown-rs/pkg/countdown_rs_bg.wasm?init";
+  import init, { update_timers } from "$wasm";
 
-  let updateTimers: CallableFunction = newTimers;
-
-  function initialize() {
-    init().then((instance) => {
-      // updateTimers = instance.exports.update_timers as CallableFunction;
-      console.log(instance.exports.add(3, 4));
-      // console.log(instance.exports.update_timers($timers, formats));
-    });
-  }
-
-  onMount(initialize);
+  let updateTimers: (o: Origins | undefined) => string[][] = newTimers;
 
   function hashTimerName(timerName: string) {
     return `timer${Array.from(timerName).reduce(
@@ -78,7 +75,15 @@
     }
   }
 
-  let formats = [
+  function popTimer(timers: ITimer[], id: number): ITimer[] {
+    return timers.slice(0, id).concat(timers.slice(id + 1));
+  }
+
+  function pop(id: number): void {
+    timers.update((ts) => popTimer(ts, id));
+  }
+
+  /* let formats = [
     {
       day: true,
       hour: true,
@@ -91,16 +96,36 @@
     {
       hour: true,
     },
-  ];
+  ]; */
 
-  timers.update((t) => updateTimers(t, formats));
-  setInterval(() => {
-    timers.update((t) => updateTimers(t, formats));
+  // during prerender this is undefined
+  let origins: Origins = originsPipe($timers);
+  $: {
+    origins = originsPipe($timers);
+  }
+
+  let renders: string[][] = updateTimers(origins);
+  const interval = setInterval(() => {
+    renders = updateTimers(origins);
   }, 1000);
+
+  async function initialize() {
+    try {
+      await init();
+      updateTimers = wasmWrapper(update_timers);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  onMount(initialize);
+  onDestroy(() => {
+    clearInterval(interval);
+  });
 </script>
 
 {#each $timers as timer, position (timer.key)}
-  <Timer {position} />
+  <Timer pop={pop.bind(null, position)} name={timer.name} countdowns={renders[position] ?? []} />
 {/each}
 
 <AddTimer on:click={addTimerEvent} />
