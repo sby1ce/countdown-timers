@@ -23,19 +23,34 @@
   <!-- hidden is not a reliable attribute -->
   <div class:hidden>
     <button type="button" on:click={pop}>Delete timer</button>
-  </div>
 
-  <button class="settings" type="button" on:click={toggle}>
-    <Kebab />
-  </button>
+    <button class="settings" type="button" on:click={toggle}>
+      <Kebab />
+    </button>
+  </div>
 </article>
 
 <style lang="scss">
+  @use "$lib/variables" as v;
+
+  $padding: 0.5em;
+
   article {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    min-inline-size: min-content;
+    inline-size: max(75%, 300px);
+    border: 0.1em solid rgba(v.$primary-colour, 0.8);
+    margin: 0.5em 0 0.5em 0;
+    padding: $padding;
+  }
+
+  h1 {
+    color: v.$primary-colour;
+    margin: 0;
   }
 
   section {
@@ -50,23 +65,34 @@
   }
 
   .settings {
-    position: absolute;
-    top: 0;
-    right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid red;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    block-size: 50%;
+    visibility: visible;
+    color: transparent;
+    background-color: v.$secondary-background-colour;
+    box-shadow: 0 0 5px rgba(v.$text-colour, 0.1);
+
+    &:hover {
+      background-color: rgba(v.$primary-colour, 0.8);
+    }
   }
 
   div {
     display: flex;
-    border-width: 2em;
-    border-color: whitesmoke;
-    border-style: solid;
+    flex-direction: row;
+    align-items: center;
     position: absolute;
-    z-index: 255;
-    flex-direction: column;
+    right: $padding;
+    block-size: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   button {
@@ -76,6 +102,6 @@
   }
 
   .hidden {
-    display: none;
+    visibility: hidden;
   }
 </style>
