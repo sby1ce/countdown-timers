@@ -1,8 +1,8 @@
 {
   "name": "countdown-timers",
   "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^3.2.1",
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.5.10",
     "@typescript-eslint/parser": "^7.12.0",
