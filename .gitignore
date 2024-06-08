@@ -17,7 +17,6 @@ vite.config.ts.*
 
 idk/
 
-static/
 /build
 /.svelte-kit
 
