@@ -28,6 +28,7 @@ export default tseslint.config(
       },
       globals: {
         ...globals.browser,
+        ...globals.nodeBuiltin,
       },
     },
   },
@@ -73,8 +74,6 @@ export default tseslint.config(
       // This eslint shit doesn't work
       // the config shown in svelte-eslint-parser doesn't work
       "**/*.svelte",
-      // TODO add this to tsconfig.json
-      "svelte.config.js",
     ],
   },
 );

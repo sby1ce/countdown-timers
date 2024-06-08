@@ -11,6 +11,15 @@ import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 const dev = process.argv.includes("dev");
 
+const _basePath = process.env.BASE_PATH;
+/** @type {`/${string}` | undefined} */
+const base =
+  _basePath === undefined
+    ? undefined
+    : _basePath.startsWith("/")
+      ? `/${_basePath.slice(1)}` // satisfying the type
+      : `/${_basePath}`;
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
@@ -23,7 +32,7 @@ const config = {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter(),
     paths: {
-      base: dev ? "" : process.env.BASE_PATH,
+      base: dev ? "" : base,
     },
     alias: {
       $licences: "./LICENCES",
