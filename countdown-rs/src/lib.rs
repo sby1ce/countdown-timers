@@ -88,10 +88,10 @@ fn convert(interval: i64, format_options: &[FormatOption]) -> String {
     let abs_interval: i64 = interval.abs();
 
     let accumulator: String = if interval >= 0 {
-        String::with_capacity(12)
+        String::with_capacity(16)
     } else {
-        let acc: String = String::with_capacity(14);
-        acc + "- "
+        let acc: String = String::with_capacity(17);
+        acc + "-"
     };
 
     reduce_interval(abs_interval, accumulator, format_options)

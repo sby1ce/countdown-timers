@@ -71,7 +71,7 @@ function reduceInterval(interval: number, accumulator: string, formatOptions: Fo
 
 function convert(interval: number, formatOptions: FormatOption[]): string {
   const absInterval: number = Math.abs(interval);
-  const accumulator: string = interval >= 0 ? "" : "- ";
+  const accumulator: string = interval >= 0 ? "" : "-";
 
   return reduceInterval(absInterval, accumulator, formatOptions);
 }
