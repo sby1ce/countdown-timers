@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
 import { writable } from "svelte/store";
-import { loadFromLocalStorage } from "./storage";
+import { loadFromLocalStorage } from "./storage.ts";
 
 export const timers = writable<ITimer[]>(loadFromLocalStorage());
 

@@ -13,8 +13,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     type ITimer,
     type Origins,
     originsPipe,
-  } from "./timers.ts";
-  import { storageAvailable } from "./storage.ts";
+  } from "$lib/timers.ts";
+  import { storageAvailable } from "$lib/storage.ts";
   import Timer from "./Timer.svelte";
   import AddTimer from "./AddTimer.svelte";
   import init, { update_timers } from "$wasm";
