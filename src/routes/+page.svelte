@@ -6,14 +6,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <script>
   import TimerBlock from "./TimerBlock.svelte";
-  import Footer from "./Footer.svelte";
 </script>
 
 <h1>Watch countdowns</h1>
 
 <TimerBlock />
-<br />
-<Footer />
 
 <style>
   :global(body) {
