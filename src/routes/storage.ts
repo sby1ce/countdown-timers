@@ -4,12 +4,7 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
-interface ITimer {
-  key: string;
-  name: string;
-  origin: number;
-  timerStrings: string[];
-}
+import type { ITimer } from "./timers.ts";
 
 export function loadFromLocalStorage(): ITimer[] {
   const temp = [
@@ -17,19 +12,16 @@ export function loadFromLocalStorage(): ITimer[] {
       key: "Timer 0",
       name: "Timer 0 name",
       origin: 0,
-      timerStrings: ["0d 0h 0m 0s", "0s", "0h"],
     },
     {
       key: "Timer 1",
       name: "Timer 1 here",
       origin: 1696174196000,
-      timerStrings: ["1d 1h 1m 1s", "1s", "1h"],
     },
     {
       key: "Timer 2",
       name: "IYKYK",
       origin: 1607025600000,
-      timerStrings: [],
     },
   ];
   if (
