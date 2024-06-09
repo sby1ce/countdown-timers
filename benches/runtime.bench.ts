@@ -14,7 +14,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 import { newTimers as tsUpdate, type Origins, wasmWrapper } from "$lib/timers.ts";
 import init, { update_timers } from "$wasm";
 
-type BenchFunction = (o: Origins) => string[][]
+type BenchFunction = (o: Origins) => string[][];
 
 async function initialize(): Promise<BenchFunction> {
   await init();
@@ -33,6 +33,15 @@ function seed(): Origins {
   } satisfies Origins;
 }
 
+function formatResult(name: string, result: number): string {
+  return (
+    name.padEnd(11) +
+    " impl: " +
+    result.toFixed(4).padStart(7) +
+    " microseconds average over 1000 runs"
+  );
+}
+
 /**
  * @returns {number} Average time over a thousand runs of the function
  */
@@ -45,8 +54,8 @@ function bench1000(func: BenchFunction, data: Origins): number {
 
   const end: number = performance.now();
 
-  const timing: number = (end - start) / 1000;
-  return timing;
+  const microseconds: number = end - start; // / 1000 * 1000;
+  return microseconds;
 }
 
 async function main(): Promise<void> {
@@ -57,10 +66,10 @@ async function main(): Promise<void> {
   const tsAvg: number = bench1000(tsUpdate, origins);
   const wasmAvg: number = bench1000(wasmUpdate, origins);
 
-  console.log(
-    `TypeScript impl: ${tsAvg}ms average over 1000 runs` + "\r\n" +
-    `WebAssembly impl: ${wasmAvg}ms average over 1000 runs`
-  );
+  const formatted =
+    formatResult("TypeScript", tsAvg) + "\r\n" + formatResult("WebAssembly", wasmAvg);
+
+  console.log(formatted);
 }
 
 await main();
