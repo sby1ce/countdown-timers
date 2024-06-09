@@ -15,6 +15,8 @@ export interface ITimer {
   origin: number;
 }
 
+export type TimerFunc = (origins: Origins) => string[][];
+
 enum FormatOption {
   Week,
   Day,
@@ -88,7 +90,7 @@ function updateTimer(origin: number, now: number): string[] {
   return [convert(interval, formatOptions)];
 }
 
-export function newTimers(origins: Origins): string[][] {
+export function tsTimers(origins: Origins): string[][] {
   const now: number = Date.now();
 
   const result: string[][] = origins.ts.map((origin: number): string[] => updateTimer(origin, now));
@@ -96,8 +98,8 @@ export function newTimers(origins: Origins): string[][] {
   return result;
 }
 
-export function wasmWrapper(updater: (o: BigInt64Array) => string[][]): (o: Origins) => string[][] {
-  const thingamabob: (o: Origins) => string[][] = (origins: Origins): string[][] => {
+export function wasmWrapper(updater: (o: BigInt64Array) => string[][]): TimerFunc {
+  const thingamabob: TimerFunc = (origins: Origins): string[][] => {
     const result: string[][] = updater(origins.wasm);
     return result;
   };

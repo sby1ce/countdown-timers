@@ -5,17 +5,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <script lang="ts">
-  import { type Origins, newTimers as tsUpdate, wasmWrapper } from "$lib/timers";
-  import init, { update_timers } from "$wasm";
   import { onMount } from "svelte";
+  import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$lib/timers.ts";
+  import { initialize, seed, bench1000, formatBrowser } from "$lib/bench.ts";
 
-  const wasmUpdate: (o: Origins) => string[][] = wasmWrapper(update_timers);
+  let rsUpdate: TimerFunc;
 
-  async function initialize(): Promise<void> {
-    await init();
-  }
-
-  onMount(initialize);
+  onMount(async () => {
+    rsUpdate = await initialize();
+  });
 
   interface Results {
     ts: number;
@@ -24,54 +22,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   let results: Results | null = null;
 
-  function formatResult(result: number | undefined): string {
-    return result !== undefined ? (
-      result.toFixed(4).padStart(7) +
-      " microseconds average over 1000 runs"
-    ) : "-";
-  }
-
-  function seed(): Origins {
-    const ts: number[] = [0, 1696174196000, 1607025600000];
-    const wasm: BigInt64Array = new BigInt64Array(ts.map(BigInt));
-    return {
-      ts,
-      wasm,
-    } satisfies Origins;
-  }
-
-  /**
-   * @returns {number} Average time over a thousand runs of the function
-   */
-  function bench1000(func: (o: Origins) => string[][], data: Origins): number {
-    const start: number = performance.now();
-
-    for (let i = 0; i < 1000; i++) {
-      const renders: string[][] = func(data);
-      if (
-        !Array.isArray(renders) ||
-        !Array.isArray(renders[0]) ||
-        !renders.every((row) => row.every((val) => val.length > 0))
-      ) {
-        throw new Error("What");
-      }
-    }
-
-    const end: number = performance.now();
-
-    const microseconds: number = end - start; // / 1000 * 1000;
-    return microseconds;
-  }
-
   function bench(): void {
     const origins: Origins = seed();
 
     const tsAvg: number = bench1000(tsUpdate, origins);
-    const wasmAvg: number = bench1000(wasmUpdate, origins);
+    const rsAvg: number = bench1000(rsUpdate, origins);
 
     results = {
       ts: tsAvg,
-      rs: wasmAvg,
+      rs: rsAvg,
     } satisfies Results;
   }
 </script>
@@ -82,11 +41,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   <section>
     <h2>TypeScript</h2>
-    <p>{formatResult(results?.ts)}</p>
+    <p>{formatBrowser(results?.ts)}</p>
   </section>
   <section>
     <h2>Rust</h2>
-    <p>{formatResult(results?.rs)}</p>
+    <p>{formatBrowser(results?.rs)}</p>
   </section>
 </article>
 

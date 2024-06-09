@@ -8,10 +8,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import { onDestroy, onMount } from "svelte";
   import {
     timers,
-    newTimers,
+    tsTimers,
     wasmWrapper,
     type ITimer,
     type Origins,
+    type TimerFunc,
     originsPipe,
   } from "$lib/timers.ts";
   import { storageAvailable } from "$lib/storage.ts";
@@ -19,16 +20,19 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import AddTimer from "./AddTimer.svelte";
   import init, { update_timers } from "$wasm";
 
-  let updateTimers: (o: Origins) => string[][] = newTimers;
+  let rsTimers: TimerFunc = () => {
+    throw new Error("wasm failed to load");
+  };
+  let updateTimers: TimerFunc = tsTimers;
 
-  function hashTimerName(timerName: string) {
+  function hashTimerName(timerName: string): string {
     return `timer${Array.from(timerName).reduce(
       (hash, char) => 0 | (31 * hash + char.charCodeAt(0)),
       0,
     )}`;
   }
 
-  function dateStringToUnix(dateString: string) {
+  function dateStringToUnix(dateString: string): number | null {
     try {
       const temp = new Date(dateString);
 
@@ -50,12 +54,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     detail: { timerName: string; timerDate: string };
   }
 
-  function addTimerEvent(event: DispatchedEvent) {
+  function addTimerEvent(event: DispatchedEvent): void {
     const newOrigin = dateStringToUnix(event.detail.timerDate);
 
     if (typeof newOrigin !== "number" || Number.isNaN(newOrigin)) {
       event.preventDefault();
-      return null;
+      return;
     }
 
     const innerName = hashTimerName(event.detail.timerName);
@@ -63,15 +67,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     for (const timer of $timers) {
       if (timer.key === innerName) {
         event.preventDefault();
-        return null;
+        return;
       }
     }
 
-    const newTimer = {
+    const newTimer: ITimer = {
       key: innerName,
       name: event.detail.timerName,
       origin: newOrigin,
-      timerStrings: ["0d 0h 0m 0s", "0s", "0h"],
     };
 
     timers.update((t) => [...t, newTimer]);
@@ -104,9 +107,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     },
   ]; */
 
-  // during prerender this is undefined
   let origins: Origins = originsPipe($timers);
   $: {
+    // during prerender this is undefined
     origins = originsPipe($timers);
   }
 
@@ -115,10 +118,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     renders = updateTimers(origins);
   }, 1000);
 
-  async function initialize() {
+  async function initialize(): Promise<void> {
     try {
       await init();
-      updateTimers = wasmWrapper(update_timers);
+      rsTimers = wasmWrapper(update_timers);
     } catch (e) {
       console.error(e);
     }
