@@ -23,7 +23,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   let rsTimers: TimerFunc = () => {
     throw new Error("wasm failed to load");
   };
+  let isRs: boolean = false;
   let updateTimers: TimerFunc = tsTimers;
+
+  const switchFunc = (): void => {
+    updateTimers = isRs ? tsTimers : rsTimers;
+    isRs = !isRs;
+  };
 
   function hashTimerName(timerName: string): string {
     return `timer${Array.from(timerName).reduce(
@@ -137,4 +143,25 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   <Timer pop={pop.bind(null, position)} name={timer.name} countdowns={renders[position] ?? []} />
 {/each}
 
-<AddTimer on:click={addTimerEvent} />
+<div>
+  <AddTimer on:click={addTimerEvent} />
+  <button type="button" on:click={switchFunc}>Switch {isRs ? "WA to JS" : "JS to WA"}</button>
+</div>
+
+<style lang="scss">
+  div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 2rem;
+    inline-size: calc(15ex + 5%);
+  }
+</style>
