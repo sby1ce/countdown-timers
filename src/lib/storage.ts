@@ -7,6 +7,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 import type { ITimer } from "./timers.ts";
 
 export function loadFromLocalStorage(): ITimer[] {
+  if (typeof localStorage === "undefined") {
+    return [];
+  }
+
   const temp = [
     {
       key: "Timer 0",
@@ -26,12 +30,11 @@ export function loadFromLocalStorage(): ITimer[] {
   ];
   if (
     !storageAvailable("localStorage") ||
-    localStorage?.getItem("timers") === undefined ||
     localStorage.getItem("timers") === null ||
-    localStorage.getItem("timers") === "{}"
+    localStorage.getItem("timers") === "[]"
   ) {
     if (storageAvailable("localStorage")) {
-      localStorage.setItem("timers", "{}");
+      localStorage.setItem("timers", JSON.stringify(temp));
     }
     return temp;
   }

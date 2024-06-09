@@ -90,12 +90,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     }
   }
 
-  function popTimer(timers: ITimer[], id: number): ITimer[] {
-    return timers.slice(0, id).concat(timers.slice(id + 1));
-  }
-
   function pop(id: number): void {
-    timers.update((ts) => popTimer(ts, id));
+    timers.update((ts) => ts.slice(0, id).concat(ts.slice(id + 1)));
+
+    if (storageAvailable("localStorage")) {
+      localStorage.setItem("timers", JSON.stringify($timers));
+    }
   }
 
   /* let formats = [
