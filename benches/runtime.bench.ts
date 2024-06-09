@@ -49,7 +49,14 @@ function bench1000(func: BenchFunction, data: Origins): number {
   const start: number = performance.now();
 
   for (let i = 0; i < 1000; i++) {
-    func(data);
+    const renders: string[][] = func(data);
+    if (
+      !Array.isArray(renders) ||
+      !Array.isArray(renders[0]) ||
+      !renders.every((row) => row.every((val) => val.length > 0))
+    ) {
+      throw new Error("What");
+    }
   }
 
   const end: number = performance.now();
@@ -66,8 +73,7 @@ async function main(): Promise<void> {
   const tsAvg: number = bench1000(tsUpdate, origins);
   const wasmAvg: number = bench1000(wasmUpdate, origins);
 
-  const formatted =
-    formatResult("TypeScript", tsAvg) + "\n" + formatResult("WebAssembly", wasmAvg);
+  const formatted = formatResult("TypeScript", tsAvg) + "\n" + formatResult("WebAssembly", wasmAvg);
 
   console.log(formatted);
 }
