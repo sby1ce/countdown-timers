@@ -21,6 +21,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   <meta name="msapplication-TileColor" content="#000000" />
   <meta name="msapplication-config" content="{base}/browserconfig.xml" />
   <meta name="theme-color" content="#ffffff" />
+
+  <title>Countdown Timers</title>
+  <meta property="og:title" content="Countdown Timers" />
+  <meta property="og:type" content="website" />
+  <!-- <meta property="og:description" content="TODO" /> -->
+  <meta property="og:url" content="https://sby1ce.github.io/countdown-timers" />
+  <meta property="og:updated_time" content="2024-06-09" />
 </svelte:head>
 
 <slot />
