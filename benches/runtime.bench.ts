@@ -67,7 +67,7 @@ async function main(): Promise<void> {
   const wasmAvg: number = bench1000(wasmUpdate, origins);
 
   const formatted =
-    formatResult("TypeScript", tsAvg) + "\r\n" + formatResult("WebAssembly", wasmAvg);
+    formatResult("TypeScript", tsAvg) + "\n" + formatResult("WebAssembly", wasmAvg);
 
   console.log(formatted);
 }

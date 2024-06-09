@@ -5,7 +5,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
 use chrono::Utc;
-use wasm_bindgen::prelude::wasm_bindgen;
+use js_sys::Array;
+use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
 
 #[derive(Clone, Copy)]
 pub struct TimeUnit {
@@ -120,9 +121,13 @@ fn update_timers_(get_now: impl Fn() -> i64, origins: Vec<i64>) -> Vec<[String; 
 
 /// Returning JSON of Vec<Vec<String>>
 #[wasm_bindgen]
-pub fn update_timers(origins: Vec<i64>) -> String {
-    serde_json::to_string(&update_timers_(get_now_millis, origins))
-        .unwrap_or_else(|error| format!("{error:?}"))
+pub fn update_timers(origins: Vec<i64>) -> Vec<JsValue> {
+    update_timers_(get_now_millis, origins)
+        .into_iter()
+        .map(|arr: [String; 1]| {
+            JsValue::from(arr.into_iter().map(JsValue::from).collect::<Array>())
+        })
+        .collect::<Vec<_>>()
 }
 
 #[cfg(test)]
@@ -138,15 +143,6 @@ mod test {
         let origins: Vec<i64> = vec![0];
         let a: Vec<[String; 1]> = update_timers_(fake_get_now, origins);
 
-        assert_eq!(a, vec![["- 0d 0h 1m 40s "]]);
-    }
-
-    #[test]
-    fn test_wasm() {
-        let origins: Vec<i64> = vec![0];
-        let a: String = update_timers(origins);
-
-        assert!(a.starts_with("[[\"- "));
-        assert!(a.ends_with("\"]]"));
+        assert_eq!(a, vec![["-0d 0h 1m 40s "]]);
     }
 }

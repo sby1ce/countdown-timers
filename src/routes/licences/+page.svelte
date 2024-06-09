@@ -19,8 +19,7 @@
     ["vite", "MIT"],
     ["vite-plugin-wasm", "MIT"],
     ["chrono", "MIT OR Apache-2.0"],
-    ["serde", "MIT OR Apache-2.0"],
-    ["serde_json", "MIT OR Apache-2.0"],
+    ["js-sys", "MIT OR Apache-2.0"],
     ["wasm-bindgen", "MIT OR Apache-2.0"],
   ];
 </script>

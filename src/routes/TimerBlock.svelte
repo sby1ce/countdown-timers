@@ -19,7 +19,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import AddTimer from "./AddTimer.svelte";
   import init, { update_timers } from "$wasm";
 
-  let updateTimers: (o: Origins | undefined) => string[][] = newTimers;
+  let updateTimers: (o: Origins) => string[][] = newTimers;
 
   function hashTimerName(timerName: string) {
     return `timer${Array.from(timerName).reduce(

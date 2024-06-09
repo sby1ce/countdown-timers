@@ -88,11 +88,7 @@ function updateTimer(origin: number, now: number): string[] {
   return [convert(interval, formatOptions)];
 }
 
-export function newTimers(origins: Origins | undefined): string[][] {
-  if (origins === undefined) {
-    return [];
-  }
-
+export function newTimers(origins: Origins): string[][] {
   const now: number = Date.now();
 
   const result: string[][] = origins.ts.map((origin: number): string[] => updateTimer(origin, now));
@@ -100,19 +96,10 @@ export function newTimers(origins: Origins | undefined): string[][] {
   return result;
 }
 
-export function wasmWrapper(
-  updater: (o: BigInt64Array) => string,
-): (o: Origins | undefined) => string[][] {
-  const thingamabob: (o: Origins | undefined) => string[][] = (
-    origins: Origins | undefined,
-  ): string[][] => {
-    if (origins === undefined) {
-      return [];
-    }
-
-    const result: string = updater(origins.wasm);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(result);
+export function wasmWrapper(updater: (o: BigInt64Array) => string[][]): (o: Origins) => string[][] {
+  const thingamabob: (o: Origins) => string[][] = (origins: Origins): string[][] => {
+    const result: string[][] = updater(origins.wasm);
+    return result;
   };
 
   return thingamabob;
