@@ -16,7 +16,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "types": ["bun"],
+    "types": ["bun"]
   },
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //
