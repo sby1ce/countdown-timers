@@ -113,6 +113,7 @@ export interface Origins {
 }
 
 export function originsPipe(itimers: ITimer[]): Origins {
+  console.log(itimers);
   const ts: number[] = itimers.map((itimer: ITimer): number => itimer.origin);
   const wasm: BigInt64Array = new BigInt64Array(ts.map(BigInt));
 
