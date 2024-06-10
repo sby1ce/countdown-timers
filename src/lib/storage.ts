@@ -31,7 +31,7 @@ export function loadFromLocalStorage(): ITimer[] {
   if (
     !storageAvailable("localStorage") ||
     localStorage.getItem("timers") === null ||
-    localStorage.getItem("timers") === "[]" || 
+    localStorage.getItem("timers") === "[]" ||
     localStorage.getItem("timers") === "{}"
   ) {
     // I don't know or remember why it can be equal to {} but it can
