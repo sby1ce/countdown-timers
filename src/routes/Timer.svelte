@@ -18,7 +18,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </script>
 
 <article>
-  <h1>{name}</h1>
+  <h2>{name}</h2>
 
   <section>
     {#each countdowns as countdown}
@@ -49,12 +49,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     position: relative;
     min-inline-size: min-content;
     inline-size: max(75%, 300px);
-    border: 0.1em solid rgba(v.$primary-colour, 0.8);
+    border-radius: 0.5rem;
     margin: 0.5em 0 0.5em 0;
     padding: $padding;
+    background-color: v.$secondary-bg-colour;
   }
 
-  h1 {
+  h2 {
+    font-weight: normal;
     color: v.$primary-colour;
     margin: 0;
   }
@@ -82,7 +84,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     block-size: 50%;
     visibility: visible;
     color: transparent;
-    background-color: v.$secondary-background-colour;
+    background-color: v.$secondary-bg-colour;
     box-shadow: 0 0 5px rgba(v.$text-colour, 0.1);
 
     &:hover {
@@ -103,8 +105,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   button {
     font-family: inherit;
-    background-color: #222222;
-    color: #dddddd;
+    background-color: v.$bg-colour;
+    color: v.$text-colour;
   }
 
   .hidden {

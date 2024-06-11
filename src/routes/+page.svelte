@@ -11,3 +11,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <h1>Watch countdowns</h1>
 
 <TimerBlock />
+
+<style lang="scss">
+  h1 {
+    font-weight: normal;
+  }
+</style>

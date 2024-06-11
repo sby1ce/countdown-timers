@@ -41,11 +41,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   <button type="button" on:click={addTimer}> Add timer </button>
 </div>
 
-<style>
+<style lang="scss">
+  @use "$lib/variables" as v;
+
   button {
     font-family: inherit;
-    background-color: #222222;
-    color: #dddddd;
+    background-color: v.$bg-colour;
+    color: v.$text-colour;
   }
 
   div {

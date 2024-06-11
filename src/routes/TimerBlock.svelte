@@ -18,6 +18,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import { storageAvailable } from "$lib/storage.ts";
   import Timer from "./Timer.svelte";
   import AddTimer from "./AddTimer.svelte";
+  import Button, { ButtonStyle } from "$lib/Button.svelte";
   import init, { update_timers } from "$wasm";
 
   let rsTimers: TimerFunc = () => {
@@ -145,23 +146,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <div>
   <AddTimer on:click={addTimerEvent} />
-  <button type="button" on:click={switchFunc}>Switch {isRs ? "WA to JS" : "JS to WA"}</button>
+  <Button style={ButtonStyle.SecondaryBg} on:click={switchFunc}>
+    Switch {isRs ? "WA to JS" : "JS to WA"}
+  </Button>
 </div>
 
 <style lang="scss">
   div {
     display: flex;
     flex-direction: row;
-  }
-
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: inherit;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 2rem;
-    inline-size: calc(15ex + 5%);
+    margin: 1rem;
   }
 </style>

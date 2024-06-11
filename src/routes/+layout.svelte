@@ -35,14 +35,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <br />
 <Footer />
 
-<style>
+<style lang="scss">
+  @use "$lib/variables" as v;
+
   :global(body) {
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: Helvetica, Arial, sans-serif;
-    background-color: #111111;
-    color: #eeeeee;
+    background-color: v.$bg-colour;
+    color: v.$text-colour;
   }
 </style>
