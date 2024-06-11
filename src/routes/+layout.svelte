@@ -40,10 +40,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   :global(body) {
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     font-family: Helvetica, Arial, sans-serif;
     background-color: v.$bg-colour;
     color: v.$text-colour;

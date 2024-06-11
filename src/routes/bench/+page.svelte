@@ -35,7 +35,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   }
 </script>
 
-<article>
+<main>
   <h1>Benchmarks</h1>
   <p>Average time over 1000 function runs in microseconds</p>
 
@@ -47,7 +47,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <h2>Rust</h2>
     <p>{formatBrowser(results?.rs)}</p>
   </section>
-</article>
+</main>
 
 {#if results === null}
   <p>Press the button to run the benchmark</p>
