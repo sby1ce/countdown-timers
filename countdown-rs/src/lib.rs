@@ -4,7 +4,6 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
-use chrono::Utc;
 use js_sys::Array;
 use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
 
@@ -105,14 +104,7 @@ fn update(origin: i64, now: i64) -> [String; 1] {
     [convert(interval, &format_options)]
 }
 
-/// Expect positive
-fn get_now_millis() -> i64 {
-    Utc::now().timestamp_millis()
-}
-
-fn update_timers_(get_now: impl Fn() -> i64, origins: Vec<i64>) -> Vec<[String; 1]> {
-    let now: i64 = get_now();
-
+fn update_timers_(now: i64, origins: Vec<i64>) -> Vec<[String; 1]> {
     origins
         .into_iter()
         .map(|origin: i64| -> [String; 1] { update(origin, now) })
@@ -121,8 +113,8 @@ fn update_timers_(get_now: impl Fn() -> i64, origins: Vec<i64>) -> Vec<[String; 
 
 /// Returning JSON of Vec<Vec<String>>
 #[wasm_bindgen]
-pub fn update_timers(origins: Vec<i64>) -> Vec<JsValue> {
-    update_timers_(get_now_millis, origins)
+pub fn update_timers(now: i64, origins: Vec<i64>) -> Vec<JsValue> {
+    update_timers_(now, origins)
         .into_iter()
         .map(|arr: [String; 1]| {
             JsValue::from(arr.into_iter().map(JsValue::from).collect::<Array>())
@@ -134,14 +126,10 @@ pub fn update_timers(origins: Vec<i64>) -> Vec<JsValue> {
 mod test {
     use super::*;
 
-    fn fake_get_now() -> i64 {
-        100_000
-    }
-
     #[test]
     fn test() {
         let origins: Vec<i64> = vec![0];
-        let a: Vec<[String; 1]> = update_timers_(fake_get_now, origins);
+        let a: Vec<[String; 1]> = update_timers_(100_000, origins);
 
         assert_eq!(a, vec![["-0d 0h 1m 40s "]]);
     }

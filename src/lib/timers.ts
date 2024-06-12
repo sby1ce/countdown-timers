@@ -98,12 +98,12 @@ export function tsTimers(origins: Origins): string[][] {
   return result;
 }
 
-export function wasmWrapper(updater: (o: BigInt64Array) => string[][]): TimerFunc {
+export function wasmWrapper(updater: (n: bigint, o: BigInt64Array) => string[][]): TimerFunc {
   const thingamabob: TimerFunc = (origins: Origins): string[][] => {
-    const result: string[][] = updater(origins.wasm);
+    const now: bigint = BigInt(Date.now());
+    const result: string[][] = updater(now, origins.wasm);
     return result;
   };
-
   return thingamabob;
 }
 
