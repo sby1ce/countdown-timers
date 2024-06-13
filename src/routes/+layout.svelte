@@ -32,7 +32,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <slot />
 
-<br />
 <Footer />
 
 <style lang="scss">

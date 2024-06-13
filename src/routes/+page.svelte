@@ -8,18 +8,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import TimerBlock from "./TimerBlock.svelte";
 </script>
 
-<main>
+<div>
   <h1>Watch countdowns</h1>
 
-  <p>
-    Create a <strong>timer</strong> by setting its name and datetime
-  </p>
-
   <TimerBlock />
-</main>
+</div>
 
 <style lang="scss">
-  main {
+  div {
     display: flex;
     flex-direction: column;
     align-items: center;

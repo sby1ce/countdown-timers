@@ -48,11 +48,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     justify-content: center;
     position: relative;
     min-inline-size: min-content;
-    inline-size: max(75%, 300px);
+    inline-size: max(90%, 300px);
     border-radius: 0.5rem;
     margin: 0.5em 0 0.5em 0;
     padding: $padding;
     background-color: v.$secondary-bg-colour;
+    box-shadow: 1px 1px 5px rgba(v.$secondary-bg-colour, 0.8);
   }
 
   h2 {
@@ -85,7 +86,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     visibility: visible;
     color: transparent;
     background-color: v.$secondary-bg-colour;
-    box-shadow: 0 0 5px rgba(v.$text-colour, 0.1);
+    box-shadow: 0 0 5px rgba(v.$text-colour, 0.5);
 
     &:hover {
       background-color: rgba(v.$primary-colour, 0.8);

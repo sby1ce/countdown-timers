@@ -10,7 +10,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     timers,
     tsTimers,
     wasmWrapper,
-    type ITimer,
     type Origins,
     type TimerFunc,
     originsPipe,
@@ -31,65 +30,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     updateTimers = isRs ? tsTimers : rsTimers;
     isRs = !isRs;
   };
-
-  function hashTimerName(timerName: string): string {
-    return `timer${Array.from(timerName).reduce(
-      (hash, char) => 0 | (31 * hash + char.charCodeAt(0)),
-      0,
-    )}`;
-  }
-
-  function dateStringToUnix(dateString: string): number | null {
-    try {
-      const temp = new Date(dateString);
-
-      return Date.UTC(
-        temp.getUTCFullYear(),
-        temp.getUTCMonth(),
-        temp.getUTCDate(),
-        temp.getUTCHours(),
-        temp.getUTCMinutes(),
-        temp.getUTCSeconds(),
-        temp.getUTCMilliseconds(),
-      );
-    } catch {
-      return null;
-    }
-  }
-
-  interface DispatchedEvent extends Event {
-    detail: { timerName: string; timerDate: string };
-  }
-
-  function addTimerEvent(event: DispatchedEvent): void {
-    const newOrigin = dateStringToUnix(event.detail.timerDate);
-
-    if (typeof newOrigin !== "number" || Number.isNaN(newOrigin)) {
-      event.preventDefault();
-      return;
-    }
-
-    const innerName = hashTimerName(event.detail.timerName);
-
-    for (const timer of $timers) {
-      if (timer.key === innerName) {
-        event.preventDefault();
-        return;
-      }
-    }
-
-    const newTimer: ITimer = {
-      key: innerName,
-      name: event.detail.timerName,
-      origin: newOrigin,
-    };
-
-    timers.update((t) => [...t, newTimer]);
-
-    if (storageAvailable("localStorage")) {
-      localStorage.setItem("timers", JSON.stringify($timers));
-    }
-  }
 
   function pop(id: number): void {
     timers.update((ts) => ts.slice(0, id).concat(ts.slice(id + 1)));
@@ -140,21 +80,79 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   });
 </script>
 
-{#each $timers as timer, position (timer.key)}
-  <Timer pop={pop.bind(null, position)} name={timer.name} countdowns={renders[position] ?? []} />
-{/each}
-
 <div>
-  <AddTimer on:click={addTimerEvent} />
-  <Button style={ButtonStyle.SecondaryBg} on:click={switchFunc}>
-    Switch {isRs ? "WA to JS" : "JS to WA"}
-  </Button>
+  <main>
+    {#each $timers as timer, position (timer.key)}
+      <Timer
+        pop={pop.bind(null, position)}
+        name={timer.name}
+        countdowns={renders[position] ?? []}
+      />
+    {/each}
+  </main>
+
+  <aside>
+    <p>
+      Create a <strong>timer</strong> by setting its name and datetime
+    </p>
+
+    <article>
+      <AddTimer />
+    </article>
+
+    <form>
+      <Button style={ButtonStyle.SecondaryBg} on:click={switchFunc}>
+        Switch {isRs ? "WA to JS" : "JS to WA"}
+      </Button>
+    </form>
+  </aside>
 </div>
 
 <style lang="scss">
+  @use "$lib/variables" as v;
+
   div {
+    margin: 0;
+    padding: 0;
+    inline-size: 100%;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+  }
+
+  main {
     display: flex;
-    flex-direction: row;
-    margin: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  aside {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border-left: 0.5em solid v.$primary-colour;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  @mixin aside-item {
+    height: min-content;
+    padding: 1em;
+    margin: 0;
+  }
+
+  p {
+    @include aside-item;
+  }
+
+  article {
+    @include aside-item;
+    width: calc(100% - 2em);
+    background-color: v.$secondary-bg-colour;
+  }
+
+  form {
+    @include aside-item;
+    width: calc(100% - 2em);
   }
 </style>
