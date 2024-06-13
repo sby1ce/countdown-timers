@@ -10,6 +10,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   let name: HTMLInputElement;
   let date: HTMLInputElement;
+  let nameInvalid: boolean = false;
+  let dateInvalid: boolean = false;
   let form: string = "";
 
   function getUnix(str: string | undefined): number | null {
@@ -44,12 +46,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     const origin: number | null = getUnix(date.value);
     if (origin === null || Number.isNaN(origin)) {
       form = "Entered datetime is invalid";
+      dateInvalid = true;
       event.preventDefault();
       return;
+    } else {
+      dateInvalid = false;
     }
 
     if (!name.value) {
       form = "Timer name should have name";
+      nameInvalid = true;
       event.preventDefault();
       return;
     }
@@ -58,6 +64,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     for (const timer of $timers) {
       if (timer.key === key) {
         form = "Timer with the same name already exists";
+        nameInvalid = true;
         event.preventDefault();
         return;
       }
@@ -74,6 +81,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
       localStorage.setItem("timers", JSON.stringify($timers));
     }
 
+    nameInvalid = false;
+    name.value = "";
+    date.value = "";
     form = "";
   }
 </script>
@@ -87,10 +97,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
       type="text"
       placeholder="Timer name here"
       minlength="1"
+      class:invalid={nameInvalid}
     />
 
     <label for="add-time" hidden>Choose time</label>
-    <input bind:this={date} id="add-time" type="datetime-local" step="0.001" />
+    <input bind:this={date} id="add-time" type="datetime-local" step="0.001" class:invalid={dateInvalid} />
   </fieldset>
 
   {#if form}
@@ -120,8 +131,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     row-gap: 0.5em;
   }
 
+  $error-colour: #ff0000;
+
   p {
     margin: 0.5em 0 0;
+    color: $error-colour;
+  }
+
+  .invalid {
+    outline: 0.2em solid $error-colour;
   }
 
   input {
