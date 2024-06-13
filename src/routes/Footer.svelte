@@ -24,7 +24,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   footer {
     margin: 0;
     border: 0;
-    padding: 1.5rem;
+    padding: 1.5rem 0 1.5rem 0;
     border-top: 0.5rem solid v.$primary-colour;
     inline-size: 100%;
     display: flex;
