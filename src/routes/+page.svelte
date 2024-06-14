@@ -15,14 +15,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </div>
 
 <style lang="scss">
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
   h1 {
     font-weight: normal;
+    text-indent: 4ex;
   }
 </style>

@@ -7,6 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <script lang="ts">
   import { base } from "$app/paths";
   import Footer from "./Footer.svelte";
+  import Navbar from "./Navbar.svelte";
 </script>
 
 <svelte:head>
@@ -31,7 +32,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   <meta property="og:updated_time" content="2024-06-09" />
 </svelte:head>
 
-<slot />
+<div>
+  <Navbar />
+  <slot />
+</div>
 
 <Footer />
 
@@ -43,5 +47,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     font-family: Helvetica, Arial, sans-serif;
     background-color: v.$bg-colour;
     color: v.$text-colour;
+  }
+
+  div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 6fr);
   }
 </style>

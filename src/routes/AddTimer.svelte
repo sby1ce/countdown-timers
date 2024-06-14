@@ -101,7 +101,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     />
 
     <label for="add-time" hidden>Choose time</label>
-    <input bind:this={date} id="add-time" type="datetime-local" step="0.001" class:invalid={dateInvalid} />
+    <input
+      bind:this={date}
+      id="add-time"
+      type="datetime-local"
+      step="0.001"
+      class:invalid={dateInvalid}
+    />
   </fieldset>
 
   {#if form}
