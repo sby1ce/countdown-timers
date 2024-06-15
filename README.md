@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Countdown
 
-Watch countdowns [here](https://sby1ce.github.io/countdown-timers/)
+Watch countdowns [here](https://sby1ce.github.io/countdown-timers/svelte)
 
 # Build
 
