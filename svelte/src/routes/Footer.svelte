@@ -19,7 +19,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </footer>
 
 <style lang="scss">
-  @use "$lib/variables" as v;
+  @use "../lib/variables" as v;
 
   footer {
     margin: 0;

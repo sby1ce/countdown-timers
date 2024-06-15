@@ -37,7 +37,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </article>
 
 <style lang="scss">
-  @use "$lib/variables" as v;
+  @use "../lib/variables" as v;
 
   $padding: 0.5em;
 

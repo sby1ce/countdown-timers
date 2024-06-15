@@ -40,7 +40,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <Footer />
 
 <style lang="scss">
-  @use "$lib/variables" as v;
+  @use "../lib/variables" as v;
 
   :global(body) {
     margin: 0;

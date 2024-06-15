@@ -18,7 +18,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import Timer from "./Timer.svelte";
   import AddTimer from "./AddTimer.svelte";
   import Button, { ButtonStyle } from "$lib/Button.svelte";
-  import init, { update_timers } from "$wasm";
+  import init, { update_timers } from "../../../countdown-rs/pkg";
 
   let rsTimers: TimerFunc = () => {
     throw new Error("wasm failed to load");
@@ -109,7 +109,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </div>
 
 <style lang="scss">
-  @use "$lib/variables" as v;
+  @use "../lib/variables" as v;
 
   div {
     margin: 0;

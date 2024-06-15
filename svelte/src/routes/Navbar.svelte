@@ -63,7 +63,7 @@
 </nav>
 
 <style lang="scss">
-  @use "$lib/variables" as v;
+  @use "../lib/variables" as v;
 
   @mixin gap($pad-left) {
     padding: 1rem 0 1rem $pad-left;

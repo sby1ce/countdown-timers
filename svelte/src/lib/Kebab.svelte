@@ -15,7 +15,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </svg>
 
 <style lang="scss">
-  @use "$lib/variables" as v;
+  @use "variables" as v;
 
   svg {
     fill: v.$text-colour;

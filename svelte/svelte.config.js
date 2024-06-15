@@ -28,10 +28,6 @@ const config = {
     paths: {
       base,
     },
-    alias: {
-      $licences: "./LICENCES",
-      $wasm: "../countdown-rs/pkg",
-    },
   },
 };
 
