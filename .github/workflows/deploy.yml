@@ -43,9 +43,14 @@ jobs:
 
       - name: Install dependencies
         run: bun install
-      #   run: npm install  
+        # run: npm install 
+
+      - name: Navigate and check
+        run: |
+          cd svelte
+          bun run check 
       - name: Build Rust
-        run: wasm-pack build ./countdown-rs --target web --release
+        run: bun run wasm --release
 
       - name: build
         run: |
@@ -57,8 +62,8 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          # this should match the `pages` option in your adapter-static options
-          path: "build/"
+          path: "svelte/build/"
+        # this should match the `pages` option in your adapter-static options
 
   deploy:
     needs: build_site

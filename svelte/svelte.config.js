@@ -30,7 +30,7 @@ const config = {
     },
     alias: {
       $licences: "./LICENCES",
-      $wasm: "./countdown-rs/pkg",
+      $wasm: "../countdown-rs/pkg",
     },
   },
 };

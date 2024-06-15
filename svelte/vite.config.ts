@@ -15,7 +15,7 @@ export default defineConfig({
   },
   server: {
     fs: {
-      allow: ["countdown-rs/pkg/"],
+      allow: ["../countdown-rs/pkg/"],
     },
   },
 });

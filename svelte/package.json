@@ -33,7 +33,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier . -w",
     "lint": "eslint",
-    "wasm": "wasm-pack build ./countdown-rs --target web",
+    "wasm": "wasm-pack build ../countdown-rs --target web",
     "bench": "bun benches/runtime.bench.ts",
     "test:unit": "bun test"
   },

@@ -17,8 +17,8 @@ vite.config.ts.*
 
 idk/
 
-/build
-/.svelte-kit
+build/
+.svelte-kit/
 
 target/
 Cargo.lock
