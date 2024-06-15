@@ -48,8 +48,6 @@ jobs:
         run: wasm-pack build ./countdown-rs --target web --release
 
       - name: build
-        env:
-          BASE_PATH: "/countdown-timers"
         run: |
           bun --bun run build_
           touch build/.nojekyll

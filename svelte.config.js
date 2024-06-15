@@ -6,19 +6,11 @@ SPDX-License-Identifier: CC0-1.0
 
 import adapter from "@sveltejs/adapter-static";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
-
 // import adapter from '@sveltejs/adapter-auto';
 
-const dev = process.argv.includes("dev");
-
-const _basePath = process.env.BASE_PATH;
 /** @type {`/${string}` | undefined} */
-const base =
-  _basePath === undefined
-    ? undefined
-    : _basePath.startsWith("/")
-      ? `/${_basePath.slice(1)}` // satisfying the type
-      : `/${_basePath}`;
+// @ts-expect-error trust me bro
+const base = process.env.PUBLIC_PATH;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -34,7 +26,7 @@ const config = {
       fallback: "404.html",
     }),
     paths: {
-      base: dev ? "" : base,
+      base,
     },
     alias: {
       $licences: "./LICENCES",

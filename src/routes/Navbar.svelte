@@ -9,8 +9,8 @@
   }
 
   interface Sibling {
-    url: `/${string}`;
-    bench: `/${string}/${string}` | "/bench";
+    url: string;
+    bench: string;
     text: string;
     current: Current;
   }
@@ -20,10 +20,12 @@
 
   function getSibling(
     pathname: string,
-    url: Sibling["url"],
-    bench: Sibling["bench"],
+    url1: `/${string}`,
+    bench1: `/${string}/${string}` | "/bench",
     text: string,
   ): Sibling {
+    const url: string = base + url1;
+    const bench: string = base + bench1;
     const current: Current =
       pathname === url ? Current.Base : pathname === bench ? Current.Bench : Current.Not;
     return {
@@ -46,10 +48,10 @@
           <summary>{sibling.text}</summary>
           <ul>
             <li class:current={sibling.current === Current.Base}>
-              <a href="{base}{sibling.url}">Timers</a>
+              <a href="{sibling.url}">Timers</a>
             </li>
             <li class:current={sibling.current === Current.Bench}>
-              <a href="{base}{sibling.bench}">Benchmark</a>
+              <a href="{sibling.bench}">Benchmark</a>
             </li>
           </ul>
         </details>
