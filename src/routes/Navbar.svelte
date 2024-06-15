@@ -57,8 +57,8 @@
         </details>
       </li>
     {/each}
-    <li><a href="{base}/bench">Benchmark</a></li>
-    <li><a href="{base}/legal">Licences</a></li>
+    <li class:current={base + "/bench" === pathname}><a href="{base}/bench">Benchmark</a></li>
+    <li class:current={base + "/legal" === pathname}><a href="{base}/legal">Licences</a></li>
   </ul>
 </nav>
 
