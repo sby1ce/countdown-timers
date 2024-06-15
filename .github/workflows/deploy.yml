@@ -48,12 +48,18 @@ jobs:
         # run: npm install 
 
       - name: Check
-        run: bun run check 
+        run: |
+          cd svelte
+          bun run check 
+
       - name: Build Rust
-        run: bun run wasm --release
+        run: |
+          cd svelte 
+          bun run wasm --release
 
       - name: build
         run: |
+          cd svelte
           bun --bun run build_
           touch build/.nojekyll
         #   npm run build
