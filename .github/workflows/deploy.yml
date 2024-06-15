@@ -64,7 +64,8 @@ jobs:
           bun --bun run build_
           touch build/.nojekyll
           mkdir svelte-build
-          mv build svelte-build
+          mkdir svelte-build/svelte
+          mv build/* svelte-build/svelte
         #   npm run build
         #   touch build/.nojekyll
 
