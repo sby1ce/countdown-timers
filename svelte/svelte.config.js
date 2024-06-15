@@ -28,6 +28,9 @@ const config = {
     paths: {
       base,
     },
+    alias: {
+      $wasm: "../countdown-rs/pkg",
+    }
   },
 };
 

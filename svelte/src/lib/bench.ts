@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
 import { wasmWrapper, type TimerFunc, type Origins } from "./timers.ts";
-import init, { update_timers } from "../../../countdown-rs/pkg";
+import init, { update_timers } from "$wasm";
 
 export async function initialize(): Promise<TimerFunc> {
   await init();

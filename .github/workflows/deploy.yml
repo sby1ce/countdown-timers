@@ -48,15 +48,15 @@ jobs:
           bun install
         # run: npm install 
 
-      - name: Check
-        run: |
-          cd svelte
-          bun run check 
-
       - name: Build Rust
         run: |
           cd svelte 
           bun run wasm --release
+
+      - name: Check
+        run: |
+          cd svelte
+          bun run check 
 
       - name: build
         run: |
