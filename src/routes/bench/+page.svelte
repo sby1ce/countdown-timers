@@ -8,6 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import { onMount } from "svelte";
   import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$lib/timers.ts";
   import { initialize, seed, bench1000, formatBrowser } from "$lib/bench.ts";
+  import Button, { ButtonStyle } from "$lib/Button.svelte";
 
   let rsUpdate: TimerFunc;
 
@@ -47,10 +48,30 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <h2>Rust</h2>
     <p>{formatBrowser(results?.rs)}</p>
   </section>
+
+  <p>Press the button to run the benchmark</p>
+
+  <form><Button style={ButtonStyle.SecondaryBg} on:click={bench}>Benchmark</Button></form>
 </main>
 
-{#if results === null}
-  <p>Press the button to run the benchmark</p>
-{/if}
+<style lang="scss">
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-<button type="button" on:click={bench}> Benchmark </button>
+  h1, h2 {
+    font-weight: normal;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h2, p, form {
+    margin: 1em 0 1em 0;
+  }
+</style>
