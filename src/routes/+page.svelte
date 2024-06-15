@@ -19,4 +19,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     font-weight: normal;
     text-indent: 4ex;
   }
+
+  @media (max-width: 400px) {
+    h1 {
+      text-indent: 0;
+      text-align: center;
+    }
+  }
 </style>

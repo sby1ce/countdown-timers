@@ -116,7 +116,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     padding: 0;
     inline-size: 100%;
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 4fr minmax(0, 1fr);
   }
 
   main {
@@ -133,6 +133,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     display: flex;
     flex-direction: column;
     align-items: start;
+  }
+
+  @media (max-width: 400px) {
+    div {
+      grid-template-columns: 1fr;
+    }
   }
 
   @mixin aside-item {

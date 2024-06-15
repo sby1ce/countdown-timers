@@ -102,7 +102,7 @@
 
   .current {
     background-color: rgba(v.$secondary-bg-colour, 0.5);
-    
+
     &::before {
       content: "";
       position: absolute;

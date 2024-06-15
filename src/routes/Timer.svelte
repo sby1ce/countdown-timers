@@ -83,6 +83,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     border: 0;
     border-radius: 50%;
     block-size: 50%;
+    inline-size: 2rem; // hack value to sync firefox and chromium
     visibility: visible;
     color: transparent;
     background-color: v.$secondary-bg-colour;

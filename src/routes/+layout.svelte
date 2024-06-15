@@ -51,6 +51,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   div {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 6fr);
+    grid-template-columns: 1fr 6fr;
+  }
+
+  @media (max-width: 700px) {
+    div {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
   }
 </style>
