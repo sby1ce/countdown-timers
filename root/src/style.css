@@ -3,3 +3,20 @@ Copyright 2024 sby1ce
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
+
+@import url(variables.css);
+@import url(navbar.css);
+
+#app {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  background-color: var(--bg-colour);
+  color: var(--text-colour);
+}
+
+@media (max-width: 700px) {
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+}
