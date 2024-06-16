@@ -48,10 +48,10 @@
           <summary>{sibling.text}</summary>
           <ul>
             <li class:current={sibling.current === Current.Base}>
-              <a href="{sibling.url}">Timers</a>
+              <a href={sibling.url}>Timers</a>
             </li>
             <li class:current={sibling.current === Current.Bench}>
-              <a href="{sibling.bench}">Benchmark</a>
+              <a href={sibling.bench}>Benchmark</a>
             </li>
           </ul>
         </details>

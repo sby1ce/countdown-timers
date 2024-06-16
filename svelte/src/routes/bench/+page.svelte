@@ -61,7 +61,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     align-items: center;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     font-weight: normal;
   }
 
@@ -71,7 +72,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     align-items: center;
   }
 
-  h2, p, form {
+  h2,
+  p,
+  form {
     margin: 1em 0 1em 0;
   }
 </style>
