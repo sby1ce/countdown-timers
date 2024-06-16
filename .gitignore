@@ -18,6 +18,8 @@ vite.config.ts.*
 idk/
 
 build/
+dist/
+
 .svelte-kit/
 
 target/

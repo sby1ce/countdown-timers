@@ -3,3 +3,7 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Files: svelte/static/*
 Copyright: 2024 sby1ce 
 License: CC-BY-4.0
+
+Files: root/public/*
+Copyright: 2024 sby1ce 
+License: CC-BY-4.0
