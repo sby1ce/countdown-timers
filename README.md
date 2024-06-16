@@ -41,6 +41,5 @@ This project is using the following third-party packages and crates
 - [`typescript-eslint`](https://typescript-eslint.io/) - licensed under `BSD-2-Clause`
 - [`vite`](https://vitejs.dev/) - licensed under `MIT`
 - [`vite-plugin-wasm`](https://www.npmjs.com/package/vite-plugin-wasm) - licensed under `MIT`
-- [`chrono`](https://crates.io/crates/chrono) - licensed under `MIT OR Apache-2.0`
 - [`js-sys`](https://crates.io/crates/js-sys) - licensed under `MIT OR Apache-2.0`
 - [`wasm-bindgen`](https://rustwasm.github.io/) - licensed under `MIT OR Apache-2.0`
