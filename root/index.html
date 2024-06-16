@@ -8,27 +8,60 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <meta name="msapplication-TileColor" content="#000000">
-    <meta name="msapplication-config" content="/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
 
     <title>Countdown Timers</title>
     <meta name="description" content="Watch timers count down" />
     <meta property="og:title" content="Countdown Timers" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="Watch timers count down" />
-    <meta property="og:url" content="https://sby1ce.github.io/countdown-timers" />
+    <meta
+      property="og:url"
+      content="https://sby1ce.github.io/countdown-timers"
+    />
     <meta property="og:updated_time" content="2024-06-16" />
+
+    <link rel="preload" href="/src/style.css" as="style" />
+    <link rel="preload" href="/src/main.ts" as="script" />
+
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <nav>
+        <ul>
+          <li>
+            <details>
+              <summary>Svelte</summary>
+              <ul>
+                <li>
+                  <a href="/svelte">Timers</a>
+                </li>
+                <li>
+                  <a href="/svelte/bench">Benchmark</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <!-- TODO this -->
+          <li>Benchmark</li>
+          <li>Licences</li>
+        </ul>
+      </nav>
+
+      <main>
+        <h1>Watch timers count down</h1>
+      </main>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
