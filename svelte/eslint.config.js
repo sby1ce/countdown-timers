@@ -12,6 +12,7 @@ import svelteParser from "svelte-eslint-parser";
 import prettier from "eslint-config-prettier";
 import eslintPluginSvelte from "eslint-plugin-svelte";
 import globals from "globals";
+import testing from "eslint-plugin-testing-library";
 
 export default tseslint.config(
   js.configs.recommended,
@@ -48,6 +49,11 @@ export default tseslint.config(
     // These create errors because of svelteParser
     // At the same time, disabling them creates parsing errors
     // ...tseslint.configs.disableTypeChecked,
+  },
+  {
+    files: ["**/*.test.ts"],
+    extends: ["plugin:testing-library/svelte"],
+    ...testing,
   },
   prettier,
   {

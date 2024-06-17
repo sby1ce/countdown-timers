@@ -5,13 +5,20 @@
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.5.10",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/svelte": "^5.1.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/bun": "^1.1.3",
     "@typescript-eslint/parser": "^7.13.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.39.3",
+    "eslint-plugin-testing-library": "^6.2.2",
     "espree": "^10.0.1",
     "globals": "^15.4.0",
+    "jsdom": "^24.1.0",
     "prettier": "^3.3.1",
     "prettier-plugin-svelte": "^3.2.4",
     "sass": "^1.77.4",
@@ -22,7 +29,8 @@
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.13.0",
     "vite": "^5.2.13",
-    "vite-plugin-wasm": "^3.3.0"
+    "vite-plugin-wasm": "^3.3.0",
+    "vitest": "^1.6.0"
   },
   "private": true,
   "scripts": {
@@ -34,7 +42,9 @@
     "format": "prettier . -w",
     "lint": "eslint",
     "bench": "bun benches/runtime.bench.ts",
-    "test:unit": "bun test"
+    "test:unit": "bun test",
+    "test:comp": "vitest run --run",
+    "test:comp:ui": "vitest --ui"
   },
   "type": "module"
 }
