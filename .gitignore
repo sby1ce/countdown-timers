@@ -16,6 +16,8 @@ vite.config.js.*
 vite.config.ts.*
 
 idk/
+*.exe
+*.ps1
 
 build/
 dist/
