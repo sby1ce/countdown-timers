@@ -46,12 +46,13 @@ jobs:
         run: |
           cd svelte
           bun install
+          cd ../root
+          bun install
         # run: npm install 
 
       - name: Build Rust
         run: |
-          cd svelte 
-          bun run wasm --release
+          source wasm.sh
 
       - name: Check
         run: |
