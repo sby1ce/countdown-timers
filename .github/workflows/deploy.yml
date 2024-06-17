@@ -58,21 +58,16 @@ jobs:
           cd svelte
           bun run check 
 
-      - name: build
+      - name: Build
         run: |
-          cd svelte
-          bun --bun run build_
-          touch build/.nojekyll
-          mkdir svelte-build
-          mkdir svelte-build/svelte
-          mv build/* svelte-build/svelte
+          source build.sh
         #   npm run build
         #   touch build/.nojekyll
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "svelte/svelte-build/"
+          path: "dist/countdown-timers/"
         # this should match the `pages` option in your adapter-static options
 
   deploy:
