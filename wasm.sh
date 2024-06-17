@@ -1,1 +1,1 @@
-wasm-pack build ../countdown-rs --target web --release
+wasm-pack build ./countdown-rs --target web --release
