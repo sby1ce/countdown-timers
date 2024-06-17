@@ -18,7 +18,9 @@ function copy_build() {
     cd $1
 
     bun run build
-    mkdir ../$TOTAL/$3
+    if [ ! -z $3 ]; then
+        mkdir ../$TOTAL/$3
+    fi
     cp -r $2/* ../$TOTAL/$3
 
     cd -
