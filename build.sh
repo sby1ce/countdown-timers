@@ -17,7 +17,7 @@ function copy_build() {
     # Third argument is the desired name of the directory
     cd $1
 
-    bun run build
+    bun --env-file=.env run build
     if [ ! -z $3 ]; then
         mkdir ../$TOTAL/$3
     fi
@@ -30,6 +30,7 @@ function main() {
     clean
     copy_build root dist ""
     copy_build svelte build svelte
+    copy_build solid .output/public solid
 }
 
 main

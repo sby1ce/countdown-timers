@@ -12,6 +12,7 @@ on:
       - "countdown-rs/src/**"
       - "svelte/src/**"
       - "root/src/**"
+      - "solid/src/**"
 
 jobs:
   build_site:

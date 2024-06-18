@@ -5,24 +5,39 @@
 .DS_Store
 node_modules
 
+# Lock files
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
 bun.lockb
 
+# IDE and editors
 .vscode/
 
+# Build process side effects
 vite.config.js.*
 vite.config.ts.*
+app.config.js.*
 
+# Other
 idk/
 *.exe
 *.ps1
 
+# Builds
 build/
 dist/
 
+# Per proj
+
+## Svelte
 .svelte-kit/
 
+## Solid
+.solid/
+.output/
+.vinxi/
+
+# Rust wasm files
 target/
 Cargo.lock
