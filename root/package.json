@@ -1,8 +1,9 @@
 {
-  "name": "root",
+  "name": "countdown-timers-root",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
