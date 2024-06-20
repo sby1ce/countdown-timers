@@ -61,18 +61,22 @@ export default function Navbar(): JSX.Element {
     <details open class={styles.details}>
       <summary class={styles.summary}>Solid</summary>
       <ul class={styles.ul}>
-        <li classList={{
-          [styles.li]: true,
-          [styles.current]: !bench(),
-        }}>
+        <li
+          classList={{
+            [styles.li]: true,
+            [styles.current]: !bench(),
+          }}
+        >
           <A href="/" class={styles.a}>
             Timers
           </A>
         </li>
-        <li classList={{
-          [styles.li]: true,
-          [styles.current]: bench(),
-        }}>
+        <li
+          classList={{
+            [styles.li]: true,
+            [styles.current]: bench(),
+          }}
+        >
           <A href="bench/" class={styles.a}>
             Benchmark
           </A>
@@ -84,10 +88,14 @@ export default function Navbar(): JSX.Element {
   const root: JSX.Element = (
     <>
       <li class={styles.li}>
-        <a href={base() + "/bench"} class={styles.a}>Benchmark</a>
+        <a href={base() + "/bench"} class={styles.a}>
+          Benchmark
+        </a>
       </li>
       <li class={styles.li}>
-        <a href={base() + "/legal"} class={styles.a}>Licences</a>
+        <a href={base() + "/legal"} class={styles.a}>
+          Licences
+        </a>
       </li>
     </>
   );
