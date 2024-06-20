@@ -1,0 +1,33 @@
+@use "~/scss/variables" as v;
+
+.button {
+  border: 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: inherit;
+  color: v.$text-colour;
+
+  &.style-bg {
+    background-color: v.$bg-colour;
+  }
+
+  &.style-secondary-bg {
+    background-color: v.$secondary-bg-colour;
+  }
+
+  &.style-primary {
+    background-color: v.$primary-colour;
+  }
+
+  &.style-text {
+    background-color: v.$text-colour;
+  }
+
+  &:hover {
+    box-shadow: 0 0 2em v.$primary-colour;
+  }
+
+  &:active {
+    outline: solid v.$primary-colour;
+  }
+}

@@ -8,7 +8,9 @@ import { MetaProvider } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
-import "./app.css";
+import Navbar from "~/components/Navbar.tsx";
+import styles from "~/scss/layout.module.scss";
+import "./app.scss";
 
 export default function App() {
   return (
@@ -17,7 +19,12 @@ export default function App() {
       base={import.meta.env.VITE_PATH}
       root={(props) => (
         <MetaProvider>
-          <Suspense>{props.children}</Suspense>
+          <Suspense>
+            <div class={styles.div}>
+              <Navbar />
+              {props.children}
+            </div>
+          </Suspense>
         </MetaProvider>
       )}
     >
