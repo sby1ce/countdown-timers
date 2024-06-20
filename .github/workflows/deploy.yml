@@ -50,20 +50,22 @@ jobs:
           bun install
           cd ../root
           bun install
+          cd ../solid
+          bun install
         # run: npm install 
 
       - name: Build Rust
-        run: |
-          source wasm.sh
+        run: source wasm.sh
 
       - name: Check
         run: |
           cd svelte
           bun run check 
+          cd ../solid
+          bun run lint
 
       - name: Build
-        run: |
-          source build.sh
+        run: source build.sh
         #   npm run build
         #   touch build/.nojekyll
 
