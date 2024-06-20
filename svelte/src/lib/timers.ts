@@ -100,7 +100,7 @@ export function tsTimers(origins: Origins): string[][] {
 
 export function wasmWrapper(updater: (n: bigint, o: BigInt64Array) => string[][]): TimerFunc {
   const thingamabob: TimerFunc = (origins: Origins): string[][] => {
-    const now: bigint = BigInt(Date.now());
+    const now = BigInt(Date.now());
     const result: string[][] = updater(now, origins.wasm);
     return result;
   };

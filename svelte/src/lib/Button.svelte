@@ -37,7 +37,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </button>
 
 <style lang="scss">
-  @use "$lib/variables" as v;
+  @use "variables" as v;
 
   button {
     border: 0;
