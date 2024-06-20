@@ -1,3 +1,9 @@
+/*
+Copyright 2024 sby1ce
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+*/
+
 import { createSignal, type JSX, Show } from "solid-js";
 import type { ITimer, SetTimers } from "./timers.ts";
 import styles from "./AddTimer.module.scss";

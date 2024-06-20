@@ -1,3 +1,9 @@
+/*
+Copyright 2024 sby1ce
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+*/
+
 import { type SetStoreFunction, createStore } from "solid-js/store";
 import { createEffect, onMount } from "solid-js";
 import { load, save } from "./storage.ts";
