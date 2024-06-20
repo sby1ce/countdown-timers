@@ -7,64 +7,98 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <script lang="ts">
   import { base } from "$app/paths";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
 
-  enum Current {
-    Not,
-    Base,
-    Bench,
+  /** https://stackoverflow.com/a/55292366 */
+  function trimEnd(pathname: string): string {
+    let end: number = pathname.length;
+    while (end > 0 && pathname[end - 1] === "/") {
+      --end;
+    }
+    const path: string = pathname.slice(0, end);
+    return path.length !== 0 ? path : "/";
   }
 
-  interface Sibling {
-    url: string;
+  /** Hardcoding a path here because too much effort
+   * TODO: write a test for this
+   */
+  function getBase(pathname: string): string {
+    const lastWordIndex = pathname.lastIndexOf("/svelte");
+    return trimEnd(
+      lastWordIndex !== -1 ? pathname.slice(0, lastWordIndex) : pathname,
+    );
+  }
+
+  function isBench(pathname: string): boolean {
+    return pathname.lastIndexOf("/bench") !== -1;
+  }
+
+  interface SiblingProps {
+    name: string;
+    index: string;
     bench: string;
-    text: string;
-    current: Current;
   }
 
   let pathname: string = $page.url.pathname;
   $: pathname = $page.url.pathname;
+  let origin: string = $page.url.origin;
+  $: origin = $page.url.origin;
+  let root: string = getBase(pathname);
+  $: root = getBase(pathname);
+  let bench: boolean = isBench(pathname);
+  $: bench = isBench(pathname);
 
-  function getSibling(
-    pathname: string,
-    url1: `/${string}`,
-    bench1: `/${string}/${string}` | "/bench",
-    text: string,
-  ): Sibling {
-    const url: string = base + url1;
-    const bench: string = base + bench1;
-    const current: Current =
-      pathname === url ? Current.Base : pathname === bench ? Current.Bench : Current.Not;
+  function getSibling(name: string, path: `/${string}`): SiblingProps {
     return {
-      url,
-      bench,
-      text,
-      current,
-    } satisfies Sibling;
+      name,
+      index: origin + root + path,
+      bench: origin + root + path + "/bench"
+    } satisfies SiblingProps;
   }
 
-  let siblings: Sibling[] = [getSibling(pathname, "/", "/bench", "Svelte")];
-  $: siblings = [getSibling(pathname, "/", "/bench", "Svelte")];
+  let siblings: SiblingProps[] = [];
+  let rootBench: string = "";
+  let rootLegal: string = "";
+  onMount(() => {
+    // onMount crutch because it isn't run on the server
+    siblings = [getSibling("Solid", "/solid")];
+    rootBench = origin + root + "/bench";
+    rootLegal = origin + root + "/legal";
+  });
 </script>
 
 <nav>
   <ul>
+    <li>
+      <details open>
+        <summary>Svelte</summary>
+        <ul>
+          <li class:current={!bench}>
+            <a href={base}>Timers</a>
+          </li>
+          <li class:current={bench}>
+            <a href="{base}/bench">Benchmark</a>
+          </li>
+        </ul>
+      </details>
+    </li>
     {#each siblings as sibling}
       <li>
-        <details open={sibling.current !== Current.Not}>
-          <summary>{sibling.text}</summary>
+        <details>
+          <summary>{sibling.name}</summary>
           <ul>
-            <li class:current={sibling.current === Current.Base}>
-              <a href={sibling.url}>Timers</a>
+            <li>
+              <a href={sibling.index}>Timers</a>
             </li>
-            <li class:current={sibling.current === Current.Bench}>
+            <li>
               <a href={sibling.bench}>Benchmark</a>
             </li>
           </ul>
         </details>
       </li>
     {/each}
-    <li class:current={base + "/bench" === pathname}><a href="{base}/bench">Benchmark</a></li>
-    <li class:current={base + "/legal" === pathname}><a href="{base}/legal">Licences</a></li>
+    <li><a href={rootBench}>Benchmark</a></li>
+    <li><a href={rootLegal}>Licences</a></li>
   </ul>
 </nav>
 
