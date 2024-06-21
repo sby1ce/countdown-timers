@@ -18,7 +18,7 @@ export default defineConfig({
     baseURL: process.env.VITE_PATH,
   },
   vite: {
-    plugins: [wasm()], 
+    plugins: [wasm()],
     server: {
       fs: {
         allow: ["../countdown-rs/pkg/"],

@@ -18,7 +18,9 @@ function clear() {
 export default function Footer(): JSX.Element {
   return (
     <footer class={styles.footer}>
-      <Button bg={ButtonStyle.Bg} click={clear}>Clear localStorage</Button>
+      <Button bg={ButtonStyle.Bg} click={clear}>
+        Clear localStorage
+      </Button>
     </footer>
   );
 }

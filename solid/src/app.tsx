@@ -34,9 +34,16 @@ function Favicons(props: { base: string }): JSX.Element {
         href={props.base + "/favicon-16x16.png"}
       />
       <Link rel="manifest" href={props.base + "/site.webmanifest"} />
-      <Link rel="mask-icon" href={props.base + "/safari-pinned-tab.svg"} color="#5bbad5" />
+      <Link
+        rel="mask-icon"
+        href={props.base + "/safari-pinned-tab.svg"}
+        color="#5bbad5"
+      />
       <Meta name="msapplication-TileColor" content="#000000" />
-      <Meta name="msapplication-config" content="/countdown-timers/solid/browserconfig.xml" />
+      <Meta
+        name="msapplication-config"
+        content="/countdown-timers/solid/browserconfig.xml"
+      />
       <Meta name="theme-color" content="#ffffff" />
     </>
   );
@@ -47,10 +54,7 @@ function Metadata(): JSX.Element {
     <>
       <Meta property="og:title" content="Countdown Timers" />
       <Meta property="og:type" content="website" />
-      <Meta
-        property="og:description"
-        content="Watch timers count down"
-      />
+      <Meta property="og:description" content="Watch timers count down" />
       <Meta
         property="og:url"
         content="https://sby1ce.github.io/countdown-timers"

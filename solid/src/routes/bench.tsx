@@ -6,8 +6,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { createResource, createSignal, type JSX } from "solid-js";
 import Button, { ButtonStyle } from "~/components/Button.tsx";
-import { initialize, seed, bench1000, formatBrowser } from "~/components/bench.ts";
-import { tsTimers as tsUpdate, type TimerFunc, type Origins } from "~/components/timers.ts";
+import {
+  initialize,
+  seed,
+  bench1000,
+  formatBrowser,
+} from "~/components/bench.ts";
+import {
+  tsTimers as tsUpdate,
+  type TimerFunc,
+  type Origins,
+} from "~/components/timers.ts";
 import styles from "~/scss/bench.module.scss";
 
 interface Results {
@@ -16,7 +25,7 @@ interface Results {
 }
 
 function bench(
-  setResults: (r: Results | null) => void ,
+  setResults: (r: Results | null) => void,
   tsUpdate: TimerFunc,
   rsTimers: () => TimerFunc | undefined,
 ): void {
@@ -47,7 +56,9 @@ export default function Bench(): JSX.Element {
   return (
     <main class={styles.main}>
       <h1 class={styles.h1}>Benchmarks</h1>
-      <p class={styles.p}>Average time over 1000 function runs in microseconds</p>
+      <p class={styles.p}>
+        Average time over 1000 function runs in microseconds
+      </p>
 
       <section class={styles.section}>
         <h2 class={styles.h2}>TypeScript</h2>
@@ -61,7 +72,9 @@ export default function Bench(): JSX.Element {
       <p class={styles.p}>Press the button to run the benchmark</p>
 
       <form class={styles.form}>
-        <Button click={run} bg={ButtonStyle.SecondaryBg}>Benchmark</Button>
+        <Button click={run} bg={ButtonStyle.SecondaryBg}>
+          Benchmark
+        </Button>
       </form>
     </main>
   );

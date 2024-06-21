@@ -24,9 +24,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
    */
   function getBase(pathname: string): string {
     const lastWordIndex = pathname.lastIndexOf("/svelte");
-    return trimEnd(
-      lastWordIndex !== -1 ? pathname.slice(0, lastWordIndex) : pathname,
-    );
+    return trimEnd(lastWordIndex !== -1 ? pathname.slice(0, lastWordIndex) : pathname);
   }
 
   function isBench(pathname: string): boolean {
@@ -52,7 +50,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     return {
       name,
       index: origin + root + path,
-      bench: origin + root + path + "/bench"
+      bench: origin + root + path + "/bench",
     } satisfies SiblingProps;
   }
 
