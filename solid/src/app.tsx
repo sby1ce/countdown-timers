@@ -9,6 +9,7 @@ import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense, type JSX } from "solid-js";
 import Navbar from "~/components/Navbar.tsx";
+import Footer from "./components/Footer.tsx";
 import styles from "~/scss/layout.module.scss";
 import "./app.scss";
 
@@ -54,7 +55,7 @@ function Metadata(): JSX.Element {
         property="og:url"
         content="https://sby1ce.github.io/countdown-timers"
       />
-      <Meta property="og:updated_time" content="2024-06-20" />
+      <Meta property="og:updated_time" content="2024-06-21" />
     </>
   );
 }
@@ -75,6 +76,8 @@ export default function App(): JSX.Element {
               <Navbar />
               {props.children}
             </div>
+
+            <Footer />
           </Suspense>
         </MetaProvider>
       )}
