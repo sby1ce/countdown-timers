@@ -6,16 +6,21 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Countdown
 
-Watch countdowns [here](https://sby1ce.github.io/countdown-timers/svelte)
+Watch countdowns [here](https://sby1ce.github.io/countdown-timers/)
 
 # Build
 
 ```bash
+cd root
 bun install
+cd ../svelte
+bun install
+cd ../solid
+bun install
+cd ../svelte
 bun run check
-bun run wasm --release
-bun run build_
-bun run preview
+cd ..
+source build.sh
 ```
 
 # Licences
