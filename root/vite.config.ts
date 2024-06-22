@@ -9,6 +9,13 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     target: "esnext",
+    rollupOptions: {
+      input: {
+        index: "index.html",
+        bench: "bench/index.html",
+        legal: "legal/index.html",
+      },
+    },
   },
   base: "/countdown-timers",
 });
