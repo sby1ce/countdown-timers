@@ -83,7 +83,7 @@ export default function Navbar(): JSX.Element {
             [styles.current]: bench(),
           }}
         >
-          <A href="bench/" class={styles.a}>
+          <A href="/bench" class={styles.a}>
             Benchmark
           </A>
         </li>
@@ -111,6 +111,7 @@ export default function Navbar(): JSX.Element {
       <ul class={styles.ul}>
         <li class={styles.li}>{self}</li>
         <li class={styles.li}>
+          <Sibling base={base()} name="React" path="/react" />
           <Sibling base={base()} name="Svelte" path="/svelte" />
         </li>
         {root}

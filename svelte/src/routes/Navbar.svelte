@@ -59,7 +59,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   let rootLegal: string = "";
   onMount(() => {
     // onMount crutch because it isn't run on the server
-    siblings = [getSibling("Solid", "/solid")];
+    siblings = [getSibling("React", "/react"), getSibling("Solid", "/solid")];
     rootBench = origin + root + "/bench";
     rootLegal = origin + root + "/legal";
   });
