@@ -13,6 +13,7 @@ on:
       - "svelte/src/**"
       - "root/src/**"
       - "solid/src/**"
+      - "react/src/**"
 
 jobs:
   build_site:
@@ -44,29 +45,17 @@ jobs:
           crate: wasm-pack
           version: "^0.12"
 
-      - name: Install dependencies
-        run: |
-          cd svelte
-          bun install
-          cd ../root
-          bun install
-          cd ../solid
-          bun install
-        # run: npm install 
-
       - name: Build Rust
         run: source wasm.sh
 
+      - name: Install dependencies
+        run: source install.sh
+
       - name: Check
-        run: |
-          cd svelte
-          bun run check 
-          cd ../solid
-          bun run lint
+        run: source lint.sh
 
       - name: Build
         run: source build.sh
-        #   npm run build
         #   touch build/.nojekyll
 
       - name: Upload Artifacts

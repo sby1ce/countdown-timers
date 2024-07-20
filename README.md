@@ -11,15 +11,9 @@ Watch countdowns [here](https://sby1ce.github.io/countdown-timers/)
 # Build
 
 ```bash
-cd root
-bun install
-cd ../svelte
-bun install
-cd ../solid
-bun install
-cd ../svelte
-bun run check
-cd ..
+source wasm.sh
+source install.sh
+source lint.sh
 source build.sh
 ```
 
