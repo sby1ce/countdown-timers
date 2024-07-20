@@ -8,15 +8,24 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import Licence from "./Licence.svelte";
 
   const LICENCES: [string, string][] = [
+    ["babel-plugin-react-compiler", "MIT"],
     ["bun", "MIT"],
+    ["clsx", "MIT"],
     ["eslint", "MIT"],
+    ["eslint-config-next", "MIT"],
     ["eslint-config-prettier", "MIT"],
     ["eslint-plugin-svelte", "MIT"],
     ["eslint-plugin-testing-library", "MIT"],
     ["espree", "BSD-2-Clause"],
     ["globals", "MIT"],
+    ["jsdom", "MIT"],
+    ["next", "MIT"],
     ["prettier", "MIT"],
     ["prettier-plugin-svelte", "MIT"],
+    ["react", "MIT"],
+    ["react-dom", "MIT"],
+    ["react-redux", "MIT"],
+    ["reduxjs", "MIT"],
     ["sass", "MIT"],
     ["solid-js", "MIT"],
     ["svelte", "MIT"],
@@ -28,6 +37,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     ["vinxi", "MIT"],
     ["vite", "MIT"],
     ["vite-plugin-wasm", "MIT"],
+    ["vitest", "MIT"],
     ["js-sys", "MIT OR Apache-2.0"],
     ["wasm-bindgen", "MIT OR Apache-2.0"],
   ];

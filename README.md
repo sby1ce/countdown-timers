@@ -24,16 +24,24 @@ See [LICENCE.txt](https://github.com/sby1ce/countdown-timers/blob/main/LICENCE.t
 
 This project is using the following third-party packages and crates
 
+- [`babel-plugin-react-compiler`](https://www.npmjs.com/package/babel-plugin-react-compiler) - licensed under `MIT`
 - [`bun`](https://bun.sh/) - licensed under `MIT`
+- [`clsx`](https://www.npmjs.com/package/clsx) - licensed under `MIT`
 - [`eslint`](https://eslint.org/) - licensed under `MIT`
+- [`eslint-config-next`](https://nextjs.org/docs/app/building-your-application/configuring/eslint#eslint-config) - licensed under `MIT`
 - [`eslint-config-prettier`](https://www.npmjs.com/package/eslint-config-prettier) - licensed under `MIT`
 - [`eslint-plugin-svelte`](https://sveltejs.github.io/eslint-plugin-svelte/) - licensed under `MIT`
 - [`eslint-plugin-testing-library`](https://www.npmjs.com/package/eslint-plugin-testing-library) - licensed under `MIT`
 - [`espree`](https://www.npmjs.com/package/espree) - licensed under `BSD-2-Clause`
 - [`globals`](https://www.npmjs.com/package/globals) - licensed under `MIT`
 - [`jsdom`](https://www.npmjs.com/package/jsdom) - licensed under `MIT`
+- [`next`](https://nextjs.org/) - licensed under `MIT`
 - [`prettier`](https://prettier.io/) - licensed under `MIT`
 - [`prettier-plugin-svelte`](https://www.npmjs.com/package/prettier-plugin-svelte) - licensed under `MIT`
+- [`react`](https://react.dev/) - licensed under `MIT`
+- [`react-dom`](https://react.dev/) - licensed under `MIT`
+- [`react-redux`](https://react-redux.js.org/) - licensed under `MIT`
+- [`reduxjs`](https://redux.js.org/) - licensed under `MIT`
 - [`sass`](https://sass-lang.com/) - licensed under `MIT`
 - [`solid-js`](https://www.solidjs.com/) - licensed under `MIT`
 - [`svelte`](https://svelte.dev/) - licensed under `MIT`
