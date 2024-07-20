@@ -38,7 +38,7 @@ export interface Origins {
 
 export type TimerFunc = (origins: Origins) => string[][];
 
-enum FormatOption {
+const enum FormatOption {
   Week,
   Day,
   Hour,
