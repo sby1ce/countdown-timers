@@ -1,0 +1,59 @@
+/*
+Copyright 2024 sby1ce
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+*/
+
+@use "@/scss/variables" as v;
+
+.form {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 0.5em;
+}
+
+$error-colour: #ff0000;
+
+.p {
+  margin: 0.5em 0 0;
+  color: $error-colour;
+}
+
+.invalid {
+  outline: 0.2em solid $error-colour;
+}
+
+.input {
+  border: 0;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+
+.button {
+  font-family: inherit;
+  background-color: v.$bg-colour;
+  color: v.$text-colour;
+  border: 0;
+  border-radius: 0.5em;
+  padding: 1em;
+  margin-top: 1em;
+
+  &:hover {
+    box-shadow: 0 0 2em v.$primary-colour;
+  }
+
+  &:active {
+    outline: solid v.$primary-colour;
+  }
+}

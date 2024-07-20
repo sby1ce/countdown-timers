@@ -38,6 +38,12 @@ dist/
 .output/
 .vinxi/
 
+## React
+next-env.d.ts
+.next/
+out/
+build/
+
 # Rust wasm files
 target/
 Cargo.lock
