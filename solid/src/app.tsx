@@ -4,7 +4,7 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
-import { Link, Meta, MetaProvider } from "@solidjs/meta";
+import { Link, Meta, MetaProvider, Title } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense, type JSX } from "solid-js";
@@ -52,6 +52,9 @@ function Favicons(props: { base: string }): JSX.Element {
 function Metadata(): JSX.Element {
   return (
     <>
+      <Title>Countdown Timers</Title>
+      <Meta name="description" content="Watch timers count down" />
+
       <Meta property="og:title" content="Countdown Timers" />
       <Meta property="og:type" content="website" />
       <Meta property="og:description" content="Watch timers count down" />
