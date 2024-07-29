@@ -19,7 +19,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   row-gap: 0.5em;
 }
 
