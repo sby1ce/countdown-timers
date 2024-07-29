@@ -76,7 +76,7 @@ function TimerBlock(): JSX.Element {
       <main className={styles.main}>
         {state.map((item: ITimer, index: number) => (
           <Timer
-            key={index}
+            key={item.key}
             id={index}
             name={item.name}
             countdowns={renders.at(index) ?? initial.at(index) ?? []}
