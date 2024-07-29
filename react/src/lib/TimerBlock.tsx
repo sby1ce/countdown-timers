@@ -52,13 +52,16 @@ function TimerBlock(): JSX.Element {
   const state: ITimer[] = timers.getState() ?? [];
   const origins: Origins = originsPipe(state);
 
-  const [renders, setRenders] = useState(update.func(origins));
+  // renders only gets access to the data after the DOM loads
+  // so by creating initial renders, the Timer element with already rendered strings
+  // still doesn't fix the initial tick before the Timer elements themselves load
+  const initial = update.func(origins);
+  const [renders, setRenders] = useState(initial);
 
-  useEffect(() =>
-    // Loading from localStorage as in onMount basically??
-    {
-      timers.dispatch(INIT_TIMERS);
-    }, []);
+  // Loading from localStorage as in onMount basically??
+  useEffect(() => {
+    timers.dispatch(INIT_TIMERS);
+  }, []);
 
   useEffect(() => {
     const interval: ReturnType<typeof setInterval> = setInterval(
@@ -76,7 +79,7 @@ function TimerBlock(): JSX.Element {
             key={index}
             id={index}
             name={item.name}
-            countdowns={renders.at(index) ?? []}
+            countdowns={renders.at(index) ?? initial.at(index) ?? []}
           />
         ))}
       </main>
