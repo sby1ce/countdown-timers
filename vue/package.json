@@ -1,0 +1,25 @@
+{
+  "name": "nuxt-app",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:ssr": "nuxt build",
+    "dev": "nuxt dev",
+    "build": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall_": "nuxt prepare",
+    "lint": "eslint .",
+    "format": "prettier -w ."
+  },
+  "dependencies": {
+    "nuxt": "^3.12.4",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "prettier": "^3.3.3",
+    "typescript-eslint": "^8.1.0"
+  }
+}

@@ -10,4 +10,7 @@ cd ../solid
 bun install
 cd ../react
 bun install
+cd ../vue
+bun install
+bun run postinstall_
 cd ..

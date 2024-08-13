@@ -36,6 +36,7 @@ function main() {
     copy_build svelte build svelte
     copy_build solid .output/public solid
     copy_build react out react
+    copy_build vue .output/public vue
 }
 
 main

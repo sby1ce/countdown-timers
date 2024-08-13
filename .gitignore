@@ -27,6 +27,7 @@ idk/
 # Builds
 build/
 dist/
+.output/
 
 # Per proj
 
@@ -35,7 +36,6 @@ dist/
 
 ## Solid
 .solid/
-.output/
 .vinxi/
 
 ## React
@@ -43,6 +43,9 @@ next-env.d.ts
 .next/
 out/
 build/
+
+## Vue
+.nuxt/
 
 # Rust wasm files
 target/
