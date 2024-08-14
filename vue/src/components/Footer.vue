@@ -17,15 +17,15 @@ function clear() {
 </script>
 
 <template>
-  <footer>
+  <footer :class="$style.footer">
     <Button @click="clear">Clear localStorage</Button>
   </footer>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 @use "../scss/variables" as v;
 
-footer {
+.footer {
   margin: 0;
   border: 0;
   padding: 1.5rem 0 1.5rem 0;

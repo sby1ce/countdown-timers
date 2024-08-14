@@ -67,8 +67,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
-    <main>
+  <div :class="$style.div">
+    <main :class="$style.main">
       <ClientOnly>
         <Timer
           v-for="(timer, position) in timers.inner"
@@ -80,14 +80,16 @@ onUnmounted(() => {
       </ClientOnly>
     </main>
 
-    <aside>
-      <p>Create a <strong>timer</strong> by setting its name and datetime</p>
+    <aside :class="$style.aside">
+      <p :class="$style.p">
+        Create a <strong>timer</strong> by setting its name and datetime
+      </p>
 
-      <article>
+      <article :class="$style.article">
         <AddTimer />
       </article>
 
-      <form>
+      <form :class="$style.form">
         <Button :color="ButtonStyle.SecondaryBg" @click="switchFunc">
           Switch {{ isRs ? "WA to JS" : "JS to WA" }}
         </Button>
@@ -96,10 +98,10 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 @use "../scss/variables" as v;
 
-div {
+.div {
   margin: 0;
   padding: 0;
   inline-size: 100%;
@@ -107,13 +109,13 @@ div {
   grid-template-columns: 4fr minmax(0, 1fr);
 }
 
-main {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-aside {
+.aside {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -124,7 +126,7 @@ aside {
 }
 
 @media (max-width: 400px) {
-  div {
+  .div {
     grid-template-columns: 1fr;
   }
 }
@@ -135,17 +137,17 @@ aside {
   margin: 0;
 }
 
-p {
+.p {
   @include aside-item;
 }
 
-article {
+.article {
   @include aside-item;
   width: calc(100% - 2em);
   background-color: v.$secondary-bg-colour;
 }
 
-form {
+.form {
   @include aside-item;
   width: calc(100% - 2em);
 }

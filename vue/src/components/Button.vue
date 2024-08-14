@@ -37,15 +37,19 @@ const class_ = matchStyle(props.color);
 </script>
 
 <template>
-  <button type="button" :class="[class_]" @click="$emit('click')">
+  <button
+    type="button"
+    :class="[$style.button, $style[class_]]"
+    @click="$emit('click')"
+  >
     <slot />
   </button>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 @use "../scss/variables" as v;
 
-button {
+.button {
   border: 0;
   padding: 1rem;
   border-radius: 0.5rem;

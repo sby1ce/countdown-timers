@@ -25,32 +25,38 @@ function toggle(): void {
 </script>
 
 <template>
-  <article>
-    <h2>{{ props.name }}</h2>
+  <article :class="$style.article">
+    <h2 :class="$style.h2">{{ props.name }}</h2>
 
-    <section>
-      <p v-for="(countdown, position) in countdowns" :key="position">
+    <section :class="$style.section">
+      <p
+        v-for="(countdown, position) in countdowns"
+        :key="position"
+        :class="$style.p"
+      >
         {{ countdown }}
       </p>
     </section>
 
     <!-- hidden is not a reliable attribute -->
-    <div :class="{ hidden }">
-      <button type="button" @click="$emit('pop')">Delete timer</button>
+    <div :class="[{ [$style.hidden]: hidden }, $style.div]">
+      <button :class="$style.button" type="button" @click="$emit('pop')">
+        Delete timer
+      </button>
 
-      <button class="settings" type="button" @click="toggle">
+      <button :class="[$style.button, $style.settings]" type="button" @click="toggle">
         <Kebab />
       </button>
     </div>
   </article>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 @use "../scss/variables" as v;
 
 $padding: 0.5em;
 
-article {
+.article {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,20 +71,20 @@ article {
   box-shadow: 1px 1px 5px rgba(v.$secondary-bg-colour, 0.8);
 }
 
-h2 {
+.h2 {
   font-weight: normal;
   color: v.$primary-colour;
   margin: 0;
 }
 
-section {
+.section {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-p {
+.p {
   margin: 0 1em 0 1em;
 }
 
@@ -103,7 +109,7 @@ p {
   }
 }
 
-div {
+.div {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -114,7 +120,7 @@ div {
   padding: 0;
 }
 
-button {
+.button {
   font-family: inherit;
   background-color: v.$bg-colour;
   color: v.$text-colour;

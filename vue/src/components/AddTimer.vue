@@ -7,6 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <script setup lang="ts">
 import { ref } from "vue";
 import { type ITimer, useTimers } from "~/timers.ts";
+import Button from "./Button.vue";
 
 const name = ref<string>();
 const date = ref<string>();
@@ -84,8 +85,8 @@ function submit(): void {
 </script>
 
 <template>
-  <form @submit.prevent="submit">
-    <fieldset>
+  <form :class="$style.form" @submit.prevent="submit">
+    <fieldset :class="$style.fieldset">
       <label for="add-name" hidden>Add timer name</label>
       <input
         id="add-name"
@@ -93,7 +94,7 @@ function submit(): void {
         type="text"
         placeholder="Timer name here"
         minlength="1"
-        :class="{ invalid: nameInvalid }"
+        :class="[{ [$style.invalid]: nameInvalid }, $style.input]"
       />
 
       <label for="add-time" hidden>Choose time</label>
@@ -102,22 +103,22 @@ function submit(): void {
         v-model="date"
         type="datetime-local"
         step="0.001"
-        :class="{ invalid: dateInvalid }"
+        :class="[{ [$style.invalid]: dateInvalid }, $style.input]"
       />
     </fieldset>
 
-    <p v-show="form">
+    <p v-show="form" :class="$style.p">
       <small>{{ form }}</small>
     </p>
 
-    <button type="submit">Add timer</button>
+    <Button :class="$style.button" type="submit">Add timer</Button>
   </form>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 @use "../scss/variables" as v;
 
-form {
+.form {
   border: 0;
   margin: 0;
   padding: 0;
@@ -125,7 +126,7 @@ form {
   flex-direction: column;
 }
 
-fieldset {
+.fieldset {
   border: 0;
   margin: 0;
   padding: 0;
@@ -136,7 +137,7 @@ fieldset {
 
 $error-colour: #ff0000;
 
-p {
+.p {
   margin: 0.5em 0 0;
   color: $error-colour;
 }
@@ -145,13 +146,13 @@ p {
   outline: 0.2em solid $error-colour;
 }
 
-input {
+.input {
   border: 0;
   border-radius: 0.5em;
   padding: 0.5em;
 }
 
-button {
+.button {
   font-family: inherit;
   background-color: v.$bg-colour;
   color: v.$text-colour;

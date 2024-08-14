@@ -42,22 +42,24 @@ function bench(): void {
 </script>
 
 <template>
-  <main>
-    <h1>Benchmarks</h1>
-    <p>Average time over 1000 function runs in microseconds</p>
+  <main :class="$style.main">
+    <h1 :class="$style.h1">Benchmarks</h1>
+    <p :class="$style.p">
+      Average time over 1000 function runs in microseconds
+    </p>
 
-    <section>
-      <h2>TypeScript</h2>
-      <p>{{ formatBrowser(results?.ts) }}</p>
+    <section :class="$style.section">
+      <h2 :class="$style.h2">TypeScript</h2>
+      <p :class="$style.p">{{ formatBrowser(results?.ts) }}</p>
     </section>
-    <section>
-      <h2>Rust</h2>
-      <p>{{ formatBrowser(results?.rs) }}</p>
+    <section :class="$style.section">
+      <h2 :class="$style.h2">Rust</h2>
+      <p :class="$style.p">{{ formatBrowser(results?.rs) }}</p>
     </section>
 
-    <p>Press the button to run the benchmark</p>
+    <p :class="$style.p">Press the button to run the benchmark</p>
 
-    <form>
+    <form :class="$style.form">
       <Button :color="ButtonStyle.SecondaryBg" @click="bench">
         Benchmark
       </Button>
@@ -65,27 +67,27 @@ function bench(): void {
   </main>
 </template>
 
-<style lang="scss" scoped>
-main {
+<style lang="scss" module>
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-h1,
-h2 {
+.h1,
+.h2 {
   font-weight: normal;
 }
 
-section {
+.section {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-h2,
-p,
-form {
+.h2,
+.p,
+.form {
   margin: 1em 0 1em 0;
 }
 </style>

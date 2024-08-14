@@ -26,7 +26,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <div>
+  <div :class="$style.div">
     <Navbar />
     <slot />
   </div>
@@ -45,14 +45,14 @@ body {
 }
 </style>
 
-<style lang="scss" scoped>
-div {
+<style lang="scss" module>
+.div {
   display: grid;
   grid-template-columns: 1fr 6fr;
 }
 
 @media (max-width: 700px) {
-  div {
+  .div {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
   }

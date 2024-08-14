@@ -56,48 +56,52 @@ const siblings: SiblingProps[] = [
 </script>
 
 <template>
-  <nav>
-    <ul>
-      <li>
-        <details open>
-          <summary>Vue</summary>
-          <ul>
-            <li :class="{ current: !bench }">
-              <a :href="base">Timers</a>
+  <nav :class="$style.nav">
+    <ul :class="$style.ul">
+      <li :class="$style.li">
+        <details open :class="$style.details">
+          <summary :class="$style.summer">Vue</summary>
+          <ul :class="$style.ul">
+            <li :class="[{ [$style.current]: !bench }, $style.li]">
+              <a :class="$style.a" :href="base">Timers</a>
             </li>
-            <li :class="{ current: bench }">
-              <a :href="base + '/bench'">Benchmark</a>
-            </li>
-          </ul>
-        </details>
-      </li>
-      <li v-for="sibling in siblings" :key="sibling.index">
-        <details>
-          <summary>{{ sibling.name }}</summary>
-          <ul>
-            <li>
-              <a :href="sibling.index">Timers</a>
-            </li>
-            <li>
-              <a :href="sibling.bench">Benchmark</a>
+            <li :class="[{ [$style.current]: bench }, $style.li]">
+              <a :class="$style.a" :href="base + '/bench'">Benchmark</a>
             </li>
           </ul>
         </details>
       </li>
-      <li><a :href="base + '/bench'">Benchmark</a></li>
-      <li><a :href="base + '/legal'">Licences</a></li>
+      <li v-for="sibling in siblings" :key="sibling.index" :class="$style.li">
+        <details :class="$style.details">
+          <summary :class="$style.summary">{{ sibling.name }}</summary>
+          <ul :class="$style.ul">
+            <li :class="$style.li">
+              <a :class="$style.a" :href="sibling.index">Timers</a>
+            </li>
+            <li :class="$style.li">
+              <a :class="$style.a" :href="sibling.bench">Benchmark</a>
+            </li>
+          </ul>
+        </details>
+      </li>
+      <li :class="$style.li">
+        <a :class="$style.a" :href="base + '/bench'">Benchmark</a>
+      </li>
+      <li :class="$style.li">
+        <a :class="$style.a" :href="base + '/legal'">Licences</a>
+      </li>
     </ul>
   </nav>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 @use "../scss/variables" as v;
 
 @mixin gap($pad-left) {
   padding: 1rem 0 1rem $pad-left;
 }
 
-nav {
+.nav {
   padding-top: 4rem;
   padding-left: 20%;
   display: flex;
@@ -107,24 +111,24 @@ nav {
 }
 
 @media (max-width: 1000px) {
-  nav {
+  .nav {
     padding-left: 5%;
   }
 }
 
 @media (max-width: 700px) {
-  nav {
+  .nav {
     display: none;
   }
 }
 
-ul {
+.ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-li {
+.li {
   position: relative;
   box-sizing: border-box;
   min-height: min-content;
@@ -144,25 +148,25 @@ li {
   }
 }
 
-details {
+.details {
   cursor: pointer;
 
   &[open] {
     margin-bottom: 0;
   }
 
-  a {
+  .a {
     display: inline-block;
     padding-left: 4ex;
   }
 }
 
-summary {
+.summary {
   @include gap(0);
   font-weight: bold;
 }
 
-a {
+.a {
   display: inline-block;
   @include gap(2ex);
   color: v.$text-colour;

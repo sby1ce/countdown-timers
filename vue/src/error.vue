@@ -15,14 +15,14 @@ defineProps<ErrorProps>();
 </script>
 
 <template>
-  <h1>
+  <h1 :class="$style.h1">
     {{ error.statusCode }}
     <template v-if="error.cause">{{ error.cause }}</template>
   </h1>
 </template>
 
-<style lang="scss" scoped>
-h1 {
+<style lang="scss" module>
+.h1 {
   font-family: inherit;
 }
 </style>
