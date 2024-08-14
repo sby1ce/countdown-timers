@@ -7,9 +7,7 @@ SPDX-License-Identifier: CC0-1.0
 import { defineConfig } from "@solidjs/start/config";
 import wasm from "vite-plugin-wasm";
 
-if (!process.env.VITE_PATH) {
-  throw new Error(`${typeof process.env.VITE_PATH} ${process.env.VITE_PATH}`);
-}
+process.env.VITE_PATH = "/countdown-timers/solid";
 
 export default defineConfig({
   ssr: true,

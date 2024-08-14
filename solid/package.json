@@ -3,10 +3,8 @@
   "type": "module",
   "license": "AGPL-3.0-or-later",
   "scripts": {
-    "dev": "bun --env-file=.env run _dev",
-    "_dev": "vinxi dev",
-    "build": "bun --env-file.env run _build",
-    "_build": "vinxi build",
+    "dev": "vinxi dev",
+    "build": "vinxi build",
     "start": "vinxi start",
     "version": "vinxi version",
     "lint": "eslint .",
@@ -14,22 +12,19 @@
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.13.6",
+    "@solidjs/router": "^0.14.2",
     "@solidjs/start": "^1.0.6",
-    "solid-js": "^1.8.19",
-    "vinxi": "^0.3.14"
-  },
-  "engines": {
-    "node": ">=20"
+    "solid-js": "^1.8.21",
+    "vinxi": "^0.4.1"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^9.8.0",
+    "@typescript-eslint/parser": "^8.1.0",
+    "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-solid": "^0.14.1",
     "prettier": "^3.3.3",
     "sass": "^1.77.8",
-    "typescript-eslint": "^7.18.0",
+    "typescript-eslint": "^8.1.0",
     "vite-plugin-wasm": "^3.3.0"
   }
 }

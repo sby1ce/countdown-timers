@@ -9,8 +9,8 @@ import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 // import adapter from '@sveltejs/adapter-auto';
 
 /** @type {`/${string}` | undefined} */
-// @ts-expect-error trust me bro
-const base = process.env.PUBLIC_PATH;
+// This is the only place where it appears
+const base = "/countdown-timers/svelte";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

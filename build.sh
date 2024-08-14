@@ -21,7 +21,7 @@ function copy_build() {
     # Third argument is the desired name of the directory
     cd $1
 
-    bun --env-file=.env run build
+    bun run build
     if [ ! -z $3 ]; then
         mkdir ../$TOTAL/$3
     fi
