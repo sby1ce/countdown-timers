@@ -20,7 +20,7 @@ withDefaults(defineProps<KebabProps>(), { height: "100%" });
   </svg>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 @use "~/scss/variables" as v;
 
 svg {

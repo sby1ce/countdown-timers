@@ -15,6 +15,11 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL,
+    head: {
+      link: [
+        { rel: "icon", type: "image/svg+xml", href: baseURL + "/icon.svg" },
+      ],
+    },
   },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },

@@ -21,7 +21,7 @@ defineProps<ErrorProps>();
   </h1>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 h1 {
   font-family: inherit;
 }

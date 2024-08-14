@@ -114,7 +114,7 @@ function submit(): void {
   </form>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 @use "../scss/variables" as v;
 
 form {

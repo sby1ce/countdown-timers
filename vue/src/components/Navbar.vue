@@ -90,7 +90,7 @@ const siblings: SiblingProps[] = [
   </nav>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 @use "../scss/variables" as v;
 
 @mixin gap($pad-left) {

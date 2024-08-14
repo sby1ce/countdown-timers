@@ -16,7 +16,7 @@ import TimerBlock from "~/components/TimerBlock.vue";
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 div {
   display: grid;
   grid-template-rows: auto 1fr;

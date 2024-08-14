@@ -42,7 +42,7 @@ const class_ = matchStyle(props.color);
   </button>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 @use "../scss/variables" as v;
 
 button {

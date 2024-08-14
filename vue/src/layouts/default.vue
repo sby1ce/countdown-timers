@@ -7,6 +7,22 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <script setup lang="ts">
 import Footer from "~/components/Footer.vue";
 import Navbar from "~/components/Navbar.vue";
+
+// favicon in nuxt.config
+// eslint-disable-next-line no-undef
+useHead({
+  meta: [{ property: "og:updated_time", content: "2024-08-14" }],
+});
+// eslint-disable-next-line no-undef
+useSeoMeta({
+  title: "Countdown Timers",
+  description: "Watch timers count down",
+  ogTitle: "Countdown Timers",
+  ogType: "website",
+  ogDescription: "Watch timers count down",
+  ogUrl: "https://sby1ce.github.io/countdown-timers",
+  // no ogUpdateTime...
+});
 </script>
 
 <template>
@@ -29,7 +45,7 @@ body {
 }
 </style>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 div {
   display: grid;
   grid-template-columns: 1fr 6fr;

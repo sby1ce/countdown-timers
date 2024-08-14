@@ -45,7 +45,7 @@ function toggle(): void {
   </article>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 @use "../scss/variables" as v;
 
 $padding: 0.5em;
