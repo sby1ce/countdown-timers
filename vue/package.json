@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "countdown-timers-vue",
   "license": "AGPL-3.0-or-later",
   "private": true,
   "type": "module",
@@ -13,13 +13,18 @@
     "format": "prettier -w ."
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.3",
     "nuxt": "^3.12.4",
+    "pinia": "^2.2.1",
     "vue": "latest"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^8.1.0",
     "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.27.0",
     "prettier": "^3.3.3",
+    "sass": "^1.77.8",
     "typescript-eslint": "^8.1.0"
   }
 }
