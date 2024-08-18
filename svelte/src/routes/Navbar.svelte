@@ -39,8 +39,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   let pathname: string = $page.url.pathname;
   $: pathname = $page.url.pathname;
-  let origin: string = $page.url.origin;
-  $: origin = $page.url.origin;
   let root: string = getBase(pathname);
   $: root = getBase(pathname);
   let bench: boolean = isBench(pathname);
@@ -49,19 +47,28 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   function getSibling(name: string, path: `/${string}`): SiblingProps {
     return {
       name,
-      index: origin + root + path,
-      bench: origin + root + path + "/bench",
+      index: root + path,
+      bench: root + path + "/bench",
     } satisfies SiblingProps;
   }
 
-  let siblings: SiblingProps[] = [];
+  let siblings: SiblingProps[] = [
+    getSibling("React", "/svelte"),
+    getSibling("Solid", "/svelte"),
+    getSibling("Vue", "/svelte"),
+  ];
   let rootBench: string = "";
   let rootLegal: string = "";
   onMount(() => {
     // onMount crutch because it isn't run on the server
-    siblings = [getSibling("React", "/react"), getSibling("Solid", "/solid")];
-    rootBench = origin + root + "/bench";
-    rootLegal = origin + root + "/legal";
+    // otherwise build fails because links don't begin with paths.base
+    siblings = [
+      getSibling("React", "/react"),
+      getSibling("Solid", "/solid"),
+      getSibling("Vue", "/vue"),
+    ];
+    rootBench = root + "/bench";
+    rootLegal = root + "/legal";
   });
 </script>
 

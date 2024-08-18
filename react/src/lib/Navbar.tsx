@@ -70,6 +70,7 @@ export default function Navbar(): JSX.Element {
         <li className={styles.li}>
           <Sibling base={base} name="Solid" path="/solid" />
           <Sibling base={base} name="Svelte" path="/svelte" />
+          <Sibling base={base} name="Vue" path="/vue" />
         </li>
         {root}
       </ul>
