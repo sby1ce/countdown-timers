@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
+import { onBeforeMount, ref } from "vue";
 import {
   tsTimers as tsUpdate,
   type Origins,
@@ -15,10 +15,10 @@ import { initialize, seed, bench1000, formatBrowser } from "~/bench.ts";
 import Button from "~/components/Button.vue";
 import { ButtonStyle } from "~/utils.ts";
 
-let rsUpdate: TimerFunc;
+const rsUpdate = ref<TimerFunc>();
 
 onBeforeMount(async () => {
-  rsUpdate = await initialize();
+  rsUpdate.value = await initialize();
 });
 
 interface Results {
@@ -26,15 +26,15 @@ interface Results {
   rs: number;
 }
 
-let results: Results | null = null;
+const results = ref<Results>();
 
 function bench(): void {
   const origins: Origins = seed();
 
   const tsAvg: number = bench1000(tsUpdate, origins);
-  const rsAvg: number = bench1000(rsUpdate, origins);
+  const rsAvg: number = bench1000(rsUpdate.value!, origins);
 
-  results = {
+  results.value = {
     ts: tsAvg,
     rs: rsAvg,
   } satisfies Results;
