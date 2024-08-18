@@ -63,10 +63,10 @@ const siblings: SiblingProps[] = [
           <summary :class="$style.summer">Vue</summary>
           <ul :class="$style.ul">
             <li :class="[{ [$style.current]: !bench }, $style.li]">
-              <a :class="$style.a" :href="base">Timers</a>
+              <a :class="$style.a" :href="base + '/vue'">Timers</a>
             </li>
             <li :class="[{ [$style.current]: bench }, $style.li]">
-              <a :class="$style.a" :href="base + '/bench'">Benchmark</a>
+              <a :class="$style.a" :href="base + '/vue/bench'">Benchmark</a>
             </li>
           </ul>
         </details>
