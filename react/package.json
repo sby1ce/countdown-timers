@@ -14,15 +14,15 @@
     "@reduxjs/toolkit": "^2.2.7",
     "clsx": "^2.1.1",
     "next": "^15.0.0-rc.0",
-    "react": "^19.0.0-rc-49496d49-20240814",
-    "react-dom": "^19.0.0-rc-49496d49-20240814",
+    "react": "^19.0.0-rc-1eaccd82-20240816",
+    "react-dom": "^19.0.0-rc-1eaccd82-20240816",
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
     "@types/node": "^22.3.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "babel-plugin-react-compiler": "^0.0.0-experimental-1cd8995-20240814",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-52d6685-20240815",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
     "prettier": "^3.3.3",
