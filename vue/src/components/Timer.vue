@@ -44,7 +44,11 @@ function toggle(): void {
         Delete timer
       </button>
 
-      <button :class="[$style.button, $style.settings]" type="button" @click="toggle">
+      <button
+        :class="[$style.button, $style.settings]"
+        type="button"
+        @click="toggle"
+      >
         <Kebab />
       </button>
     </div>
