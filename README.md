@@ -32,10 +32,13 @@ This project is using the following third-party packages and crates
 - [`eslint-config-prettier`](https://www.npmjs.com/package/eslint-config-prettier) - licensed under `MIT`
 - [`eslint-plugin-svelte`](https://sveltejs.github.io/eslint-plugin-svelte/) - licensed under `MIT`
 - [`eslint-plugin-testing-library`](https://www.npmjs.com/package/eslint-plugin-testing-library) - licensed under `MIT`
+- [`eslint-plugin-vue`](https://eslint.vuejs.org/) - licensed under `MIT`
 - [`espree`](https://www.npmjs.com/package/espree) - licensed under `BSD-2-Clause`
 - [`globals`](https://www.npmjs.com/package/globals) - licensed under `MIT`
 - [`jsdom`](https://www.npmjs.com/package/jsdom) - licensed under `MIT`
 - [`next`](https://nextjs.org/) - licensed under `MIT`
+- [`nuxt`](https://nuxt.com/) - licensed under `MIT`
+- [`pinia`](https://pinia.vuejs.org/) - licensed under `MIT`
 - [`prettier`](https://prettier.io/) - licensed under `MIT`
 - [`prettier-plugin-svelte`](https://www.npmjs.com/package/prettier-plugin-svelte) - licensed under `MIT`
 - [`react`](https://react.dev/) - licensed under `MIT`
@@ -54,5 +57,6 @@ This project is using the following third-party packages and crates
 - [`vite`](https://vitejs.dev/) - licensed under `MIT`
 - [`vite-plugin-wasm`](https://www.npmjs.com/package/vite-plugin-wasm) - licensed under `MIT`
 - [`vitest`](https://vitest.dev/) - licensed under `MIT`
+- [`vue`](https://vuejs.org/) - licensed under `MIT`
 - [`js-sys`](https://crates.io/crates/js-sys) - licensed under `MIT OR Apache-2.0`
 - [`wasm-bindgen`](https://rustwasm.github.io/) - licensed under `MIT OR Apache-2.0`
