@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onUnmounted, ref } from "vue";
+import { computed, onBeforeMount, onMounted, onUnmounted, ref } from "vue";
 import {
   tsTimers,
   wasmWrapper,
@@ -58,7 +58,8 @@ onBeforeMount(() => {
   interval = setInterval(() => {
     renders.value = updateTimers.value(origins.value);
   }, 1000);
-
+});
+onMounted(() => {
   timers.init();
 });
 onUnmounted(() => {

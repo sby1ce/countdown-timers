@@ -4,12 +4,12 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
-import { ref } from "vue";
+import { shallowRef } from "vue";
 import { defineStore } from "pinia";
 import { loadFromLocalStorage, storageAvailable } from "./storage.ts";
 
 export const useTimers = defineStore("timers", () => {
-  const inner = ref<ITimer[]>([]);
+  const inner = shallowRef<ITimer[]>([]);
 
   function init(): void {
     inner.value = loadFromLocalStorage();
