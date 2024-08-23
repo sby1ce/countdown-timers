@@ -108,7 +108,9 @@ function submit(): void {
     </fieldset>
 
     <p v-show="form" :class="$style.p">
-      <small>{{ form }}</small>
+      <output for="add-name add-time"
+        ><small>{{ form }}</small></output
+      >
     </p>
 
     <Button :class="$style.button" type="submit">Add timer</Button>

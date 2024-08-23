@@ -111,7 +111,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   </fieldset>
 
   {#if form}
-    <p><small>{form}</small></p>
+    <p><output><small>{form}</small></output></p>
   {/if}
 
   <button type="submit"> Add timer </button>

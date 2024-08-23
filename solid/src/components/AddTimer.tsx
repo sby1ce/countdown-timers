@@ -154,7 +154,9 @@ export default function AddTimer(props: AddTimerProps): JSX.Element {
 
       <Show when={Boolean(form())}>
         <p class={styles.p}>
-          <small>{form()}</small>
+          <output>
+            <small>{form()}</small>
+          </output>
         </p>
       </Show>
 

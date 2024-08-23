@@ -174,7 +174,9 @@ export default function AddTimer({ timers }: AddTimerProps): JSX.Element {
 
       {err.length > 0 && (
         <p className={styles.p}>
-          <small>{err}</small>
+          <output>
+            <small>{err}</small>
+          </output>
         </p>
       )}
 

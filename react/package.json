@@ -22,7 +22,7 @@
     "@types/node": "^22.3.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "babel-plugin-react-compiler": "^0.0.0-experimental-52d6685-20240815",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-48eb8f4-20240822",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
     "prettier": "^3.3.3",

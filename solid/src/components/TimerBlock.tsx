@@ -58,7 +58,9 @@ export default function TimerBlock(): JSX.Element {
 
   let interval: ReturnType<typeof setInterval>;
   // eslint-disable-next-line solid/reactivity
-  const [renders, setRenders] = createSignal<string[][]>(update().func(origins()));
+  const [renders, setRenders] = createSignal<string[][]>(
+    update().func(origins()),
+  );
   createRenderEffect(() => {
     interval = setInterval(() => setRenders(update().func(origins())), 1000);
   });
