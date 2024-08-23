@@ -60,7 +60,7 @@ const siblings: SiblingProps[] = [
     <ul :class="$style.ul">
       <li :class="$style.li">
         <details open :class="$style.details">
-          <summary :class="$style.summer">Vue</summary>
+          <summary :class="$style.summary">Vue</summary>
           <ul :class="$style.ul">
             <li :class="[{ [$style.current]: !bench }, $style.li]">
               <a :class="$style.a" :href="base + '/vue'">Timers</a>
