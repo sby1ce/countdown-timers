@@ -4,9 +4,6 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
-use js_sys::Array;
-use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
-
 #[derive(Clone, Copy)]
 pub struct TimeUnit {
     suffix: &'static str,
@@ -104,22 +101,11 @@ fn update(origin: i64, now: i64) -> [String; 1] {
     [convert(interval, &format_options)]
 }
 
-fn update_timers_(now: i64, origins: Vec<i64>) -> Vec<[String; 1]> {
+pub fn update_timers_(now: i64, origins: Vec<i64>) -> Vec<[String; 1]> {
     origins
         .into_iter()
         .map(|origin: i64| -> [String; 1] { update(origin, now) })
         .collect::<Vec<[String; 1]>>()
-}
-
-/// Returning JSON of Vec<Vec<String>>
-#[wasm_bindgen]
-pub fn update_timers(now: i64, origins: Vec<i64>) -> Vec<JsValue> {
-    update_timers_(now, origins)
-        .into_iter()
-        .map(|arr: [String; 1]| {
-            JsValue::from(arr.into_iter().map(JsValue::from).collect::<Array>())
-        })
-        .collect::<Vec<_>>()
 }
 
 #[cfg(test)]

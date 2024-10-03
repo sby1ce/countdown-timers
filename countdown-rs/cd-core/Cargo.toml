@@ -1,0 +1,11 @@
+# Copyright 2024 sby1ce
+# 
+# SPDX-License-Identifier: CC0-1.0
+
+[package]
+name = "cd-core"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-or-later"
+
+[dependencies]

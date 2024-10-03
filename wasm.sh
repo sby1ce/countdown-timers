@@ -2,4 +2,4 @@
 # 
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-wasm-pack build ./countdown-rs --target web --release
+wasm-pack build ./countdown-rs/cd-wasm --out-dir ../pkg --target web --release
