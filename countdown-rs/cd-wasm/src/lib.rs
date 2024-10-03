@@ -7,7 +7,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 use js_sys::Array;
 use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
 
-
 /// Returning JSON of Vec<Vec<String>>
 #[wasm_bindgen]
 pub fn update_timers(now: i64, origins: Vec<i64>) -> Vec<JsValue> {

@@ -2,6 +2,7 @@
 members = [
     "cd-core",
     "cd-wasm",
+    "cd-native",
 ]
 resolver = "2"
 
