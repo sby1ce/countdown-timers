@@ -12,19 +12,19 @@
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.14.2",
-    "@solidjs/start": "^1.0.6",
-    "solid-js": "^1.8.21",
-    "vinxi": "^0.4.1"
+    "@solidjs/router": "^0.14.7",
+    "@solidjs/start": "^1.0.8",
+    "solid-js": "^1.9.1",
+    "vinxi": "^0.4.3"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.1.0",
-    "eslint": "^9.9.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-solid": "^0.14.1",
+    "eslint-plugin-solid": "^0.14.3",
     "prettier": "^3.3.3",
-    "sass": "^1.77.8",
-    "typescript-eslint": "^8.1.0",
+    "sass": "^1.79.4",
+    "typescript-eslint": "^8.8.0",
     "vite-plugin-wasm": "^3.3.0"
   }
 }

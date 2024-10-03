@@ -15,6 +15,13 @@ export default defineConfig({
   build: {
     target: "esnext",
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern",
+      },
+    },
+  },
   server: {
     fs: {
       allow: ["../countdown-rs/pkg/"],
