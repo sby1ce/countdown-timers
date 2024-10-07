@@ -87,9 +87,10 @@ pub unsafe extern "C" fn update_timers(
     assert!(!array_ptr.is_null());
     assert!(array_ptr.is_aligned());
     assert!(len < usize::MAX / 4);
-    println!("Got TypedArray {array_ptr:?}");
+    // JavaScript owns the data but core consumes the iterator
+    // surely the compiler will optimize away the copying
     let origins: &[i64] = unsafe { slice::from_raw_parts(array_ptr, len) };
-    println!("Origins {origins:?}");
+    println!("{origins:?}");
 
     // The docs don't specify what happens to the memory of the pointer, length and capacity
     // when a `Vec` is marked for manual dropping
@@ -143,7 +144,6 @@ pub unsafe extern "C" fn drop_pointers(array_ptr: *mut usize, length: libc::size
 pub unsafe extern "C" fn drop_vec(ptr: *mut u16, length: libc::size_t) {
     assert!(!ptr.is_null());
     assert!(ptr.is_aligned());
-    println!("Pointer to drop {ptr:?} with length {length:?}");
     let vector: Vec<u16> = unsafe { Vec::from_raw_parts(ptr, length, length) };
     drop(vector);
 }
