@@ -19,7 +19,7 @@ function callNative(): void {
   const DLL_PATH = `${import.meta.dir}/../../countdown-rs/target/release/cd_native.${suffix}`;
 
   const {
-    symbols: { as_pointer, drop_vec, update_timers },
+    symbols: { as_pointer, drop_pointers, work_nat },
     // Gathering into object because eslint doesn't like
     // `close` being called without `this`
     // It is unclear whether it is required or recommended to call close in the first place
@@ -38,13 +38,21 @@ function callNative(): void {
       args: [FFIType.ptr, "usize"],
       returns: FFIType.ptr,
     },
+    work_nat: {
+      args: [FFIType.ptr, "usize"],
+      returns: FFIType.ptr,
+    },
+    drop_pointers: {
+      args: [FFIType.ptr, "usize"],
+      returns: FFIType.void,
+    },
   });
 
   const len = 4;
   // Array is automatically filled with zeros
   const arr = new BigInt64Array(len);
 
-  const ptr = update_timers(arr, 4);
+  /* const ptr = update_timers(arr, 4);
   if (ptr === null) {
     dll.close();
     return;
@@ -76,7 +84,25 @@ function callNative(): void {
   // God knows why this doesn't work
   console.log(decoder.decode(buffer), buffer);
 
-  drop_vec(buffer, length);
+  drop_vec(buffer, length); */
+
+  const box: Pointer | null = work_nat(arr, len);
+  if (box === null) {
+    dll.close();
+    return;
+  }
+  const vec: Pointer | null = as_pointer(read.ptr(box));
+  if (vec === null) {
+    dll.close();
+    return;
+  }
+  const length = read.ptr(box, 8);
+  // const buffer = new Uint16Array(toArrayBuffer(vec, 0, length * 2));
+  const pointers = new BigUint64Array(toArrayBuffer(vec, 0, length * 8));
+
+  console.log(pointers);
+
+  drop_pointers(pointers, pointers.length);
 
   dll.close();
 }
