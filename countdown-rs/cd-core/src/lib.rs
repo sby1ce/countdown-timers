@@ -35,6 +35,7 @@ pub enum FormatOption {
 }
 
 impl FormatOption {
+    #[must_use]
     pub fn new(time_unit: &str) -> Option<Self> {
         Some(match time_unit {
             "w" => Self::Week,
@@ -46,6 +47,7 @@ impl FormatOption {
             _ => return None,
         })
     }
+    #[must_use]
     pub const fn as_time_unit(&self) -> TimeUnit {
         match self {
             Self::Week => TIME_UNITS[0],
@@ -156,6 +158,7 @@ pub fn update<T: Clone, A: Accumulate<T>>(accumulators: [A; 1], origin: i64, now
     accumulators.map(|accumulator: A| convert(interval, accumulator, &format_options))
 }
 
+#[must_use]
 pub fn update_timers_(now: i64, origins: Vec<i64>) -> Vec<[String; 1]> {
     let update_accumulators = |origin: i64| -> [MyStr; 1] {
         // One might think this is allocation in a loop

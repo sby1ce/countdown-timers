@@ -14,3 +14,13 @@ crate-type = ["cdylib"]
 
 [dependencies]
 libc = "0.2"
+
+[lints.clippy]
+single_call_fn = { level = "allow", priority = 1 }  # God function
+too_many_lines = { level = "allow", priority = 1 }  # No, I don't think so
+module_name_repetitions = { level = "allow", priority = 1 }  # This is annoying
+multiple_crate_versions = { level = "allow", priority = 1 }  # Can't do anything about it
+all = "warn"
+cargo = "warn"
+nursery = "deny"
+pedantic = "deny"
