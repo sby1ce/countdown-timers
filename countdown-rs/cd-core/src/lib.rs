@@ -35,6 +35,7 @@ pub enum FormatOption {
 }
 
 impl FormatOption {
+    #[must_use]
     pub fn new(time_unit: &str) -> Option<Self> {
         Some(match time_unit {
             "w" => Self::Week,
@@ -46,6 +47,7 @@ impl FormatOption {
             _ => return None,
         })
     }
+    #[must_use]
     pub const fn to_time_unit(&self) -> TimeUnit {
         match self {
             Self::Week => TIME_UNITS[0],
@@ -101,6 +103,7 @@ fn update(origin: i64, now: i64) -> [String; 1] {
     [convert(interval, &format_options)]
 }
 
+#[must_use]
 pub fn update_timers_(now: i64, origins: Vec<i64>) -> Vec<[String; 1]> {
     origins
         .into_iter()

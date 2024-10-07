@@ -12,29 +12,26 @@ SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
 import { dlopen, FFIType, read, suffix, toArrayBuffer, type Pointer } from "bun:ffi";
-import { resolve } from "node:path";
 // import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$lib/timers.ts";
 // import { initialize, seed, bench1000, formatRuntime } from "$lib/bench.ts";
 
 function callNative(): void {
-  const DLL_PATH = resolve(
-    `${import.meta.dir}/../../countdown-rs/target/release/cd_native.${suffix}`,
-  );
+  const DLL_PATH = `${import.meta.dir}/../../countdown-rs/target/release/cd_native.${suffix}`;
 
   const {
-    symbols: { as_context, as_pointer, drop_box, update_timers },
+    symbols: { as_pointer, drop_vec, update_timers },
+    // Gathering into object because eslint doesn't like
+    // `close` being called without `this`
+    // It is unclear whether it is required or recommended to call close in the first place
+    // but the example in the docs says `JSCallback` instances specifically need to be closed
     ...dll
   } = dlopen(DLL_PATH, {
-    as_context: {
-      args: ["usize"],
-      returns: FFIType.ptr,
-    },
     as_pointer: {
       args: ["usize"],
       returns: FFIType.ptr,
     },
-    drop_box: {
-      args: [FFIType.ptr],
+    drop_vec: {
+      args: [FFIType.ptr, "usize"],
       returns: FFIType.void,
     },
     update_timers: {
@@ -65,16 +62,21 @@ function callNative(): void {
       `pointer to first element in Vec ${vec.toString(16)} and length ${length}`,
   );
   console.log("Reading first element of vec", read.u16(vec));
-  const lengthCtx = as_context(length);
-  // `toArrayBuffer` actually returns a fake ArrayBuffer by bun, 
+  // not using deallocator arguments in `toArrayBuffer` (that isn't typed in `@types/bun` yet)
+  // because for some reason it causes issues with properly reading data
+  // and it doesn't get called anyway
+  //
+  // `toArrayBuffer` actually returns a fake ArrayBuffer by bun,
   // so need to cast to a TypedArray for `TextDecoder` to work
+  //
   // `length * 2` because u16 is 2 bytes
-  //@ts-expect-error @bun/types is not up to date yet
-  const buffer = new Uint16Array(toArrayBuffer(vec, 0, length * 2, lengthCtx, drop_box));
+  const buffer = new Uint16Array(toArrayBuffer(vec, 0, length * 2));
 
   const decoder = new TextDecoder("utf-16");
   // God knows why this doesn't work
   console.log(decoder.decode(buffer), buffer);
+
+  drop_vec(buffer, length);
 
   dll.close();
 }
