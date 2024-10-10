@@ -128,8 +128,34 @@ class NatString implements Disposable {
   }
 }
 
-function callNative(): void {
-  using ffi = new FfiWrapper({
+function nativeWrapper(
+  update_timers: (ptr: BigInt64Array, len: number) => Pointer | null,
+  as_pointer: (ptr: number | bigint) => Pointer | null,
+  drop_pointers: (ptr: BigUint64Array, len: number) => void,
+  drop_vec: (ptr: Uint16Array, length: number) => void,
+): TimerFunc {
+  return (origins: Origins): string[][] => {
+    const timestamps: BigInt64Array = origins.wasm;
+    const box: Pointer = update_timers(timestamps, timestamps.length)!;
+    using vec: NatVec = NatVec.create(box, as_pointer, drop_pointers)!;
+    return vec.iter().map(([str, length]) => {
+      using natStr = NatString.create(as_pointer(str), length, drop_vec);
+      // Ending up cloning anyway to give JavaScript the ownership
+      // because it has to drop the data later than `NatString` lifetime.
+      // In a real application the string will be consumed but more likely copied by some side effect
+      // return [structuredClone(natStr!.asString())];
+      return [natStr!.asString()];
+    });
+  };
+}
+
+interface Native extends Disposable {
+  ffi: FfiWrapper<Record<string, FFIFunction>>;
+  rsUpdate: TimerFunc;
+}
+
+function setupNative(): Native {
+  const ffi = new FfiWrapper({
     as_pointer: {
       args: ["usize"],
       returns: FFIType.ptr,
@@ -142,34 +168,22 @@ function callNative(): void {
       args: [FFIType.ptr, "usize"],
       returns: FFIType.void,
     },
-    work_nat: {
+    update_timers: {
       args: [FFIType.ptr, "usize"],
       returns: FFIType.ptr,
     },
   });
-  const { as_pointer, drop_vec, drop_pointers, work_nat } = ffi.symbols();
-
-  const len = 4;
-  // Array is automatically filled with zeros
-  const arr = new BigInt64Array(len).fill(3n);
-
-  const box = work_nat(arr, 4);
-  if (box === null) {
-    return;
-  }
-
-  using vec: NatVec | null = NatVec.create(box, as_pointer, drop_pointers);
-  if (vec === null) {
-    return;
-  }
-  const [str, strLen]: [bigint, bigint] = vec.iter()[0];
-
-  using refStr: NatString | null = NatString.create(as_pointer(str), strLen, drop_vec);
-  console.log(refStr?.asString());
+  const { as_pointer, drop_vec, drop_pointers, update_timers } = ffi.symbols();
+  return {
+    ffi,
+    rsUpdate: nativeWrapper(update_timers, as_pointer, drop_pointers, drop_vec),
+    [Symbol.dispose]: () => ffi[Symbol.dispose](),
+  };
 }
 
 async function main(): Promise<void> {
-  callNative();
+  using ffi = setupNative();
+  const { rsUpdate } = ffi;
 
   const wasmUpdate: TimerFunc = await initialize();
 
@@ -177,9 +191,14 @@ async function main(): Promise<void> {
 
   const tsAvg: number = bench1000(tsUpdate, origins);
   const wasmAvg: number = bench1000(wasmUpdate, origins);
+  const rsAvg: number = bench1000(rsUpdate, origins);
 
   const formatted =
-    formatRuntime("TypeScript", tsAvg) + "\n" + formatRuntime("WebAssembly", wasmAvg);
+    formatRuntime("TypeScript", tsAvg) +
+    "\n" +
+    formatRuntime("WebAssembly", wasmAvg) +
+    "\n" +
+    formatRuntime("Rust", rsAvg);
 
   console.log(formatted);
 }
