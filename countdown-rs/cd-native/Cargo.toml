@@ -14,6 +14,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 libc = "0.2"
+cd-core = { path = "../cd-core" }
+chrono = "0.4.38"
 
 [lints.clippy]
 single_call_fn = { level = "allow", priority = 1 }  # God function
