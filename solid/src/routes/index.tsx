@@ -10,7 +10,7 @@ import styles from "~/scss/index.module.scss";
 
 export default function Home(): JSX.Element {
   return (
-    <div>
+    <div class={styles.div}>
       <h1 class={styles.h1}>Watch countdowns</h1>
 
       <TimerBlock />
