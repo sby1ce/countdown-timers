@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC0-1.0
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import * as tsParser from "@typescript-eslint/parser";
-import solid from "eslint-plugin-solid/configs/recommended.js";
+import solid from "eslint-plugin-solid/configs/recommended";
 import prettier from "eslint-config-prettier";
 
 export default tseslint.config(

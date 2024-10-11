@@ -59,9 +59,11 @@ export default function TimerBlock(): JSX.Element {
   });
   onMount((): void => {
     // Mad side effects
-    initialize().then((rsUpdate: TimerFunc): void => {
-      setRsTimers(() => rsUpdate);
-    });
+    initialize()
+      .then((rsUpdate: TimerFunc): void => {
+        setRsTimers(() => rsUpdate);
+      })
+      .catch((reason) => console.error(reason));
   });
   const switchFunc: () => void = () => setUpdate(switchUpdate(rsTimers));
 
@@ -70,8 +72,8 @@ export default function TimerBlock(): JSX.Element {
   const origins: () => Origins = () => originsPipe(timers);
 
   let interval: ReturnType<typeof setInterval>;
-  // eslint-disable-next-line solid/reactivity
   const [renders, setRenders] = createSignal<string[][]>(
+    // eslint-disable-next-line solid/reactivity
     update().func(origins()),
   );
   createRenderEffect(() => {
