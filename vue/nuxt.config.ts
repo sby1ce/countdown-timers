@@ -21,7 +21,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  compatibilityDate: "2024-04-03",
+  compatibilityDate: "2024-10-11",
   devtools: { enabled: true },
   $production: {
     devtools: { enabled: false },
@@ -42,6 +42,15 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       base: baseURL,
+    },
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern",
+        },
+      },
     },
   },
 });
