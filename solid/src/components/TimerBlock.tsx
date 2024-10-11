@@ -10,10 +10,9 @@ import {
   onCleanup,
   createSignal,
   createRenderEffect,
+  onMount,
 } from "solid-js";
-import Timer from "./Timer.tsx";
-import AddTimer from "./AddTimer.tsx";
-import Button, { ButtonStyle } from "./Button.tsx";
+import { initialize } from "./bench.ts";
 import {
   type ITimer,
   type TimerFunc,
@@ -22,6 +21,9 @@ import {
   tsTimers,
   originsPipe,
 } from "./timers.ts";
+import Timer from "./Timer.tsx";
+import AddTimer from "./AddTimer.tsx";
+import Button, { ButtonStyle } from "./Button.tsx";
 import styles from "./TimerBlock.module.scss";
 
 interface UpdateFunc {
@@ -29,28 +31,39 @@ interface UpdateFunc {
   func: TimerFunc;
 }
 
-function switchUpdate(updateFunc: UpdateFunc): UpdateFunc {
-  if (updateFunc.isRs) {
+function switchUpdate(
+  rsTimers: () => TimerFunc | undefined,
+): (uf: UpdateFunc) => UpdateFunc {
+  console.log("switch outer");
+  return (updateFunc: UpdateFunc): UpdateFunc => {
+    if (updateFunc.isRs) {
+      return {
+        isRs: false,
+        func: tsTimers,
+      } satisfies UpdateFunc;
+    }
     return {
-      isRs: false,
-      func: tsTimers,
+      isRs: true,
+      func: rsTimers()!,
     } satisfies UpdateFunc;
-  }
-  return {
-    isRs: true,
-    // TODO
-    func: tsTimers,
-  } satisfies UpdateFunc;
+  };
 }
 
 export default function TimerBlock(): JSX.Element {
-  // TODO rsTimers
   const [update, setUpdate] = createSignal<UpdateFunc>({
     isRs: false,
     func: tsTimers,
   });
-  // TODO this is suboptimal
-  const switchFunc: () => void = () => setUpdate(switchUpdate);
+  const [rsTimers, setRsTimers] = createSignal<TimerFunc>(() => {
+    throw new Error("wasm failed to load");
+  });
+  onMount((): void => {
+    // Mad side effects
+    initialize().then((rsUpdate: TimerFunc): void => {
+      setRsTimers(() => rsUpdate);
+    });
+  });
+  const switchFunc: () => void = () => setUpdate(switchUpdate(rsTimers));
 
   const [timers, setTimers] = createTimers();
 
@@ -95,7 +108,7 @@ export default function TimerBlock(): JSX.Element {
         <form class={styles.form}>
           {/* TODO */}
           <Button click={switchFunc} bg={ButtonStyle.SecondaryBg}>
-            Switch
+            Switch {update().isRs ? "WA to JS" : "JS to WA"}
           </Button>
         </form>
       </aside>

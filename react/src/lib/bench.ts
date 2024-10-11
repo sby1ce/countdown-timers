@@ -4,21 +4,12 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
+import init, { update_timers } from "@/../../countdown-rs/pkg";
 import { wasmWrapper, type TimerFunc, type Origins } from "./timers.ts";
 
 export async function initialize(): Promise<TimerFunc> {
-  const base: string | undefined = process.env.BASE_PATH;
-  if (base === undefined) {
-    // TODO remove this check
-    throw new Error("No base path in env");
-  }
-  const wasmPath: string = base + "/timers_bg.wasm";
-
-  return wasmWrapper(
-    (await WebAssembly.instantiateStreaming(fetch(wasmPath)).then(
-      (source) => source.instance.exports.update_timers!,
-    )) as any,
-  );
+  await init();
+  return wasmWrapper(update_timers);
 }
 
 /**

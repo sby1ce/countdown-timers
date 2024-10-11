@@ -14,6 +14,7 @@ import {
   type MutableRefObject,
 } from "react";
 import { Provider } from "react-redux";
+import { initialize } from "./bench.ts";
 import {
   originsPipe,
   timers,
@@ -22,13 +23,11 @@ import {
   type TimerFunc,
   type Origins,
   INIT_TIMERS,
-  wasmWrapper,
 } from "./timers.ts";
 import Timer from "./Timer.tsx";
 import AddTimer from "./AddTimer.tsx";
 import Button, { ButtonStyle } from "./Button.tsx";
 import styles from "./TimerBlock.module.scss";
-import init, { update_timers } from "@/../../countdown-rs/pkg";
 
 interface UpdateFunc {
   isRs: boolean;
@@ -63,7 +62,7 @@ function TimerBlock(): JSX.Element {
   const rsTimers: MutableRefObject<TimerFunc> = useRef(() => {
     throw new Error("wasm failed to load");
   });
-  const switchFunc: () => void = () => setUpdate(switchUpdate(rsTimers));
+  const switchFunc: () => void = setUpdate.bind(null, switchUpdate(rsTimers));
 
   // Idk what causes this to be undefined
   const state: ITimer[] = timers.getState() ?? [];
@@ -82,9 +81,9 @@ function TimerBlock(): JSX.Element {
     // Fetching WASM in the background on load
     // Not using SWR because that's not fetching from an endpoint
     // Not using GetStaticProps because that's not supported for `app` directory project structure
-    init().then(() => {
+    initialize().then((rsUpdate: TimerFunc): void => {
       // Mad side effects
-      rsTimers.current = wasmWrapper(update_timers);
+      rsTimers.current = rsUpdate;
     });
   }, []);
 
