@@ -12,11 +12,17 @@ export async function initialize(): Promise<TimerFunc> {
   return wasmWrapper(update_timers);
 }
 
+function range(start: number, length: number): number[] {
+  return Array(length)
+    .fill(start)
+    .map((value: number, index: number) => value + index);
+}
+
 /**
  * Setup data
  */
 export function seed(): Origins {
-  const ts: number[] = [0, 1696174196000, 1607025600000];
+  const ts: number[] = [0, 1696174196000, 1607025600000].concat(range(1, 2000));
   const wasm: BigInt64Array = new BigInt64Array(ts.map(BigInt));
   return {
     ts,
