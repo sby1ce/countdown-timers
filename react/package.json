@@ -11,22 +11,22 @@
     "format": "prettier -w ."
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.2.7",
+    "@reduxjs/toolkit": "^2.2.8",
     "clsx": "^2.1.1",
     "next": "^15.0.0-rc.0",
-    "react": "^19.0.0-rc-70fb1363-20241010",
-    "react-dom": "^19.0.0-rc-70fb1363-20241010",
+    "react": "^19.0.0-rc-09111202-20241011",
+    "react-dom": "^19.0.0-rc-09111202-20241011",
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
-    "@types/node": "^22.7.4",
+    "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
+    "@types/react-dom": "^18.3.1",
     "babel-plugin-react-compiler": "^0.0.0-experimental-e504e66-20241010",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.14",
+    "eslint": "~8.57.1",
+    "eslint-config-next": "^14.2.15",
     "prettier": "^3.3.3",
-    "sass": "^1.79.4",
-    "typescript": "^5.6.2"
+    "sass": "^1.79.5",
+    "typescript": "^5.6.3"
   }
 }

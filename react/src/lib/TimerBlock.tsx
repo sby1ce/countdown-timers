@@ -6,7 +6,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 "use client";
 
-import { useEffect, useState, type JSX } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type JSX,
+  type MutableRefObject,
+} from "react";
 import { Provider } from "react-redux";
 import {
   originsPipe,
@@ -16,29 +22,36 @@ import {
   type TimerFunc,
   type Origins,
   INIT_TIMERS,
+  wasmWrapper,
 } from "./timers.ts";
 import Timer from "./Timer.tsx";
 import AddTimer from "./AddTimer.tsx";
 import Button, { ButtonStyle } from "./Button.tsx";
 import styles from "./TimerBlock.module.scss";
+import init, { update_timers } from "@/../../countdown-rs/pkg";
 
 interface UpdateFunc {
   isRs: boolean;
   func: TimerFunc;
 }
 
-function switchUpdate(updateFunc: UpdateFunc): UpdateFunc {
-  if (updateFunc.isRs) {
+function switchUpdate(
+  rsTimers: MutableRefObject<TimerFunc>,
+): (uf: UpdateFunc) => UpdateFunc {
+  // This ref object could've been a closure that returns a function
+  // but better not overcomplicate things
+  return (updateFunc: UpdateFunc): UpdateFunc => {
+    if (updateFunc.isRs) {
+      return {
+        isRs: false,
+        func: tsTimers,
+      } satisfies UpdateFunc;
+    }
     return {
-      isRs: false,
-      func: tsTimers,
+      isRs: true,
+      func: rsTimers.current,
     } satisfies UpdateFunc;
-  }
-  return {
-    isRs: true,
-    // TODO
-    func: tsTimers,
-  } satisfies UpdateFunc;
+  };
 }
 
 function TimerBlock(): JSX.Element {
@@ -46,7 +59,11 @@ function TimerBlock(): JSX.Element {
     isRs: false,
     func: tsTimers,
   });
-  const switchFunc: () => void = () => setUpdate(switchUpdate);
+  // See a bit later `useEffect` where this gets properly initialized
+  const rsTimers: MutableRefObject<TimerFunc> = useRef(() => {
+    throw new Error("wasm failed to load");
+  });
+  const switchFunc: () => void = () => setUpdate(switchUpdate(rsTimers));
 
   // Idk what causes this to be undefined
   const state: ITimer[] = timers.getState() ?? [];
@@ -58,9 +75,17 @@ function TimerBlock(): JSX.Element {
   const initial = update.func(origins);
   const [renders, setRenders] = useState(initial);
 
-  // Loading from localStorage as in onMount basically??
   useEffect(() => {
+    // Loading from localStorage as in onMount basically??
     timers.dispatch(INIT_TIMERS);
+
+    // Fetching WASM in the background on load
+    // Not using SWR because that's not fetching from an endpoint
+    // Not using GetStaticProps because that's not supported for `app` directory project structure
+    init().then(() => {
+      // Mad side effects
+      rsTimers.current = wasmWrapper(update_timers);
+    });
   }, []);
 
   useEffect(() => {
@@ -69,7 +94,7 @@ function TimerBlock(): JSX.Element {
       1000,
     );
     return () => clearInterval(interval);
-  });
+  }, [origins, update]);
 
   return (
     <div className={styles.div}>
@@ -94,9 +119,8 @@ function TimerBlock(): JSX.Element {
         </article>
 
         <form className={styles.form}>
-          {/* TODO */}
           <Button click={switchFunc} bg={ButtonStyle.SecondaryBg}>
-            Switch
+            Switch {update.isRs ? "WA to JS" : "JS to WA"}
           </Button>
         </form>
       </aside>
