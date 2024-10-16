@@ -6,8 +6,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 #[derive(Clone, Copy)]
 pub struct TimeUnit {
-    suffix: &'static str,
-    divisor: i64,
+    pub suffix: &'static str,
+    pub divisor: i64,
 }
 
 impl TimeUnit {

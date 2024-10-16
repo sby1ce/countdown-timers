@@ -14,6 +14,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 import {
   dlopen,
   FFIType,
+  ptr,
   read,
   suffix,
   toArrayBuffer,
@@ -152,6 +153,12 @@ function nativeWrapper(
 interface Native extends Disposable {
   ffi: FfiWrapper<Record<string, FFIFunction>>;
   rsUpdate: TimerFunc;
+  experimental: (
+    origin_ptr: BigInt64Array,
+    pointers: BigUint64Array,
+    outer_len: number,
+    inner_cap: number,
+  ) => void;
 }
 
 function setupNative(): Native {
@@ -172,22 +179,44 @@ function setupNative(): Native {
       args: [FFIType.ptr, "usize"],
       returns: FFIType.ptr,
     },
+    experimental: {
+      args: [FFIType.ptr, FFIType.ptr, "usize", "usize"],
+      returns: FFIType.void,
+    },
   });
-  const { as_pointer, drop_vec, drop_pointers, update_timers } = ffi.symbols();
+  const { as_pointer, drop_vec, drop_pointers, update_timers, experimental } = ffi.symbols();
   return {
     ffi,
     rsUpdate: nativeWrapper(update_timers, as_pointer, drop_pointers, drop_vec),
+    experimental,
     [Symbol.dispose]: () => ffi[Symbol.dispose](),
   };
 }
 
+const INNER_CAP = 30;
+
+function declareStrings(length: number): [Uint16Array[], BigUint64Array] {
+  const strings: Uint16Array[] = [];
+  for (let i = 0; i < length; ++i) {
+    strings.push(new Uint16Array(INNER_CAP));
+  }
+  return [
+    strings,
+    new BigUint64Array(strings.map((pointer: Uint16Array): bigint => BigInt(ptr(pointer)))),
+  ];
+}
+
 async function main(): Promise<void> {
   using ffi = setupNative();
-  const { rsUpdate } = ffi;
+  const { rsUpdate, experimental } = ffi;
 
   const wasmUpdate: TimerFunc = await initialize();
 
   const origins: Origins = seed();
+  const [strings, pointers] = declareStrings(origins.ts.length);
+  experimental(origins.wasm, pointers, origins.ts.length, INNER_CAP);
+  const decoder = new TextDecoder("utf-16");
+  console.log(strings.map((a) => decoder.decode(a)));
 
   const tsAvg: number = bench1000(tsUpdate, origins);
   const wasmAvg: number = bench1000(wasmUpdate, origins);
