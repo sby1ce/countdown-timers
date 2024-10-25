@@ -7,10 +7,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <script lang="ts">
   import Kebab from "$lib/Kebab.svelte";
 
-  export let pop: () => void;
-  export let name: string;
-  export let countdowns: string[];
-  let hidden: boolean = true;
+  let {
+    pop,
+    name,
+    countdowns,
+  }: {
+    pop(): void;
+    name: string;
+    countdowns: string[];
+  } = $props();
+  let hidden: boolean = $state(true);
 
   function toggle(): void {
     hidden = !hidden;
@@ -28,9 +34,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   <!-- hidden is not a reliable attribute -->
   <div class:hidden>
-    <button type="button" on:click={pop}>Delete timer</button>
+    <button type="button" onclick={pop}>Delete timer</button>
 
-    <button class="settings" type="button" on:click={toggle}>
+    <button class="settings" type="button" onclick={toggle}>
       <Kebab />
     </button>
   </div>

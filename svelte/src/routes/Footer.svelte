@@ -15,7 +15,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </script>
 
 <footer>
-  <Button on:click={clear}>Clear localStorage</Button>
+  <Button onclick={clear}>Clear localStorage</Button>
 </footer>
 
 <style lang="scss">

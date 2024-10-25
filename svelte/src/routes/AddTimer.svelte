@@ -8,11 +8,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import { timers, type ITimer } from "$lib/timers";
   import { storageAvailable } from "$lib/storage";
 
+  // Documentation doesn't specify on whether to use $state in this situation
   let name: HTMLInputElement;
   let date: HTMLInputElement;
-  let nameInvalid: boolean = false;
-  let dateInvalid: boolean = false;
-  let form: string = "";
+  let nameInvalid: boolean = $state(false);
+  let dateInvalid: boolean = $state(false);
+  let form: string = $state("");
 
   function getUnix(str: string | undefined): number | null {
     if (!str) {
@@ -88,7 +89,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   }
 </script>
 
-<form on:submit={submit}>
+<form onsubmit={submit}>
   <fieldset>
     <label for="add-name" hidden>Add timer name</label>
     <input

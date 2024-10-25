@@ -4,7 +4,7 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-<script lang="ts" context="module">
+<script lang="ts" module>
   export const enum ButtonStyle {
     Bg,
     SecondaryBg,
@@ -14,26 +14,36 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </script>
 
 <script lang="ts">
-  export let style: ButtonStyle = ButtonStyle.Bg;
-  let class_: string = "style-bg";
-  $: switch (style) {
-    case ButtonStyle.Bg:
-      class_ = "style-bg";
-      break;
-    case ButtonStyle.SecondaryBg:
-      class_ = "style-secondary-bg";
-      break;
-    case ButtonStyle.Primary:
-      class_ = "style-primary";
-      break;
-    case ButtonStyle.Text:
-      class_ = "style-text";
-      break;
+  import type { Snippet } from "svelte";
+
+  let {
+    style = ButtonStyle.Bg,
+    onclick,
+    children,
+  }: {
+    style?: ButtonStyle;
+    onclick?: (event: MouseEvent) => void;
+    children?: Snippet;
+  } = $props();
+
+  function match(style: ButtonStyle): string {
+    switch (style) {
+      case ButtonStyle.Bg:
+        return "style-bg";
+      case ButtonStyle.SecondaryBg:
+        return "style-secondary-bg";
+      case ButtonStyle.Primary:
+        return "style-primary";
+      case ButtonStyle.Text:
+        return "style-text";
+    }
   }
+
+  const class_: string = $derived(match(style));
 </script>
 
-<button on:click type="button" class={class_}>
-  <slot />
+<button {onclick} type="button" class={class_}>
+  {@render children?.()}
 </button>
 
 <style lang="scss">

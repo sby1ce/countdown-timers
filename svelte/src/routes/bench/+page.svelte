@@ -21,7 +21,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     rs: number;
   }
 
-  let results: Results | null = null;
+  let results: Results | null = $state(null);
 
   function bench(): void {
     const origins: Origins = seed();
@@ -51,7 +51,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
   <p>Press the button to run the benchmark</p>
 
-  <form><Button style={ButtonStyle.SecondaryBg} on:click={bench}>Benchmark</Button></form>
+  <form><Button style={ButtonStyle.SecondaryBg} onclick={bench}>Benchmark</Button></form>
 </main>
 
 <style lang="scss">

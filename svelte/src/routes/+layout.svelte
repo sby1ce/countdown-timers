@@ -6,8 +6,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <script lang="ts">
   import { base } from "$app/paths";
+  import type { Snippet } from "svelte";
   import Footer from "./Footer.svelte";
   import Navbar from "./Navbar.svelte";
+
+  let {
+    children,
+  }: {
+    children?: Snippet;
+  } = $props();
 </script>
 
 <svelte:head>
@@ -32,7 +39,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <div>
   <Navbar />
-  <slot />
+  {@render children?.()}
 </div>
 
 <Footer />

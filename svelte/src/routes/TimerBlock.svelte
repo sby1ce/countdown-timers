@@ -20,11 +20,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   import Button, { ButtonStyle } from "$lib/Button.svelte";
   import init, { update_timers } from "$wasm";
 
-  let rsTimers: TimerFunc = () => {
+  let rsTimers: TimerFunc = $state(() => {
     throw new Error("wasm failed to load");
-  };
-  let isRs: boolean = false;
-  let updateTimers: TimerFunc = tsTimers;
+  });
+  let isRs: boolean = $state(false);
+  let updateTimers: TimerFunc = $state(tsTimers);
 
   const switchFunc = (): void => {
     updateTimers = isRs ? tsTimers : rsTimers;
@@ -54,16 +54,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     },
   ]; */
 
-  let origins: Origins = originsPipe($timers);
-  $: {
-    // during prerender this is undefined
-    origins = originsPipe($timers);
-  }
+  const origins: Origins = $derived(originsPipe($timers));
 
-  let renders: string[][] = updateTimers(origins);
-  const interval = setInterval(() => {
-    renders = updateTimers(origins);
-  }, 1000);
+  // State referenced in its own scope will never update. Did you mean to reference it inside a closure?
+  let renders: string[][] = $state(tsTimers(originsPipe($timers)));
+  let interval: ReturnType<typeof setInterval> | undefined = $state();
+  $effect(() => {
+    interval = setInterval(() => {
+      renders = updateTimers(origins);
+    }, 1000);
+  })
 
   async function initialize(): Promise<void> {
     try {
@@ -101,7 +101,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     </article>
 
     <form>
-      <Button style={ButtonStyle.SecondaryBg} on:click={switchFunc}>
+      <Button style={ButtonStyle.SecondaryBg} onclick={switchFunc}>
         Switch {isRs ? "WA to JS" : "JS to WA"}
       </Button>
     </form>

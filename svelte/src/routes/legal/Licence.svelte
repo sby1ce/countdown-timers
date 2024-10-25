@@ -5,8 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <script lang="ts">
-  export let pkg: string;
-  export let licence: string;
+  let { pkg, licence }: { pkg: string; licence: string } = $props();
 </script>
 
 <details>
