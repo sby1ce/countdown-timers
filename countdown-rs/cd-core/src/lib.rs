@@ -46,7 +46,7 @@ impl FormatOption {
             _ => return None,
         })
     }
-    pub const fn to_time_unit(&self) -> TimeUnit {
+    pub const fn as_time_unit(&self) -> TimeUnit {
         match self {
             Self::Week => TIME_UNITS[0],
             Self::Day => TIME_UNITS[1],
@@ -58,38 +58,93 @@ impl FormatOption {
     }
 }
 
+fn calculate_interval(interval: i64, divisor: i64) -> (i64, String) {
+    let new_interval: i64 = interval.checked_rem_euclid(divisor).unwrap_or_default();
+    let unit_count: i64 = interval.checked_div_euclid(divisor).unwrap_or_default();
+    (new_interval, unit_count.to_string())
+}
+
+pub trait Accumulate<T: Clone> {
+    const MINUS_SIGN: T;
+    const SPACE_SIGN: T;
+    fn accumulate(self, interval: i64, format_option: &FormatOption) -> (i64, Self);
+    fn plus(self, element: T) -> Self;
+}
+
+struct MyStr {
+    inner: String,
+}
+
+impl MyStr {
+    fn into_string(self) -> String {
+        self.inner
+    }
+}
+
+impl Default for MyStr {
+    fn default() -> Self {
+        Self {
+            // Some calculating concluded that with the length 20
+            // the possibility of reallocation is close to 0
+            inner: String::with_capacity(20),
+        }
+    }
+}
+
+impl Accumulate<&str> for MyStr {
+    const MINUS_SIGN: &'static str = "-";
+    const SPACE_SIGN: &'static str = " ";
+    fn accumulate(self, interval: i64, format_option: &FormatOption) -> (i64, Self) {
+        let time_unit: TimeUnit = format_option.as_time_unit();
+        let (new_interval, unit_count) = calculate_interval(interval, time_unit.divisor);
+        let new_accumulator: Self = Self {
+            inner: self.inner + &unit_count + time_unit.suffix + Self::SPACE_SIGN,
+        };
+        (new_interval, new_accumulator)
+    }
+    fn plus(self, element: &str) -> Self {
+        Self {
+            inner: self.inner + element,
+        }
+    }
+}
+fn next(format_options: &[FormatOption]) -> &[FormatOption] {
+    &format_options[1..format_options.len()]
+}
+
 /// Works with positive intervals
-fn reduce_interval(interval: i64, accumulator: String, format_options: &[FormatOption]) -> String {
-    let format_len: usize = format_options.len();
-    if format_len == 0 {
+fn reduce_interval<T: Clone, A: Accumulate<T>>(
+    interval: i64,
+    accumulator: A,
+    format_options: &[FormatOption],
+) -> A {
+    if format_options.is_empty() {
         return accumulator;
     }
     let format_option: &FormatOption = &format_options[0];
-    let time_unit: TimeUnit = format_option.to_time_unit();
-    let new_interval: i64 = interval
-        .checked_rem_euclid(time_unit.divisor)
-        .unwrap_or_default();
-    let unit_count: i64 = interval
-        .checked_div_euclid(time_unit.divisor)
-        .unwrap_or_default();
-    let new_accumulator = accumulator + &unit_count.to_string() + time_unit.suffix + " ";
+    let (new_interval, new_accumulator) = accumulator.accumulate(interval, format_option);
 
-    reduce_interval(
-        new_interval,
-        new_accumulator,
-        &format_options[1..format_len],
-    )
+    reduce_interval(new_interval, new_accumulator, next(format_options))
 }
 
-fn convert(interval: i64, format_options: &[FormatOption]) -> String {
+fn convert<T: Clone, A: Accumulate<T>>(
+    interval: i64,
+    accumulator: A,
+    format_options: &[FormatOption],
+) -> A {
     let abs_interval: i64 = interval.abs();
 
-    let accumulator: String = String::with_capacity(20) + if interval < 0 { "-" } else { "" };
+    let element: T = A::MINUS_SIGN;
+    let new_accumulator: A = if interval < 0 {
+        accumulator.plus(element)
+    } else {
+        accumulator
+    };
 
-    reduce_interval(abs_interval, accumulator, format_options)
+    reduce_interval(abs_interval, new_accumulator, format_options)
 }
 
-fn update(origin: i64, now: i64) -> [String; 1] {
+pub fn update<T: Clone, A: Accumulate<T>>(accumulators: [A; 1], origin: i64, now: i64) -> [A; 1] {
     let interval: i64 = origin - now;
     let format_options: [FormatOption; 4] = [
         FormatOption::Day,
@@ -98,13 +153,21 @@ fn update(origin: i64, now: i64) -> [String; 1] {
         FormatOption::Second,
     ];
 
-    [convert(interval, &format_options)]
+    accumulators.map(|accumulator: A| convert(interval, accumulator, &format_options))
 }
 
 pub fn update_timers_(now: i64, origins: Vec<i64>) -> Vec<[String; 1]> {
+    let update_accumulators = |origin: i64| -> [MyStr; 1] {
+        // One might think this is allocation in a loop
+        // but it isn't because accumulators for every origin are entirely separate
+        let accumulators: [MyStr; 1] = [MyStr::default()];
+        update(accumulators, origin, now)
+    };
+
     origins
         .into_iter()
-        .map(|origin: i64| -> [String; 1] { update(origin, now) })
+        .map(update_accumulators)
+        .map(|accs: [MyStr; 1]| accs.map(MyStr::into_string))
         .collect::<Vec<[String; 1]>>()
 }
 
