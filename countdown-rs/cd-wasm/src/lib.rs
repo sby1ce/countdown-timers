@@ -11,7 +11,7 @@ use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
 #[must_use]
 #[wasm_bindgen]
 pub fn update_timers(now: i64, origins: Vec<i64>) -> Vec<JsValue> {
-    cd_core::update_timers(now, origins)
+    cd_core::update_timers_(now, origins)
         .into_iter()
         .map(|arr: [String; 1]| {
             JsValue::from(arr.into_iter().map(JsValue::from).collect::<Array>())
