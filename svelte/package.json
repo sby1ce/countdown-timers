@@ -19,6 +19,7 @@
     "espree": "^10.2.0",
     "globals": "^15.11.0",
     "jsdom": "^25.0.1",
+    "mitata": "^1.0.10",
     "prettier": "^3.3.3",
     "prettier-plugin-svelte": "^3.2.7",
     "sass": "^1.80.4",

@@ -12,8 +12,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
 import { dlopen, FFIType, ptr, suffix, type FFIFunction, type Library } from "bun:ffi";
+import { barplot, bench, run } from "mitata";
 import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$lib/timers.ts";
-import { initialize, seed, bench1000, formatRuntime } from "$lib/bench.ts";
+import { initialize, seed, bench1000 } from "$lib/bench.ts";
 
 const INNER_CAP = 20;
 const DLL_PATH = `${import.meta.dir}/../../countdown-rs/target/release/cd_native.${suffix}`;
@@ -99,18 +100,14 @@ async function main(): Promise<void> {
 
   const origins: Origins = seed();
 
-  const tsAvg: number = bench1000(tsUpdate, origins);
-  const wasmAvg: number = bench1000(wasmUpdate, origins);
-  const rsAvg: number = bench1000(rsUpdate, origins);
+  barplot(() => {
+    bench("ts", () => bench1000(tsUpdate, origins));
+    bench("wasm", () => bench1000(wasmUpdate, origins));
+    bench("rs", () => bench1000(rsUpdate, origins));
+  });
 
-  const formatted =
-    formatRuntime("TypeScript", tsAvg) +
-    "\n" +
-    formatRuntime("WebAssembly", wasmAvg) +
-    "\n" +
-    formatRuntime("Rust", rsAvg);
-
-  console.log(formatted);
+  const result = await run();
+  console.log(result);
 }
 
 await main();
