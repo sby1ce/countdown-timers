@@ -4,13 +4,8 @@ Copyright 2024 sby1ce
 SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
-import init, { update_timers } from "@/../../countdown-rs/pkg";
-import { wasmWrapper, type TimerFunc, type Origins } from "./timers.ts";
-
-export async function initialize(): Promise<TimerFunc> {
-  await init();
-  return wasmWrapper(update_timers);
-}
+import init, { update_timers } from "../../countdown-rs/pkg";
+import { wasmWrapper, type Origins, type TimerFunc } from "./timers.ts";
 
 /**
  * Setup data
@@ -60,4 +55,9 @@ export function formatBrowser(result: number | undefined): string {
   return result !== undefined
     ? result.toFixed(4).padStart(7) + " microseconds average over 1000 runs"
     : "-";
+}
+
+export async function initialize(): Promise<TimerFunc> {
+  await init();
+  return wasmWrapper(update_timers);
 }

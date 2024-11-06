@@ -13,7 +13,9 @@
     "types": ["vinxi/types/client"],
     "isolatedModules": true,
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "$wasm": ["../countdown-rs/pkg"],
+      "$cd-lib/*": ["../countdown-lib/src/*"]
     },
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,

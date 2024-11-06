@@ -11,8 +11,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
  * @module
  */
 
-import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$lib/timers.ts";
-import { initialize, seed, bench1000, formatRuntime } from "$lib/bench.ts";
+import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$cd-lib/timers.ts";
+import { initialize, seed, bench1000, formatRuntime } from "$cd-lib/bench.ts";
 
 async function main(): Promise<void> {
   const wasmUpdate: TimerFunc = await initialize();

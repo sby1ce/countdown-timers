@@ -12,6 +12,7 @@ const baseURL: string = "/countdown-timers/vue";
 export default defineNuxtConfig({
   alias: {
     $wasm: "../countdown-rs/pkg",
+    "$cd-lib": "../countdown-lib",
   },
   app: {
     baseURL,

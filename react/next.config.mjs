@@ -19,6 +19,10 @@ const nextConfig = {
   output: "export",
   reactStrictMode: true,
   basePath: BASE_PATH,
+  sassOptions: {
+    // Crutch for now https://github.com/vercel/next.js/issues/71638
+    silenceDeprecations: ["legacy-js-api"],
+  },
 };
 
 export default nextConfig;

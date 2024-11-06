@@ -12,7 +12,8 @@ import {
   type JSX,
 } from "react";
 import clsx from "clsx";
-import { appendTimer, type ITimer, timers as timerStore } from "./timers.ts";
+import type { ITimer } from "$cd-lib/timers.ts";
+import { appendTimer, timers as timerStore } from "./timers.ts";
 import styles from "./AddTimer.module.scss";
 
 function getUnix(str: string | undefined): number | null {

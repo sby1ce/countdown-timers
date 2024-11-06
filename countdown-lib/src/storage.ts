@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { ITimer } from "./timers.ts";
 
-export function loadFromLocalStorage(): ITimer[] {
+export function load(): ITimer[] {
   if (typeof localStorage === "undefined") {
     return [];
   }
@@ -62,7 +62,8 @@ export function storageAvailable(type: string): boolean {
   } catch (e) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return (e instanceof DOMException &&
-      (e.name === "QuotaExceededError" || e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+      (e.name === "QuotaExceededError" ||
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
       // acknowledge QuotaExceededError only if there's something already stored
       storage &&
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

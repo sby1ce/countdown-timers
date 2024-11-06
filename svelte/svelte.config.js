@@ -29,6 +29,7 @@ const config = {
     },
     alias: {
       $wasm: "../countdown-rs/pkg",
+      "$cd-lib": "../countdown-lib/src",
     },
   },
 };
