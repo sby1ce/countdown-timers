@@ -34,7 +34,6 @@
     "./tests/**/*.js",
     "./tests/**/*.ts",
     "./tests/**/*.svelte",
-    "./benches/**/*.ts",
     "svelte.config.js",
     "vitest-setup.js"
   ]

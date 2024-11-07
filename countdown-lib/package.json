@@ -11,7 +11,8 @@
   },
   "scripts": {
     "format": "prettier -w .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "bench": "bun benches/runtime.bench.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
