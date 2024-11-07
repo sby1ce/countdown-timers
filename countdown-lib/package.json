@@ -5,9 +5,9 @@
   "private": true,
   "main": "./src/index.ts",
   "exports": {
-    "bench": "./src/bench.ts",
-    "storage": "./src/storage.ts",
-    "timers": "./src/timers.ts"
+    "./bench": "./src/bench.ts",
+    "./storage": "./src/storage.ts",
+    "./timers": "./src/timers.ts"
   },
   "scripts": {
     "format": "prettier -w .",

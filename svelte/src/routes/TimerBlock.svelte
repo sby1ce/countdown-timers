@@ -12,9 +12,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     type Origins,
     type TimerFunc,
     originsPipe,
-  } from "$cd-lib/timers.ts";
+  } from "countdown-lib/timers";
   import { timers } from "$lib/timers.ts";
-  import { storageAvailable } from "$cd-lib/storage.ts";
+  import { storageAvailable } from "countdown-lib/storage";
   import Timer from "./Timer.svelte";
   import AddTimer from "./AddTimer.svelte";
   import Button, { ButtonStyle } from "$lib/Button.svelte";

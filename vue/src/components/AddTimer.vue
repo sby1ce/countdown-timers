@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { ITimer } from "../../../countdown-lib/src/timers.ts";
+import type { ITimer } from "countdown-lib/timers";
 import { useTimers } from "~/timers.ts";
 import Button from "./Button.vue";
 

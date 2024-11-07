@@ -6,8 +6,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$cd-lib/timers.ts";
-  import { initialize, seed, bench1000, formatBrowser } from "$cd-lib/bench.ts";
+  import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "countdown-lib/timers";
+  import { initialize, seed, bench1000, formatBrowser } from "countdown-lib/bench";
   import Button, { ButtonStyle } from "$lib/Button.svelte";
 
   let rsUpdate: TimerFunc;

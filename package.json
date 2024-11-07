@@ -1,0 +1,17 @@
+{
+  "name": "countdown-timers",
+  "license": "AGPL-3.0-or-later",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "countdown-lib",
+    "react",
+    "root",
+    "solid",
+    "svelte",
+    "vue"
+  ],
+  "dependencies": {
+    "nuxt": "^3.14.159"
+  }
+}

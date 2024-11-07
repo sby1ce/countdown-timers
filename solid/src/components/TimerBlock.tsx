@@ -18,9 +18,9 @@ import {
   type Origins,
   tsTimers,
   originsPipe,
-} from "../../../countdown-lib/src/timers.ts";
+} from "countdown-lib/timers";
 import { createTimers } from "./timers.ts";
-import { initialize } from "$cd-lib/bench.ts";
+import { initialize } from "countdown-lib/bench";
 import Timer from "./Timer.tsx";
 import AddTimer from "./AddTimer.tsx";
 import Button, { ButtonStyle } from "./Button.tsx";

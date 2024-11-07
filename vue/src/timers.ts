@@ -6,8 +6,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { shallowRef } from "vue";
 import { defineStore } from "pinia";
-import type { ITimer } from "../../countdown-lib/src/timers.ts";
-import { load, storageAvailable } from "../../countdown-lib/src/storage.ts";
+import type { ITimer } from "countdown-lib/timers";
+import { load, storageAvailable } from "countdown-lib/storage";
 
 export const useTimers = defineStore("timers", () => {
   const inner = shallowRef<ITimer[]>([]);

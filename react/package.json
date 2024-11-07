@@ -1,5 +1,5 @@
 {
-  "name": "react",
+  "name": "countdown-timers-react",
   "version": "0.1.0",
   "private": true,
   "license": "AGPL-3.0-or-later",
@@ -13,9 +13,10 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
     "clsx": "^2.1.1",
-    "next": "^15.0.2",
-    "react": "^19.0.0-rc-66855b96-20241106",
-    "react-dom": "^19.0.0-rc-66855b96-20241106",
+    "countdown-lib": "workspace:*",
+    "next": "^15.0.3",
+    "react": "^19.0.0-rc-5c56b873-20241107",
+    "react-dom": "^19.0.0-rc-5c56b873-20241107",
     "react-redux": "^9.1.2"
   },
   "devDependencies": {

@@ -20,8 +20,8 @@ import {
   type ITimer,
   type TimerFunc,
   type Origins,
-} from "$cd-lib/timers.ts";
-import { initialize } from "$cd-lib/bench.ts";
+} from "countdown-lib/timers";
+import { initialize } from "countdown-lib/bench";
 import { timers, INIT_TIMERS } from "./timers.ts";
 import Timer from "./Timer.tsx";
 import AddTimer from "./AddTimer.tsx";

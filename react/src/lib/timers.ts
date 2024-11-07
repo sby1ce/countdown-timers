@@ -9,8 +9,8 @@ import {
   type UnknownAction,
   type Unsubscribe,
 } from "@reduxjs/toolkit";
-import { load, storageAvailable } from "$cd-lib/storage.ts";
-import type { ITimer } from "$cd-lib/timers.ts";
+import { load, storageAvailable } from "countdown-lib/storage";
+import type { ITimer } from "countdown-lib/timers";
 
 export interface AppendTimer extends UnknownAction {
   type: "timers/append";

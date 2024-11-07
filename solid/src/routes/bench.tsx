@@ -9,13 +9,13 @@ import {
   tsTimers as tsUpdate,
   type TimerFunc,
   type Origins,
-} from "../../../countdown-lib/src/timers.ts";
+} from "countdown-lib/timers";
 import {
   initialize,
   seed,
   bench1000,
   formatBrowser,
-} from "../../../countdown-lib/src/bench.ts";
+} from "countdown-lib/bench";
 import Button, { ButtonStyle } from "~/components/Button.tsx";
 import styles from "~/scss/bench.module.scss";
 

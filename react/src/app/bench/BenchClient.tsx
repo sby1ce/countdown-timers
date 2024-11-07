@@ -8,13 +8,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 import dynamic from "next/dynamic";
 import { type JSX, useState } from "react";
-import { seed, bench1000, formatBrowser } from "$cd-lib/bench.ts";
+import { seed, bench1000, formatBrowser } from "countdown-lib/bench";
 import {
   type TimerFunc,
   type Origins,
   tsTimers as tsUpdate,
   wasmWrapper,
-} from "$cd-lib/timers.ts";
+} from "countdown-lib/timers";
 import Button, { ButtonStyle } from "@/lib/Button.tsx";
 import styles from "./bench.module.scss";
 

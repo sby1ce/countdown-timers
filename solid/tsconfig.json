@@ -14,8 +14,7 @@
     "isolatedModules": true,
     "paths": {
       "~/*": ["./src/*"],
-      "$wasm": ["../countdown-rs/pkg"],
-      "$cd-lib/*": ["../countdown-lib/src/*"]
+      "$wasm": ["../countdown-rs/pkg"]
     },
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,

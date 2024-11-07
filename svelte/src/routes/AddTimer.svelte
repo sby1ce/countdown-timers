@@ -5,8 +5,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <script lang="ts">
-  import { storageAvailable } from "$cd-lib/storage.ts";
-  import type { ITimer } from "$cd-lib/timers.ts";
+  import { storageAvailable } from "countdown-lib/storage";
+  import type { ITimer } from "countdown-lib/timers";
   import { timers } from "$lib/timers.ts";
 
   // Documentation doesn't specify on whether to use $state in this situation

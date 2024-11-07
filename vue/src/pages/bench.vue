@@ -10,13 +10,13 @@ import {
   tsTimers as tsUpdate,
   type Origins,
   type TimerFunc,
-} from "../../../countdown-lib/src/timers.ts";
+} from "countdown-lib/timers";
 import {
   initialize,
   seed,
   bench1000,
   formatBrowser,
-} from "../../../countdown-lib/src/bench.ts";
+} from "countdown-lib/bench";
 import Button from "~/components/Button.vue";
 import { ButtonStyle } from "~/utils.ts";
 

@@ -7,8 +7,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 import { type SetStoreFunction, createStore } from "solid-js/store";
 import { createEffect, onMount } from "solid-js";
 import { isServer } from "solid-js/web";
-import { load, storageAvailable } from "../../../countdown-lib/src/storage.ts";
-import type { ITimer } from "../../../countdown-lib/src/timers.ts";
+import { load, storageAvailable } from "countdown-lib/storage";
+import type { ITimer } from "countdown-lib/timers";
 
 export type SetTimers = SetStoreFunction<ITimer[]>;
 
