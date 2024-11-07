@@ -12,7 +12,7 @@ Watch countdowns [here](https://sby1ce.github.io/countdown-timers/)
 
 ```bash
 source wasm.sh
-source install.sh
+bun install
 source lint.sh
 source build.sh
 ```

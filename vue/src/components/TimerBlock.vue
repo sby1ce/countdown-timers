@@ -12,8 +12,8 @@ import {
   type Origins,
   type TimerFunc,
   originsPipe,
-  useTimers,
-} from "~/timers.ts";
+} from "countdown-lib/timers";
+import { useTimers } from "~/timers.ts";
 import Timer from "~/components/Timer.vue";
 import AddTimer from "~/components/AddTimer.vue";
 import Button from "~/components/Button.vue";

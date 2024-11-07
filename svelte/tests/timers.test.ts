@@ -5,8 +5,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
 import { describe, test, expect } from "bun:test";
-import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$lib/timers.ts";
-import { initialize, seed } from "$lib/bench.ts";
+import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "countdown-lib/timers";
+import { initialize, seed } from "countdown-lib/bench";
 
 const data: Origins = seed();
 const rsUpdate: TimerFunc = await initialize();

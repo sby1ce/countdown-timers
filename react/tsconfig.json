@@ -18,7 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "$wasm": ["../countdown-rs/pkg"]
     },
     "allowImportingTsExtensions": true,
     "target": "ES2017"

@@ -14,6 +14,7 @@ export default defineConfig({
   server: {
     preset: "static",
     baseURL: process.env.VITE_PATH,
+    compatibilityDate: "2024-11-07",
   },
   vite: {
     plugins: [wasm()],

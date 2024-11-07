@@ -5,8 +5,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <script lang="ts">
-  import { timers, type ITimer } from "$lib/timers";
-  import { storageAvailable } from "$lib/storage";
+  import { storageAvailable } from "countdown-lib/storage";
+  import type { ITimer } from "countdown-lib/timers";
+  import { timers } from "$lib/timers.ts";
 
   // Documentation doesn't specify on whether to use $state in this situation
   let name: HTMLInputElement;

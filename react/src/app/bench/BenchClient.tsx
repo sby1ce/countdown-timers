@@ -8,13 +8,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 import dynamic from "next/dynamic";
 import { type JSX, useState } from "react";
-import { seed, bench1000, formatBrowser } from "@/lib/bench.ts";
+import { seed, bench1000, formatBrowser } from "countdown-lib/bench";
 import {
   type TimerFunc,
   type Origins,
   tsTimers as tsUpdate,
   wasmWrapper,
-} from "@/lib/timers.ts";
+} from "countdown-lib/timers";
 import Button, { ButtonStyle } from "@/lib/Button.tsx";
 import styles from "./bench.module.scss";
 
@@ -66,7 +66,7 @@ function BenchClient({ rsUpdate }: { rsUpdate: TimerFunc }): JSX.Element {
 
 export default dynamic<{}>(
   async () => {
-    const wasm = await import("../../../../countdown-rs/pkg");
+    const wasm = await import("$wasm");
     const init = wasm.default;
     await init();
     const rsUpdate: TimerFunc = wasmWrapper(wasm.update_timers);

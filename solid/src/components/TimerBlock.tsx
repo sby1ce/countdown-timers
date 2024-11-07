@@ -12,15 +12,15 @@ import {
   createRenderEffect,
   onMount,
 } from "solid-js";
-import { initialize } from "./bench.ts";
 import {
   type ITimer,
   type TimerFunc,
   type Origins,
-  createTimers,
   tsTimers,
   originsPipe,
-} from "./timers.ts";
+} from "countdown-lib/timers";
+import { createTimers } from "./timers.ts";
+import { initialize } from "countdown-lib/bench";
 import Timer from "./Timer.tsx";
 import AddTimer from "./AddTimer.tsx";
 import Button, { ButtonStyle } from "./Button.tsx";

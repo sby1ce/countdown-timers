@@ -7,14 +7,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import {
-    timers,
     tsTimers,
     wasmWrapper,
     type Origins,
     type TimerFunc,
     originsPipe,
-  } from "$lib/timers.ts";
-  import { storageAvailable } from "$lib/storage.ts";
+  } from "countdown-lib/timers";
+  import { timers } from "$lib/timers.ts";
+  import { storageAvailable } from "countdown-lib/storage";
   import Timer from "./Timer.svelte";
   import AddTimer from "./AddTimer.svelte";
   import Button, { ButtonStyle } from "$lib/Button.svelte";
@@ -63,7 +63,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     interval = setInterval(() => {
       renders = updateTimers(origins);
     }, 1000);
-  })
+  });
 
   async function initialize(): Promise<void> {
     try {

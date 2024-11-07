@@ -13,8 +13,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { dlopen, FFIType, ptr, suffix, type FFIFunction, type Library } from "bun:ffi";
 import { barplot, bench, run } from "mitata";
-import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "$lib/timers.ts";
-import { initialize, seed, bench1000 } from "$lib/bench.ts";
+import { tsTimers as tsUpdate, type Origins, type TimerFunc } from "../src/timers.ts";
+import { initialize, seed, bench1000 } from "../src/bench.ts";
 
 const INNER_CAP = 20;
 const DLL_PATH = `${import.meta.dir}/../../countdown-rs/target/release/cd_native.${suffix}`;
@@ -106,8 +106,7 @@ async function main(): Promise<void> {
     bench("rs", () => bench1000(rsUpdate, origins));
   });
 
-  const result = await run();
-  console.log(result);
+  await run();
 }
 
 await main();

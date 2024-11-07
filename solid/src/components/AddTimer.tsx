@@ -5,7 +5,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
 import { createSignal, type JSX, Show } from "solid-js";
-import type { ITimer, SetTimers } from "./timers.ts";
+import type { ITimer } from "countdown-lib/timers";
+import type { SetTimers } from "./timers.ts";
 import styles from "./AddTimer.module.scss";
 
 function getUnix(str: string | undefined): number | null {

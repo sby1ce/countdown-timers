@@ -14,16 +14,15 @@ import {
   type MutableRefObject,
 } from "react";
 import { Provider } from "react-redux";
-import { initialize } from "./bench.ts";
 import {
   originsPipe,
-  timers,
   tsTimers,
   type ITimer,
   type TimerFunc,
   type Origins,
-  INIT_TIMERS,
-} from "./timers.ts";
+} from "countdown-lib/timers";
+import { initialize } from "countdown-lib/bench";
+import { timers, INIT_TIMERS } from "./timers.ts";
 import Timer from "./Timer.tsx";
 import AddTimer from "./AddTimer.tsx";
 import Button, { ButtonStyle } from "./Button.tsx";

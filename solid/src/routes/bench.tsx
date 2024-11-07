@@ -5,18 +5,18 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 */
 
 import { createResource, createSignal, type JSX } from "solid-js";
-import Button, { ButtonStyle } from "~/components/Button.tsx";
+import {
+  tsTimers as tsUpdate,
+  type TimerFunc,
+  type Origins,
+} from "countdown-lib/timers";
 import {
   initialize,
   seed,
   bench1000,
   formatBrowser,
-} from "~/components/bench.ts";
-import {
-  tsTimers as tsUpdate,
-  type TimerFunc,
-  type Origins,
-} from "~/components/timers.ts";
+} from "countdown-lib/bench";
+import Button, { ButtonStyle } from "~/components/Button.tsx";
 import styles from "~/scss/bench.module.scss";
 
 interface Results {

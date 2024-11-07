@@ -6,10 +6,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 import type { Metadata } from "next";
 import type React from "react";
-import Navbar from "@/lib/Navbar";
+import Navbar from "@/lib/Navbar.tsx";
+import Footer from "@/lib/Footer.tsx";
 import styles from "./layout.module.scss";
 import "./globals.scss";
-import Footer from "@/lib/Footer";
 
 export const metadata: Metadata = {
   title: "Countdown Timers",

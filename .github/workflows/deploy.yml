@@ -50,7 +50,7 @@ jobs:
         run: source wasm.sh
 
       - name: Install dependencies
-        run: source install.sh
+        run: bun install
 
       - name: Check
         run: source lint.sh
