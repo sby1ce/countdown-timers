@@ -17,15 +17,6 @@ export interface ITimer {
 
 export type TimerFunc = (origins: Origins) => string[][];
 
-const enum FormatOption {
-  Week,
-  Day,
-  Hour,
-  Minute,
-  Second,
-  Millisecond,
-}
-
 interface TimeUnit {
   suffix: string;
   divisor: number;
@@ -40,7 +31,16 @@ const TIME_UNITS: TimeUnit[] = [
   { suffix: "ms", divisor: 1 },
 ];
 
-function toTimeUnit(formatOption: FormatOption): TimeUnit {
+const enum FormatOption {
+  Week,
+  Day,
+  Hour,
+  Minute,
+  Second,
+  Millisecond,
+}
+
+function asTimeUnit(formatOption: FormatOption): TimeUnit {
   switch (formatOption) {
     case FormatOption.Week:
       return TIME_UNITS[0];
@@ -57,33 +57,56 @@ function toTimeUnit(formatOption: FormatOption): TimeUnit {
   }
 }
 
+function calculateInterval(interval: number, divisor: number): [number, string] {
+  const newInterval: number = interval % divisor;
+  const unitCount: number = Math.floor(interval / divisor);
+  return [newInterval, unitCount.toString()];
+}
+
+/* interface Accumulate<T> {
+  readonly minusSign: T;
+  readonly spaceSign: T;
+  accumulate(interval: number, formatOption: FormatOption): [number, ThisType<this>];
+  plus(element: T): ThisType<this>;
+} */
+
+function accumulate(self: string, interval: number, formatOption: FormatOption): [number, string] {
+  const timeUnit: TimeUnit = asTimeUnit(formatOption);
+  const [newInterval, unitCount] = calculateInterval(interval, timeUnit.divisor);
+  const newAccumulator: string = self + unitCount + timeUnit.suffix + ' ';
+  return [newInterval, newAccumulator];
+}
+
+function next(formatOptions: FormatOption[]): FormatOption[] {
+  return formatOptions.slice(1);
+}
+
 function reduceInterval(
   interval: number,
   accumulator: string,
   formatOptions: FormatOption[],
 ) {
-  const formatLen: number = formatOptions.length;
-  if (formatLen === 0) {
+  if (formatOptions.length === 0) {
     return accumulator;
   }
   const formatOption: FormatOption = formatOptions[0];
-  const timeUnit = toTimeUnit(formatOption);
-  const newInterval: number = interval % timeUnit.divisor;
-  const unitCount: number = Math.floor(interval / timeUnit.divisor);
-  const newAccumulator: string =
-    accumulator + unitCount.toString() + timeUnit.suffix + " ";
+  const [newInterval, newAccumulator] = accumulate(accumulator, interval, formatOption);
 
-  return reduceInterval(newInterval, newAccumulator, formatOptions.slice(1));
+  return reduceInterval(newInterval, newAccumulator, next(formatOptions));
 }
 
-function convert(interval: number, formatOptions: FormatOption[]): string {
+function convert(interval: number,
+  accumulator: string,
+  formatOptions: FormatOption[]): string {
   const absInterval: number = Math.abs(interval);
-  const accumulator: string = interval >= 0 ? "" : "-";
 
-  return reduceInterval(absInterval, accumulator, formatOptions);
+  const element = '-';
+  const newAccumulator: string = interval >= 0 ? "" : element;
+
+  return reduceInterval(absInterval, newAccumulator, formatOptions);
 }
 
-function updateTimer(origin: number, now: number): string[] {
+function update(accumulators: [string], origin: number, now: number): string[] {
   const interval: number = origin - now;
   const formatOptions: FormatOption[] = [
     FormatOption.Day,
@@ -92,17 +115,22 @@ function updateTimer(origin: number, now: number): string[] {
     FormatOption.Second,
   ];
 
-  return [convert(interval, formatOptions)];
+  return accumulators.map((acc) => convert(interval, acc, formatOptions));
+}
+
+function updateTimers(now: number, origins: number[]): string[][] {
+  const updateAccumulators = (origin: number): string[] => {
+    const accumulators: [string] = [""];
+    return update(accumulators, origin, now);
+  }
+
+  return origins.map(updateAccumulators);
 }
 
 export function tsTimers(origins: Origins): string[][] {
   const now: number = Date.now();
 
-  const result: string[][] = origins.ts.map((origin: number): string[] =>
-    updateTimer(origin, now),
-  );
-
-  return result;
+  return updateTimers(now, origins.ts);
 }
 
 export function wasmWrapper(
