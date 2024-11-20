@@ -50,3 +50,8 @@ build/
 # Rust wasm files
 target/
 Cargo.lock
+
+## Node-API
+*.node
+index.js
+index.d.ts

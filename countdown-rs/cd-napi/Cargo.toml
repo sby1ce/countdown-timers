@@ -1,0 +1,31 @@
+# Copyright 2024 sby1ce
+# 
+# SPDX-License-Identifier: CC0-1.0
+
+[package]
+name = "cd-napi"
+edition = "2021"
+version = "0.1.0"
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = "2"
+napi-derive = "2"
+
+[build-dependencies]
+napi-build = "2"
+
+[lints.clippy]
+single_call_fn = { level = "allow", priority = 1 }  # God function
+too_many_lines = { level = "allow", priority = 1 }  # No, I don't think so
+module_name_repetitions = { level = "allow", priority = 1 }  # This is annoying
+multiple_crate_versions = { level = "allow", priority = 1 }  # Can't do anything about it
+all = "warn"
+cargo = "warn"
+nursery = "deny"
+pedantic = "deny"

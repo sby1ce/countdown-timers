@@ -1,0 +1,19 @@
+{
+  "name": "countdown-napi-win32-x64-msvc",
+  "version": "0.0.0",
+  "private": true,
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "main": "cd-napi.win32-x64-msvc.node",
+  "files": [
+    "cd-napi.win32-x64-msvc.node"
+  ],
+  "license": "AGPL-3.0-or-later",
+  "engines": {
+    "node": ">= 10"
+  }
+}

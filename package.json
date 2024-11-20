@@ -5,6 +5,7 @@
   "private": true,
   "workspaces": [
     "countdown-lib",
+    "countdown-rs/cd-napi",
     "react",
     "root",
     "solid",
