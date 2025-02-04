@@ -95,13 +95,15 @@ function reduceInterval(
   return reduceInterval(newInterval, newAccumulator, next(formatOptions));
 }
 
-function convert(interval: number,
+function convert(
+  interval: number,
   accumulator: string,
-  formatOptions: FormatOption[]): string {
+  formatOptions: FormatOption[]
+): string {
   const absInterval: number = Math.abs(interval);
 
   const element = '-';
-  const newAccumulator: string = interval >= 0 ? "" : element;
+  const newAccumulator: string = interval < 0 ? accumulator + element : accumulator;
 
   return reduceInterval(absInterval, newAccumulator, formatOptions);
 }
