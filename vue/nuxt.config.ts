@@ -44,13 +44,4 @@ export default defineNuxtConfig({
       base: baseURL,
     },
   },
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: "modern",
-        },
-      },
-    },
-  },
 });

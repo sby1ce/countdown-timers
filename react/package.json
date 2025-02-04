@@ -11,23 +11,23 @@
     "format": "prettier -w ."
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.3.0",
+    "@reduxjs/toolkit": "^2.5.1",
     "clsx": "^2.1.1",
     "countdown-lib": "workspace:*",
-    "next": "^15.0.3",
-    "react": "^19.0.0-rc-5c56b873-20241107",
-    "react-dom": "^19.0.0-rc-5c56b873-20241107",
-    "react-redux": "^9.1.2"
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "babel-plugin-react-compiler": "^19.0.0-beta-63b359f-20241101",
-    "eslint": "^9.14.0",
-    "eslint-config-next": "^15.0.2",
-    "prettier": "^3.3.3",
-    "sass": "^1.80.6",
-    "typescript": "^5.6.3"
+    "@types/node": "^22.13.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "babel-plugin-react-compiler": "^19.0.0-beta-714736e-20250131",
+    "eslint": "^9.19.0",
+    "eslint-config-next": "^15.1.6",
+    "prettier": "^3.4.2",
+    "sass": "^1.83.4",
+    "typescript": "^5.7.3"
   }
 }

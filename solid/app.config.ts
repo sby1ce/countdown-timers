@@ -18,14 +18,6 @@ export default defineConfig({
   },
   vite: {
     plugins: [wasm()],
-    css: {
-      preprocessorOptions: {
-        // Doesn't work, very unfortunate
-        scss: {
-          api: "modern",
-        },
-      },
-    },
     server: {
       fs: {
         allow: ["../countdown-rs/pkg/"],
